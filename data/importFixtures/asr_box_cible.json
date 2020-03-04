@@ -1,0 +1,167 @@
+[
+	{
+		"n0_num" : 1,
+		"guid" : "a0cea619-a9e6-424d-8dca-9eebd757cc35",
+		"date_create" : "13/01/2017 08:33:13",
+		"id_u_create" : 2,
+		"date_update" : "25/01/2019 09:32:35",
+		"id_u_update" : 3,
+		"afficher" : "1",
+		"nom" : "TOUT PUBLIC",
+		"description" : null
+	},
+	{
+		"n0_num" : 2,
+		"guid" : "989d5201-a6b5-46b1-969b-f59cf99b5422",
+		"date_create" : "13/01/2017 08:34:02",
+		"id_u_create" : 2,
+		"date_update" : "25/01/2019 09:31:16",
+		"id_u_update" : 3,
+		"afficher" : "1",
+		"nom" : "ENFANTS",
+		"description" : "Classe de population de 0 à 18 ans"
+	},
+	{
+		"n0_num" : 3,
+		"guid" : "d29d70e0-8a3d-4ed2-a63e-3647f6fd2406",
+		"date_create" : "13/01/2017 08:34:36",
+		"id_u_create" : 2,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "26 - 50 ans",
+		"description" : "Classe de population de 26 à 50 ans"
+	},
+	{
+		"n0_num" : 4,
+		"guid" : "580da172-52cd-41f6-9dc4-fdab3998dfac",
+		"date_create" : "13/01/2017 08:35:01",
+		"id_u_create" : 2,
+		"date_update" : "25/01/2019 09:30:57",
+		"id_u_update" : 3,
+		"afficher" : "1",
+		"nom" : "16-25 ANS",
+		"description" : "Classe de population de 19 à 25 ans"
+	},
+	{
+		"n0_num" : 5,
+		"guid" : "45211f74-568e-440f-aaa8-cc160aed37a2",
+		"date_create" : "13/01/2017 08:35:44",
+		"id_u_create" : 2,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "51 - 74 ans",
+		"description" : "Classe de population de 51 à 74 ans"
+	},
+	{
+		"n0_num" : 6,
+		"guid" : "84329a16-1bda-4c17-9d33-401e43e8bf29",
+		"date_create" : "13/01/2017 08:37:04",
+		"id_u_create" : 2,
+		"date_update" : "25/01/2019 09:31:35",
+		"id_u_update" : 3,
+		"afficher" : "1",
+		"nom" : "SENIORS",
+		"description" : "Classe de population à partir de 75 ans"
+	},
+	{
+		"n0_num" : 7,
+		"guid" : "20b9880b-3ade-4d78-97e6-44ea659ce83b",
+		"date_create" : "13/01/2017 08:38:37",
+		"id_u_create" : 2,
+		"date_update" : "25/01/2019 09:32:04",
+		"id_u_update" : 3,
+		"afficher" : "1",
+		"nom" : "HANDICAPES",
+		"description" : "Classe de population handicapé"
+	},
+	{
+		"n0_num" : 8,
+		"guid" : "56f0b80f-7235-48e9-a357-a479a8f83c39",
+		"date_create" : "22/05/2017 08:05:53",
+		"id_u_create" : 3,
+		"date_update" : "25/01/2019 09:31:54",
+		"id_u_update" : 3,
+		"afficher" : "1",
+		"nom" : "FEMMES",
+		"description" : null
+	},
+	{
+		"n0_num" : 9,
+		"guid" : "8eee7281-02aa-4ecf-bd26-8d999ab51e48",
+		"date_create" : "02/06/2017 08:46:01",
+		"id_u_create" : 3,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "test",
+		"description" : ""
+	},
+	{
+		"n0_num" : 10,
+		"guid" : "2aed2500-f74e-4d9e-9f0e-4c39306323c6",
+		"date_create" : "09/10/2017 14:49:59",
+		"id_u_create" : 2,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "Jeunes en insertion",
+		"description" : ""
+	},
+	{
+		"n0_num" : 11,
+		"guid" : "12834e34-a128-4fe4-b3ce-3794badea111",
+		"date_create" : "25/10/2017 12:00:25",
+		"id_u_create" : 11,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "adultes",
+		"description" : ""
+	},
+	{
+		"n0_num" : 12,
+		"guid" : "a97275f6-2c39-4d09-8dbc-4d35a4cee488",
+		"date_create" : "30/11/2017 09:13:40",
+		"id_u_create" : 3,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "Professionnels de santé",
+		"description" : ""
+	},
+	{
+		"n0_num" : 13,
+		"guid" : "e9d8b81d-43a9-440e-804d-9da52f4fc087",
+		"date_create" : "29/11/2019 12:53:16",
+		"id_u_create" : 24,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "Personnes à conduite addictive",
+		"description" : ""
+	},
+	{
+		"n0_num" : 14,
+		"guid" : "9dfb21c4-2648-41dc-ad36-6d3a08419af7",
+		"date_create" : "23/12/2019 12:23:42",
+		"id_u_create" : 24,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "demandeurs d'asile",
+		"description" : ""
+	},
+	{
+		"n0_num" : 15,
+		"guid" : "93fbc92b-ca04-4869-852c-62e97a592666",
+		"date_create" : "24/02/2020 14:25:15",
+		"id_u_create" : 24,
+		"date_update" : "01/01/0001 00:00:00",
+		"id_u_update" : 0,
+		"afficher" : "1",
+		"nom" : "Demandeurs d'emploi",
+		"description" : ""
+	}
+]
