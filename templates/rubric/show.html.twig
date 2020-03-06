@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Rubriques' %}
+{% set route_index='admin_rubric_index' %}
+{% set entityShortName='rubric' %}
+{% set entityName='admin_rubric' %}
+{% set entity=rubric %}
+
+{% block title %}{{ parent() }} {{title}}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')) }}">
+{% endblock %}
+
+{% block body_header %}
+    {{ include('admin/_body_header.html.twig', {domaine: title , id : entity.id, index :route_index}) }}
+{% endblock %}
+
+{% block sidebar_sommaire %}
+    <li class="nav-item ">
+        <a class="nav-link" href="#anchor_contact">
+            <i class="fas fa-users"></i> Contacts
+        </a>
+    </li>
+{% endblock %}
+
+{% block sidebar_button %}
+    {% if is_granted('ROLE_GESTIONNAIRE') %}
+
+        {{ include('share/__btn_edit.html.twig',
+            {   'url':entityName ~'_edit',
+                'id':entity.id
+            }) }}
+
+        <span class="mb-3"></span>
+
+        <span class="btn btn-danger " onclick="$('#delete').click();">
+            <i class="fas fa-trash"></i> Supprimer
+        </span>
+
+    {% endif %}
+
+    <span class="mb-3"></span>
+
+    {{ include('share/__btn_return_list.html.twig',
+        {   url:route_index
+        }) }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="row justify-content-center">
+        <div id="anchor_name" class="jumbotron col-12 text-center text-purple">
+            <h3>
+                <a href="{{ path('admin_thematic_show',{id:entity.thematic.id}) }}">
+                    {{ entity.thematic.name }}
+                </a>
+                <br>
+                {{ entity.name }}
+            </h3>
+            <small class="float-right">
+                {% if entity.enable %}
+                    <span class="text-success">Visible</span>
+                {% else %}
+                    <span class="text-danger">Masquée</span>
+                {% endif %}
+            </small>
+        </div>
+        {{ include(entityShortName~'/_show/_content.html.twig',{content:entity.content}) }}
+        {{ include('rubric/_view/_vignette_admin.html.twig') }}
+        {{ include('underrubric/_view/_vignettes_admin.html.twig',{underrubrics:entity.underrubrics}) }}
+        <div class="d-none">
+            {{ include('share/_delete_form.html.twig',{domaine: entityName ,id:entity.id}) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
+{% endblock %}

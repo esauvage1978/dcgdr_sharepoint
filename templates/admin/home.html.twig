@@ -38,7 +38,7 @@
                 </div>
             </div>
             <h3 id="anchor_organisme" class="text-purple">
-                <small><i class="fas fa-users"></i>Partenaire</small>
+                <small><i class="fas fa-users"></i> Partenaire</small>
             </h3>
             <div class="card">
                 <div class="card-body p-0">
@@ -54,13 +54,18 @@
         {% if is_granted('ROLE_GESTIONNAIRE') %}
             <div class="col-6">
                 <h3 id="anchor_organisme" class="text-purple">
-                    <small><i class="fas fa-users"></i>Contact</small>
+                    <small><i class="fas fa-users"></i> Porte feuille</small>
                 </h3>
                 <div class="card">
                     <div class="card-body p-0">
                         <table class="table">
                             <tbody>
                             {% if is_granted('ROLE_USER') %}
+                                {{ include('admin/_entree_unitaire.html.twig',{'title':'Bibliothèque d\'images', 'domaine':'admin_picture'} ) }}
+                                {{ include('admin/_entree_unitaire.html.twig',{'title':'Thématiques pour les rubriques', 'domaine':'admin_thematic'} ) }}
+                                {{ include('admin/_entree_unitaire.html.twig',{'title':'Rubriques', 'domaine':'admin_rubric'} ) }}
+                                {{ include('admin/_entree_unitaire.html.twig',{'title':'Thématiques pour les sous-rubriques', 'domaine':'admin_underthematic'} ) }}
+                                {{ include('admin/_entree_unitaire.html.twig',{'title':'Sous-rubriques', 'domaine':'admin_underrubric'} ) }}
                             {% endif %}
                             </tbody>
                         </table>

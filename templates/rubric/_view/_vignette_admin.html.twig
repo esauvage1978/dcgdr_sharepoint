@@ -1,0 +1,28 @@
+<div class="card mb-5 shadow ml-2 mr-2">
+
+
+    {% if rubric.picture %}
+        <img src="{{ absolute_url( asset(rubric.picture.href)) }}" class="card-img-top rounded-top rounded-lg "
+             alt="{{ rubric.picture.name }}">
+    {% else %}
+        <img src="{{ absolute_url( asset('img/vignette.jpg')) }}" class="card-img-top rounded-top rounded-lg "
+             alt="{{ rubric.thematic.name }}">
+    {% endif %}
+
+    <div class="card-body text-center">
+        <a href="{{ path('admin_rubric_show',{id:rubric.id}) }}" data-html="true"
+           data-toggle="tooltip" data-placement="top" title="{{ rubric.content }}">
+            <h5 class="text-bold ">{{ rubric.name }}</h5>
+        </a>
+        <div class="text-muted">
+            <a href="{{ path('admin_thematic_show',{id:rubric.thematic.id}) }}" data-html="true"
+               data-toggle="tooltip" data-placement="top" title="{{ rubric.thematic.content }}">
+                {{ rubric.thematic.name }}
+            </a>
+            <br/>
+            <small class="text-muted">0 PORTE-DOCUMENT</small>
+        </div>
+
+    </div>
+    </a>
+</div>

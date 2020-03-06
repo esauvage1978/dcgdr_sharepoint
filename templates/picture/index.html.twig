@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Image de présentation' %}
+{% set entitys=pictures %}
+
+{% block title %} {{ parent() }} {{title}} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')) }}">
+    <link rel="stylesheet"
+          href="{{ absolute_url( asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')) }}">
+{% endblock %}
+
+{% block body_header %}
+    {{ include('admin/_body_header.html.twig', { domaine:(entitys | length) ~' '~ title }) }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="tableAdministration" class="table table-striped table-condensed "
+                                   style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th class="all">#</th>
+                                    <th class="all">Nom</th>
+                                    <th class="all">Image</th>
+                                    <th class="desktop text-center">
+                                        <i class="fas fa-project-diagram" data-toggle="tooltip" data-placement="top"
+                                           title="Nombre de rubrique'"></i>
+                                    </th>
+                                    <th class="desktop text-center">
+                                        <i class="fas fa-project-diagram" data-toggle="tooltip" data-placement="top"
+                                           title="Nombre de sous rubrique'"></i>
+                                    </th>
+                                    <th class="all">Description</th>
+                                    <th class="all text-center"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for entity in entitys %}
+                                    <tr>
+                                        <td class="align-middle">{{ entity.id }}</td>
+                                        <td class="align-middle text-{{ entity.enable ? 'gray-dark' : 'danger text-bold' }}">
+                                            {{ entity.name }}
+                                        </td>
+                                        <td  class="align-middle">
+                                            {{ include('picture/_show/_picture_mini.html.twig',{picture:entity}) }}
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            {% if   entity.rubrics.count==0 %}
+                                                <span class="text-light" ><i class="fas fa-circle"></i></span>
+                                            {% else %}
+                                                <small class="badge bg-info">{{ entity.rubrics.count}}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td  class="align-middle">
+                                            {% if   entity.underRubrics.count==0 %}
+                                                <span class="text-light" ><i class="fas fa-circle"></i></span>
+                                            {% else %}
+                                                <small class="badge bg-info">{{ entity.underRubrics.count}}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td  class="align-middle">
+                                            {{ entity.content | raw }}
+
+                                        </td>
+
+                                        <td class="d-flex align-items-center justify-content-end ">
+
+                                            {{ include('share/__btn_show.html.twig',
+                                                {   'url':'admin_picture_show',
+                                                    'id':entity.id,
+                                                    'mr':true,
+                                                    'sm':true,
+                                                }) }}
+
+                                            {% if is_granted('ROLE_GESTIONNAIRE') %}
+                                                {{ include('share/__btn_edit.html.twig',
+                                                    {   'url':'admin_picture_edit',
+                                                        'id':entity.id,
+                                                        'sm':true,
+                                                    }) }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7">Aucun d'enregistrement</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                {% if is_granted('ROLE_GESTIONNAIRE') %}
+                    <div class="card-header">
+                        {{ include('share/__btn_new.html.twig',
+                            {
+                                url:'admin_picture_new',
+                                title:'Ajouter un élément'
+                            }) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ absolute_url( asset('plugins/datatables/jquery.dataTables.js')) }}"></script>
+    <script src="{{ absolute_url( asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js')) }}"></script>
+    <script src="{{ absolute_url( asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')) }}"></script>
+    <script src="{{ absolute_url( asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')) }}"></script>
+    <script src="{{ absolute_url( asset('js/datatables/picture.js')) }}"></script>
+{% endblock %}

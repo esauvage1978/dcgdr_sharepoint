@@ -1,0 +1,16 @@
+{% if underrubrics |length >0 %}
+    <div class=" col-sm-12 ">
+        <article class=" pt-3" id="anchor_underrubrics">
+            <h5 class="text-purple p-1 ">
+                Sous-rubriques
+            </h5>
+            <div class="row col-12 d-flex align-items-stretch justify-content-center " id="anchor_contact">
+                {% for underrubric in underrubrics %}
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+                        {{ include('underrubric/_view/_vignette_admin.html.twig') }}
+                    </div>
+                {% endfor %}
+            </div>
+        </article>
+    </div>
+{% endif %}

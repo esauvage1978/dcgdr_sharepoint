@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ parent() }} Plan d'actions {% endblock %}
+{% block title %} {{ parent() }} Recherche {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ absolute_url( asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')) }}">
@@ -28,36 +28,47 @@
                         <li class="nav-item">
                             <a class="nav-link active" id="custom-tabs-one-partenaire-tab" data-toggle="pill" href="#custom-tabs-one-partenaire" role="tab"
                                aria-controls="custom-tabs-one-partenaire" aria-selected="true">
-                                Partenaires
-                                <span class="badge badge-info">{{ partenaires | length }}</span>
+                                Portes documents
+                                <span class="badge badge-info"></span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-contact-tab" data-toggle="pill" href="#custom-tabs-one-contact" role="tab"
-                               aria-controls="custom-tabs-one-contact" aria-selected="false">
-                                Contacts
-                                <span class="badge badge-info">{{ contacts | length }}</span>
+                            <a class="nav-link" id="custom-tabs-one-rubric-tab" data-toggle="pill" href="#custom-tabs-one-rubric" role="tab"
+                               aria-controls="custom-tabs-one-rubric" aria-selected="false">
+                                Rubriques
+                                <span class="badge badge-info">{{ rubrics | length }}</span>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-one-underrubric-tab" data-toggle="pill" href="#custom-tabs-one-underrubric" role="tab"
+                               aria-controls="custom-tabs-one-underrubric" aria-selected="false">
+                                Sous-rubriques
+                                <span class="badge badge-info">{{ underrubrics | length }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
                         <div class="tab-pane fade active show" id="custom-tabs-one-partenaire" role="tabpanel" aria-labelledby="custom-tabs-one-partenaire-tab">
                             <div class="row col-12 d-flex align-items-stretch justify-content-center"  >
-                                {% for partenaire in partenaires %}
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-one-rubric" role="tabpanel" aria-labelledby="custom-tabs-one-rubric-tab">
+                            <div class="row col-12 d-flex align-items-stretch justify-content-center"  >
+                                {% for rubric in rubrics %}
                                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3  d-flex align-items-stretch" >
-                                        {{ include('partenaire/_view/_vignette.html.twig') }}
+                                        {{ include('rubric/_view/_vignette.html.twig') }}
                                     </div>
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-one-contact" role="tabpanel" aria-labelledby="custom-tabs-one-contact-tab">
+                        <div class="tab-pane fade" id="custom-tabs-one-underrubric" role="tabpanel" aria-labelledby="custom-tabs-one-underrubric-tab">
                             <div class="row col-12 d-flex align-items-stretch justify-content-center"  >
-                                {% for contact in contacts %}
+                                {% for underrubric in underrubrics %}
                                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3  d-flex align-items-stretch" >
-                                        {{ include('contact/_view/_vignette.html.twig') }}
+                                        {{ include('underrubric/_view/_vignette.html.twig') }}
                                     </div>
                                 {% endfor %}
                             </div>

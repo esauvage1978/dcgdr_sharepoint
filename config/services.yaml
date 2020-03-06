@@ -7,7 +7,8 @@ parameters:
     directory_import : '%kernel.project_dir%/data/importFixtures/'
     mailer.mail: 'emmanuel.sauvage@live.fr'
     mailer.name: '[ DCGDR SHARED ] Emmanuel SAUVAGE '
-
+    directory_picture : '%kernel.project_dir%/public/rubric'
+    directory_data_picture : '%kernel.project_dir%/data/bg'
 
 services:
     # default configuration for services in *this* file
@@ -27,6 +28,9 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Listener\PictureUploadListener:
+        arguments:
+            $directory: '%directory_picture%'
+        tags:
+            - { name: doctrine.orm.entity_listener }
 
