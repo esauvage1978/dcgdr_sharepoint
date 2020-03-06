@@ -1,0 +1,33 @@
+<div class="card-body">
+    <div class="row ml-3">
+        <div class="col-12">
+            {{ form_row(form.name) }}
+        </div>
+    </div>
+
+    <div class="row ml-3">
+        <label class="col-sm-3 col-form-label" for="{{ form.enable.vars.id }}">
+            Afficher
+        </label>
+        <div class="col mt-1">
+            {{ form_row(form.enable) }}
+        </div>
+    </div>
+    <div class="row ml-3">
+        <div class="col-10">
+            {{ form_row(form.thematic) }}
+        </div>
+    </div>
+    <div class="row ml-3">
+        <div class="col-10">
+            {{ form_row(form.underRubrics) }}
+        </div>
+    </div>
+    <div class="row ml-3">
+        {{ form_row(form.content) }}
+    </div>
+    <div class="d-none">
+        <button name="update" id="update">{{ button_label|default('Save') }}</button>
+    </div>
+
+</div>

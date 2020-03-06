@@ -18,24 +18,33 @@
     {% endif %}
 
 
-    <div class="row bg-white ">
-        <div class="col-sm-4"
-             style="
-                     background-image: url('{{ absolute_url( asset('img/fond_cut.png')) }}') ;
-                     background-repeat: no-repeat;
-                     background-position: 100% 50px;
-                     "
-        >
 
-        </div>
-        <div class="col-sm-8 pr-4 pt-5">
-            <div class="text-center">
-                <h1 class="font-weight-bold">DCGDR SHARED</h1>
-                <span class="text-muted">Partage des fichiers de la DCGDR</span>
+    <div class="d-flex justify-content-center">
+        {% set the_courant="" %}
+        {% set the_precedent="" %}
+        {% for rubric in rubrics %}
+        {% set the_courant=rubric.thematic.name %}
+            {% if the_precedent=="" or the_precedent !=the_courant %}
+                <a href="#anchor_thematic_{{ rubric.thematic.id }}" title="accès rapide" class="btn btn-light ml-1 mr-1">
+                    <small class="text-muted">{{ rubric.thematic.name }}</small>
+                </a>
+            {% endif %}
+            {% set the_precedent=rubric.thematic.name %}
+        {% endfor %}
+    </div>
+
+
+    <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+        {% for rubric in rubrics %}
+            {% set the_courant=rubric.thematic.name %}
+            {% if the_precedent=="" or the_precedent !=the_courant %}
+                {{  include('thematic/_view/_title.html.twig',{thematic:rubric.thematic}) }}
+            {% endif %}
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+                {{ include('rubric/_view/_vignette.html.twig') }}
             </div>
-            <br/>
-            <br/>
-        </div>
+            {% set the_precedent=rubric.thematic.name %}
+        {% endfor %}
     </div>
 
 

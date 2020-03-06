@@ -1,0 +1,17 @@
+<div class="card-body">
+    <div class="row ml-3">
+        <div class="col-12">
+            {{ form_row(form.name) }}
+        </div>
+    </div>
+
+    <div class="row ml-3">
+        <div class="col-12">
+            {{ form_row(form.content) }}
+        </div>
+    </div>
+    <div class="d-none">
+        <button name="update" id="update">{{ button_label|default('Save') }}</button>
+    </div>
+
+</div>

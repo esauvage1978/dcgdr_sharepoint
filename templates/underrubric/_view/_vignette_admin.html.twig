@@ -1,0 +1,28 @@
+<div class="card mb-5 shadow ml-2 mr-2">
+
+
+
+    <a href="{{ path('admin_underrubric_show',{id:underrubric.id}) }}">
+        {% if underrubric.picture %}
+            <img src="{{ absolute_url( asset(underrubric.picture.href))}}" class="card-img-top rounded-top rounded-lg "
+                 alt="{{ underrubric.picture.name }}">
+        {% else %}
+            <img src="{{ absolute_url( asset('img/vignette.jpg')) }}" class="card-img-top rounded-top rounded-lg "
+                 alt="{{ underrubric.underthematic.name }}">
+        {% endif %}
+        <div class="card-body text-center">
+            <a href="{{ path('admin_underrubric_show',{id:underrubric.id}) }}" data-html="true"
+               data-toggle="tooltip" data-placement="top" title="{{ underrubric.content }}">
+                <h5 class="text-bold ">{{ underrubric.name }}</h5>
+            </a>
+            <div class="text-muted">
+                <a href="{{ path('admin_underthematic_show',{id:underrubric.underthematic.id}) }}" data-html="true"
+                   data-toggle="tooltip" data-placement="top" title="{{ underrubric.underthematic.content }}">
+                    {{ underrubric.underthematic.name }}
+                </a>
+                <br/>
+                <small class="text-muted">0 PORTE-DOCUMENT</small>
+            </div>
+        </div>
+    </a>
+</div>

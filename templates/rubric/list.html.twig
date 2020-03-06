@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} {{rubric.name}}  {% endblock %}
+
+ {% block body_header %}
+     <div class="col">
+         <ol class="breadcrumb float-sm-left">
+             <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+             <li class="breadcrumb-item active">{{ rubric.name }}</li>
+         </ol>
+     </div>
+ {% endblock %}
+
+{% block body %}
+
+
+
+    <div class="d-flex justify-content-center">
+        {% set the_courant="" %}
+        {% set the_precedent="" %}
+        {% for underrubric in underRubrics %}
+            {% set the_courant=underrubric.underThematic.name %}
+            {% if the_precedent=="" or the_precedent !=the_courant %}
+                <a href="#anchor_underthematic_{{ underrubric.underThematic.id }}" title="accès rapide" class="btn btn-light ml-1 mr-1">
+                    <small class="text-muted">{{ underrubric.underThematic.name }}</small>
+                </a>
+            {% endif %}
+            {% set the_precedent=underrubric.underThematic.name %}
+        {% endfor %}
+    </div>
+
+    <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+
+        {% set the_courant="" %}
+        {% set the_precedent="" %}
+
+        {% for underrubric in underRubrics %}
+            {% set the_courant=underrubric.underthematic.name %}
+            {% if the_precedent=="" or the_precedent !=the_courant %}
+                {{  include('underthematic/_view/_title.html.twig',{thematic:underrubric.underthematic}) }}
+            {% endif %}
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+                {{ include('underrubric/_view/_vignette.html.twig') }}
+            </div>
+            {% set the_precedent=underrubric.underthematic.name %}
+        {% endfor %}
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(function () {
+        });
+    </script>
+{% endblock %}
