@@ -1,0 +1,229 @@
+{% set n1_c="" %}
+{% set n1_p="" %}
+{% set n1_same=false %}
+{% set n1_present=false %}
+{% set n1_open=false %}
+
+{% set n2_c="" %}
+{% set n2_p="" %}
+{% set n2_same=false %}
+{% set n2_present=false %}
+{% set n2_open=false %}
+
+{% set n3_c="" %}
+{% set n3_p="" %}
+{% set n3_same=false %}
+{% set n3_present=false %}
+{% set n3_open=false %}
+
+{% set n4_c="" %}
+{% set n4_p="" %}
+{% set n4_same=false %}
+{% set n4_present=false %}
+{% set n4_open=false %}
+
+{% set n5_c="" %}
+{% set n5_p="" %}
+{% set n5_same=false %}
+{% set n5_present=false %}
+{% set n5_open=false %}
+
+
+{% for bp in backpacks %}
+{% set n1_c=bp.dir1 %}
+{% set n2_c=bp.dir2 %}
+{% set n3_c=bp.dir3 %}
+{% set n4_c=bp.dir4 %}
+{% set n5_c=bp.dir5 %}
+
+{% set n1_same=  n1_c == n1_p ? true : false %}
+{% set n1_present=  n1_c is empty ? false : true %}
+
+{% if n1_same == false %}
+
+{{ n2_open?'</div></div>':'' }}
+{% set n2_open=false %}
+{{ n3_open?'</div></div>':'' }}
+{% set n3_open=false %}
+{{ n4_open?'</div></div>':'' }}
+{% set n4_open=false %}
+{{ n5_open?'</div></div>':'' }}
+{% set n5_open=false %}
+
+    {% set n2_p="" %}
+{% set n3_p="" %}
+{% set n4_p="" %}
+{% set n5_p="" %}
+
+{% endif %}
+
+{% if n1_present %}
+
+{% set n2_same=  n2_c == n2_p ? true : false %}
+{% set n2_present=  n2_c is empty ? false : true %}
+
+{% endif %}
+
+{% if n2_same == false %}
+
+{{ n3_open?'</div></div>':'' }}
+{% set n3_open=false %}
+    {{ n4_open?'</div></div>':'' }}
+    {% set n4_open=false %}
+    {{ n5_open?'</div></div>':'' }}
+    {% set n5_open=false %}
+    {% set n3_p="" %}
+{% set n4_p="" %}
+{% set n5_p="" %}
+
+{% endif %}
+
+{% if n2_present %}
+
+{% set n3_same=  n3_c == n3_p ? true : false %}
+{% set n3_present=  n3_c is empty ? false : true %}
+
+{% endif %}
+
+{% if n3_same == false %}
+
+    {{ n4_open?'</div></div>':'' }}
+    {% set n4_open=false %}
+    {{ n5_open?'</div></div>':'' }}
+    {% set n5_open=false %}
+
+{% set n4_p="" %}
+{% set n5_p="" %}
+
+{% endif %}
+
+{% if n3_present %}
+
+{% set n4_same=  n4_c == n4_p ? true : false %}
+{% set n4_present=  n4_c is empty ? false : true %}
+
+{% endif %}
+
+{% if n4_same == false %}
+
+    {{ n5_open?'</div></div>':'' }}
+    {% set n5_open=false %}
+
+{% set n5_p="" %}
+
+{% endif %}
+
+{% if n4_present %}
+
+{% set n5_same=  n5_c == n4_p ? true : false %}
+{% set n5_present=  n5_c is empty ? false : true %}
+
+{% endif %}
+
+
+{% if n1_same == false and n1_present==true %}
+{{ n1_open?'</div></div>':'' }}
+<div class="card ">
+<div class="card-header " data-card-widget="collapse">
+<i class="fas fa-minus"></i>
+<i class="fas fa-folder-open text-yellow"></i> {{ bp.dir1 }}
+</div>
+
+<div class="card-body p-2">
+{% set n1_open=true %}
+
+{% endif %}
+
+{% if n2_same == false and n2_present==true %}
+{{ n2_open?'</div></div>':'' }}
+<div class="card collapsed-card">
+<div class="card-header " data-card-widget="collapse">
+<i class="fas fa-minus"></i>
+<i class="fas fa-folder-open text-yellow"></i> {{ bp.dir2 }}
+</div>
+
+<div class="card-body  p-2">
+{% set n2_open=true %}
+{% endif %}
+
+{% if n3_same == false and n3_present==true %}
+{{ n3_open?'</div></div>':'' }}
+<div class="card collapsed-card">
+<div class="card-header " data-card-widget="collapse">
+<i class="fas fa-minus"></i>
+<i class="fas fa-folder-open text-yellow"></i> {{ bp.dir3 }}
+</div>
+
+<div class="card-body p-2">
+{% set n3_open=true %}
+{% endif %}
+
+{% if n4_same == false and n4_present==true %}
+{{ n4_open?'</div></div>':'' }}
+<div class="card collapsed-card">
+<div class="card-header " data-card-widget="collapse">
+<i class="fas fa-minus"></i>
+<i class="fas fa-folder-open text-yellow"></i> {{ bp.dir4 }}
+</div>
+
+<div class="card-body p-2">
+{% set n4_open=true %}
+{% endif %}
+
+{% if n5_same == false and n5_present==true %}
+{{ n5_open?'</div></div>':'' }}
+<div class="card collapsed-card">
+<div class="card-header " data-card-widget="collapse">
+<i class="fas fa-minus"></i>
+<i class="fas fa-folder-open text-yellow"></i> {{ bp.dir5 }}
+</div>
+
+<div class="card-body p-2">
+{% set n5_open=true %}
+{% endif %}
+
+<div class="row">
+<div class="col-sm-12 mb-2 ml-2">
+<i class="fas fa-suitcase text-info mr-3"></i> <a
+href="{{ path('backpack_show',{id:bp.id})}}"> {{ bp.name }}</a>
+</div>
+</div>
+{% if bp.content %}
+<div class="row">
+<div class="col-sm-12  d-flex">
+<small class="text-muted ml-5 ">
+{{ bp.content | raw }}
+</small>
+</div>
+</div>
+{% endif %}
+
+{% set n1_p=bp.dir1 %}
+{% set n1_same=false %}
+{% set n1_present=false %}
+
+{% set n2_p=bp.dir2 %}
+{% set n2_same=false %}
+{% set n2_present=false %}
+
+{% set n3_p=bp.dir3 %}
+{% set n3_same=false %}
+{% set n3_present=false %}
+
+{% set n4_p=bp.dir4 %}
+{% set n4_same=false %}
+{% set n4_present=false %}
+
+{% set n5_p=bp.dir5 %}
+{% set n5_same=false %}
+{% set n5_present=false %}
+
+
+{% set ecart=0 %}
+{% endfor %}
+
+{{ n1_open  ?'</div></div>':'' }}
+{{ n2_open?'</div></div>':'' }}
+{{ n3_open?'</div></div>':'' }}
+{{ n4_open?'</div></div>':'' }}
+{{ n5_open?'</div></div>':'' }}

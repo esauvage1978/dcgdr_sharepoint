@@ -123,11 +123,17 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
         $this->builder = $this->createQueryBuilder(self::ALIAS)
             ->select(
                 self::ALIAS,
+                PictureRepository::ALIAS,
                 ThematicRepository::ALIAS,
-                UnderRubricRepository::ALIAS
+                UnderRubricRepository::ALIAS,
+                UnderThematicRepository::ALIAS,
+                BackpackRepository::ALIAS
             )
+            ->leftJoin(self::ALIAS . '.picture', PictureRepository::ALIAS)
             ->leftJoin(self::ALIAS . '.thematic', ThematicRepository::ALIAS)
-            ->leftJoin(self::ALIAS . '.underRubrics', UnderRubricRepository::ALIAS);
+            ->leftJoin(self::ALIAS . '.underRubrics', UnderRubricRepository::ALIAS)
+            ->leftJoin(UnderRubricRepository::ALIAS . '.underThematic', UnderThematicRepository::ALIAS)
+        ->leftJoin(UnderRubricRepository::ALIAS . '.backpacks', BackpackRepository::ALIAS);
 
 
     }

@@ -2,6 +2,9 @@
 
 {% block title %} {{ parent() }} Page d'accueil {% endblock %}
 
+{% block body_header %}
+
+{% endblock %}
 {% block body %}
     {% if app.user and app.user.emailvalidated == false %}
         <div class="alert alert-danger alert-dismissible mt-2">
@@ -19,7 +22,7 @@
 
 
 
-    <div class="d-flex justify-content-center">
+    <div class="text-center" >
         {% set the_courant="" %}
         {% set the_precedent="" %}
         {% for rubric in rubrics %}
@@ -34,24 +37,39 @@
     </div>
 
 
-    <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+
+        {% set t_c="" %}
+        {% set t_p="" %}
+        {% set t_same=false %}
+        {% set t_present=false %}
+        {% set t_open=false %}
+
         {% for rubric in rubrics %}
-            {% set the_courant=rubric.thematic.name %}
-            {% if the_precedent=="" or the_precedent !=the_courant %}
+
+            {% set t_c=rubric.thematic.name %}
+
+            {% set t_same=  t_c == t_p ? true : false %}
+            {% set t_present=  t_c is empty ? false : true %}
+
+            {% if t_same == false and t_present==true %}
+
+                {{ t_open ?'</div>':'' }}
+
                 {{  include('thematic/_view/_title.html.twig',{thematic:rubric.thematic}) }}
+
+                <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+                {% set t_open=true %}
+
             {% endif %}
+
+
             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
                 {{ include('rubric/_view/_vignette.html.twig') }}
             </div>
-            {% set the_precedent=rubric.thematic.name %}
+            {% set t_p=rubric.thematic.name %}
         {% endfor %}
-    </div>
 
-
-
-
-
-
+    {{ t_open ?'</div>':'' }}
 
 
 {% endblock %}
