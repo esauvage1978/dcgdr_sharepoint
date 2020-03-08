@@ -1,9 +1,9 @@
-<div class="card mb-5 shadow ml-2 mr-2">
+<div class="card mb-5 shadow m-0 p-0">
 
     <div class="ribbon-wrapper ribbon-lg">
         <div class="ribbon  bg-gradient-light">
             <a href="{{ path('admin_thematic_show',{id:rubric.thematic.id}) }}">
-                <i class="fas fa-clock"></i> Nouveautés
+                <i class="fas fa-certificate"></i> Nouveautés
             </a>
         </div>
     </div>
@@ -21,7 +21,8 @@
             <h5 class="text-bold ">{{ rubric.name }}</h5>
             <div class="text-muted">{{ rubric.thematic.name }}
                 <br/>
-                <small class="text-muted">0 PORTE-DOCUMENT</small></div>
+                {% set nbr=rubric.underRubrics | sumBackpackForRubricEnable %}
+                <small class="text-muted">{{nbr}} PORTE-DOCUMENT</small></div>
         </div>
     </a>
 </div>

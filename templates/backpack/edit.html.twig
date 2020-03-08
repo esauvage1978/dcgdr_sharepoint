@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Porte document' %}
+{% set entityName='backpack' %}
+{% set entity=backpack %}
+
+{% block title %}{{ parent() }} {{title}}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/select2/css/select2.min.css')) }}">
+    <link rel="stylesheet"
+          href="{{ absolute_url( asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')) }}">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')) }}">
+{% endblock %}
+
+{% block body_header %}
+{% endblock %}
+
+{% block sidebar_sommaire %}
+
+{% endblock %}
+
+{% block sidebar_button %}
+    {% if is_granted('ROLE_GESTIONNAIRE') %}
+
+        {{ include('share/__btn_save_onclick.html.twig') }}
+
+        <span class="mb-3"></span>
+
+        <span class="btn btn-danger " onclick="$('#delete').click();">
+            <i class="fas fa-trash"></i> Supprimer
+        </span>
+
+    {% endif %}
+
+    <span class="mb-3"></span>
+
+    {{ include('share/__btn_return_show.html.twig',
+        {   url:'backpack_show',
+            id:entity.id
+        }) }}
+
+
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    <div class="row justify-content-center">
+        <div class="row col-12 ">
+            <div id="col1"
+                 class="col-sm-12  order-sm-second  col-md-12 order-sm-second col-lg-6 order-lg-second col-xl-2 order-xl-first ">
+                <div class="shadow">
+                    {{ include('backpack/_edit/_afficher.html.twig') }}
+                </div>
+            </div>
+            <div id="col2"
+                 class=" col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-7 order-xl-second ">
+                <div class="shadow bg-white card-body">
+                    {{ include('backpack/_edit/_name.html.twig') }}
+                </div>
+                <div class="d-none">
+                    <button name="update" id="update">{{ button_label|default('Save') }}</button>
+                </div>
+            </div>
+            <div id="col3" class="col-sm-12 col-md-12 col-lg-6 col-xl-3 ">
+                <div class="shadow">
+                    {{ include('backpack/_edit/_arborescence.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-none">
+        {{ form_rest(form) }}
+        {{ include('share/__btn_save.html.twig') }}
+    </div>
+    {{ form_end(form) }}
+    <div class="d-none">
+        {{ include('share/_delete_form.html.twig',{'domaine': 'backpack','id':backpack.id}) }}
+    </div>
+    <div class="modal fade" id="addDir" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajoute un libellé</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="addDir_field_new" class="col-form-label">Libellé</label>
+                            <input type="text"  class="form-control d-none" id="addDir_field">
+                            <input type="text"  class="form-control" id="addDir_field_new">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="btn_addDir" class="btn btn-success">Ajouter le libellé</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <!-- Select2 -->
+    <script src="{{ absolute_url( asset('plugins/select2/js/select2.full.min.js')) }}"></script>
+    <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
+    <script src="{{ absolute_url( asset('js/fillCombobox/arborescence.js')) }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            arborescence('#cmb_dir1', "{{ path('ajax_fill_combobox_dir1') }}","{{ entity.underRubric.id }}", true,'#backpack_dir1');
+
+            $('#cmb_dir1').change(function () {
+                var data=$('#cmb_dir1  option:selected').text();
+                $('#backpack_dir1').val(data);
+                if ( data === "") {
+                    $('#div_dir2').addClass('d-none');
+                    $('#div_dir3').addClass('d-none');
+                    $('#div_dir4').addClass('d-none');
+                    $('#div_dir5').addClass('d-none');
+                } else {
+                    $('#div_dir2').removeClass('d-none');
+                    arborescenceChained('#cmb_dir2', "{{ path('ajax_fill_combobox_dir2') }}","{{ entity.underRubric.id }}", true,'#backpack_dir2',data);
+                }
+            });
+            $('#cmb_dir2').change(function () {
+                var data=$('#cmb_dir2  option:selected').text();
+                $('#backpack_dir2').val(data);
+                if ( data === "") {
+                    $('#div_dir3').addClass('d-none');
+                    $('#div_dir4').addClass('d-none');
+                    $('#div_dir5').addClass('d-none');
+                } else {
+                    $('#div_dir3').removeClass('d-none');
+                    arborescenceChained('#cmb_dir3', "{{ path('ajax_fill_combobox_dir3') }}","{{ entity.underRubric.id }}", true,'#backpack_dir3',data);
+                }
+            });
+            $('#cmb_dir3').change(function () {
+                var data=$('#cmb_dir3  option:selected').text();
+                $('#backpack_dir3').val(data);
+                if ( data === "") {
+                    $('#div_dir4').addClass('d-none');
+                    $('#div_dir5').addClass('d-none');
+                } else {
+                    $('#div_dir4').removeClass('d-none');
+                    arborescenceChained('#cmb_dir4', "{{ path('ajax_fill_combobox_dir4') }}","{{ entity.underRubric.id }}", true,'#backpack_dir4',data);
+                }
+            });
+            $('#cmb_dir4').change(function () {
+                var data=$('#cmb_dir4  option:selected').text();
+                $('#backpack_dir4').val(data);
+                if ( data === "") {
+                    $('#div_dir5').addClass('d-none');
+                } else {
+                    $('#div_dir5').removeClass('d-none');
+                    arborescenceChained('#cmb_dir5', "{{ path('ajax_fill_combobox_dir5') }}","{{ entity.underRubric.id }}", true,'#backpack_dir5',data);
+                }
+            });
+            $('#cmb_dir5').change(function () {
+                var data=$('#cmb_dir5  option:selected').text();
+                $('#backpack_dir5').val(data);
+            });
+        });
+
+        $('#addDir').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+
+            modal.find('#addDir_field').val(recipient)
+        });
+
+        $(function () {
+            $('#btn_addDir').click(function () {
+
+                if($('#addDir_field_new').val()==="") {
+                    alert('Le libellé est vide');
+                    return;
+                }
+                $('#addDir').modal('toggle');
+                var selecteurCible=$('#addDir_field').val();
+                var data=$('#addDir_field_new').val();
+                $('#'+ selecteurCible).append('<option selected value="' + data + '">'
+                    + data + '</option>');
+                $('#addDir_field').val("");
+                $('#'+ selecteurCible).change();
+
+            });
+        })
+    </script>
+
+{% endblock %}
+
+
+

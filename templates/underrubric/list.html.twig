@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} {{ underrubric.name }}  {% endblock %}
+
+ {% block body_header %}
+     <div class="col-sm-12 col-md-6">
+         {% set nbr=backpacks|length %}
+         <h3 class="m-0 text-dark">{{ nbr }} porte-document{{ nbr>1?'s':'' }} pour {{ underrubric.name }}</h3>
+     </div>
+     <div class="col-sm-12 col-md-6">
+         <ol class="breadcrumb float-sm-right">
+             <li class="breadcrumb-item"><a href="{{ path('home') }}">Page d'accueil</a></li>
+             <li class="breadcrumb-item"><a
+                         href="{{ path('rubric_show',{id:underrubric.rubric.id}) }}">Rubrique {{ underrubric.rubric.name }}</a>
+             </li>
+             <li class="breadcrumb-item active">Sous-rubrique {{ underrubric.name }}</li>
+         </ol>
+     </div>
+
+ {% endblock %}
+
+{% block body %}
+
+    {{ include('backpack/_view/_tree.html.twig') }}
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(function () {
+        });
+    </script>
+{% endblock %}

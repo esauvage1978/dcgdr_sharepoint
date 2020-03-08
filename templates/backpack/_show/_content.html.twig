@@ -1,0 +1,12 @@
+{% if content %}
+    <section id="anchor_arborescence" class="bg-white rounded mb-5">
+        <h5 class="text-purple p-1 pt-4 text-center ">
+            <i class="far fa-file-alt mr-1"></i> Description
+        </h5>
+        <article class="card-body ">
+            <div class="card-body text-muted ">
+                {{ content |raw }}
+            </div>
+        </article>
+    </section>
+{% endif %}

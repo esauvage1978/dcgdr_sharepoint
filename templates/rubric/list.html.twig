@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ parent() }} {{rubric.name}}  {% endblock %}
+{% block title %} {{ parent() }} {{ rubric.name }}  {% endblock %}
 
  {% block body_header %}
      <div class="col">
          <ol class="breadcrumb float-sm-left">
-             <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+             <li class="breadcrumb-item"><a href="{{ path('home') }}">Page d'accueil</a></li>
              <li class="breadcrumb-item active">{{ rubric.name }}</li>
          </ol>
      </div>
@@ -14,47 +14,55 @@
 {% block body %}
 
 
+        <div class="text-center">
+            {% set the_courant="" %}
+            {% set the_precedent="" %}
+            {% for underrubric in underRubrics %}
+                {% set the_courant=underrubric.underThematic.name %}
+                {% if the_precedent=="" or the_precedent !=the_courant %}
+                    <a href="#anchor_underthematic_{{ underrubric.underThematic.id }}" title="accès rapide"
+                       class="btn btn-light ml-1 mr-1">
+                        <small class="text-muted">{{ underrubric.underThematic.name }}</small>
+                    </a>
+                {% endif %}
+                {% set the_precedent=underrubric.underThematic.name %}
+            {% endfor %}
+        </div>
 
-    <div class="d-flex justify-content-center">
-        {% set the_courant="" %}
-        {% set the_precedent="" %}
-        {% for underrubric in underRubrics %}
-            {% set the_courant=underrubric.underThematic.name %}
-            {% if the_precedent=="" or the_precedent !=the_courant %}
-                <a href="#anchor_underthematic_{{ underrubric.underThematic.id }}" title="accès rapide" class="btn btn-light ml-1 mr-1">
-                    <small class="text-muted">{{ underrubric.underThematic.name }}</small>
-                </a>
-            {% endif %}
-            {% set the_precedent=underrubric.underThematic.name %}
-        {% endfor %}
-    </div>
+    {% set t_c="" %}
+    {% set t_p="" %}
+    {% set t_same=false %}
+    {% set t_present=false %}
+    {% set t_open=false %}
 
-    <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+    {% for underrubric in underRubrics %}
 
-        {% set the_courant="" %}
-        {% set the_precedent="" %}
+        {% set t_c=underrubric.underthematic.name %}
 
-        {% for underrubric in underRubrics %}
-            {% set the_courant=underrubric.underthematic.name %}
-            {% if the_precedent=="" or the_precedent !=the_courant %}
-                {{  include('underthematic/_view/_title.html.twig',{thematic:underrubric.underthematic}) }}
-            {% endif %}
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
-                {{ include('underrubric/_view/_vignette.html.twig') }}
-            </div>
-            {% set the_precedent=underrubric.underthematic.name %}
-        {% endfor %}
-    </div>
+        {% set t_same=  t_c == t_p ? true : false %}
+        {% set t_present=  t_c is empty ? false : true %}
+
+        {% if t_same == false and t_present==true %}
+
+            {{ t_open ?'</div>':'' }}
+
+            {{ include('underthematic/_view/_title.html.twig',{underthematic:underrubric.underthematic}) }}
+
+            <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+            {% set t_open=true %}
+
+        {% endif %}
 
 
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+            {{ include('underrubric/_view/_vignette.html.twig') }}
+        </div>
+        {% set t_p=underrubric.underthematic.name %}
+    {% endfor %}
 
-
-
-
-
+    {{ t_open ?'</div>':'' }}
 
 {% endblock %}
-
 
 {% block javascripts %}
     <script>

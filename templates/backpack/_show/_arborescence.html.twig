@@ -1,0 +1,36 @@
+<!-- Intervenants -->
+<section id="anchor_arborescence" class="bg-white rounded mb-5">
+    <h5 class="text-purple p-1 pt-4 text-center ">
+        <i class="fas fa-sort-amount-down-alt"></i> Arborescence
+    </h5>
+
+    <article class="card-body ">
+        <div class="list-group list-group-flush  bg-light">
+            {% if backpack.dir1 %}
+                <div class="list-group-item">
+                    <i class="fas fa-folder-open text-yellow"></i> {{ backpack.dir1 }}
+                </div>
+            {% endif %}
+            {% if backpack.dir2 %}
+                <div class="list-group-item">
+                    <i class="fas fa-folder-open text-yellow"></i> {{ backpack.dir2 }}
+                </div>
+            {% endif %}
+            {% if backpack.dir3 %}
+                <div class="list-group-item">
+                    <i class="fas fa-folder-open text-yellow"></i> {{ backpack.dir3 }}
+                </div>
+            {% endif %}
+            {% if backpack.dir4 %}
+                <div class="list-group-item">
+                    <i class="fas fa-folder-open text-yellow"></i> {{ backpack.dir4 }}
+                </div>
+            {% endif %}
+            {% if backpack.dir5 %}
+                <div class="list-group-item">
+                    <i class="fas fa-folder-open text-yellow"></i> {{ backpack.dir5 }}
+                </div>
+            {% endif %}
+        </div>
+    </article>
+</section>
