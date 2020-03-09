@@ -20,6 +20,7 @@ class BackpackExtension extends AbstractExtension
         $nbr = 0;
         foreach ($underRubrics as $underrubric) {
             foreach ($underrubric->getBackpacks() as $backpack) {
+
                 if (
                     $underrubric->getEnable()
                     && $underrubric->getUnderThematic()->getEnable()

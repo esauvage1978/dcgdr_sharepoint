@@ -48,7 +48,7 @@
                                                 {{ include('picture/_show/_picture_mini.html.twig',{picture:entity.picture}) }}
                                             {% endif %}
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle text-{{ entity.thematic.enable ? 'gray-dark' : 'danger text-bold' }}">
                                             {{ entity.thematic.name }}
                                         </td>
                                         <td class="align-middle text-{{ entity.enable ? 'gray-dark' : 'danger text-bold' }}">
