@@ -46,7 +46,7 @@
 
             {{ t_open ?'</div>':'' }}
 
-            {{ include('underthematic/_view/_title.html.twig',{underthematic:underrubric.underthematic}) }}
+            {{ include('underthematic/_view/_title.html.twig',{underthematic:underrubric.underthematic, rubric:rubric}) }}
 
             <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
             {% set t_open=true %}

@@ -25,6 +25,7 @@ class BackpackExtension extends AbstractExtension
                     $underrubric->getEnable()
                     && $underrubric->getUnderThematic()->getEnable()
                     && $backpack->getEnable()
+                    && !$backpack->getArchiving()
                 ) {
                     $nbr = $nbr + 1;
                 }
@@ -38,7 +39,8 @@ class BackpackExtension extends AbstractExtension
         $nbr = 0;
         foreach ($backpacks as $backpack) {
             if (
-            $backpack->getEnable()
+                $backpack->getEnable()
+                && !$backpack->getArchiving()
             ) {
                 $nbr = $nbr + 1;
             }

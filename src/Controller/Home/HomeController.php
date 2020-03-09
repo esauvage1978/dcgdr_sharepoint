@@ -51,13 +51,17 @@ class HomeController extends AbstractController
         $underRubricDto = new UnderRubricDto();
         $rubricDto = new RubricDto();
         $backpackDto = new BackpackDto();
-
+        $backpackDtoArchiving = new BackpackDto();
 
         $underRubricDto
             ->setWordSearch($request->request->get('search'));;
         $rubricDto
             ->setWordSearch($request->request->get('search'));
         $backpackDto
+            ->setArchiving(BackpackDto::FALSE)
+            ->setWordSearch($request->request->get('search'));
+        $backpackDtoArchiving
+            ->setArchiving(BackpackDto::TRUE)
             ->setWordSearch($request->request->get('search'));
 
 
@@ -78,6 +82,13 @@ class HomeController extends AbstractController
                 ->setThematicEnable(RubricDto::TRUE)
                 ->setUnderRubricEnable(RubricDto::TRUE)
                 ->setRubricEnable(RubricDto::TRUE);
+
+            $backpackDtoArchiving
+                ->setEnable(RubricDto::TRUE)
+                ->setUnderThematicEnable(RubricDto::TRUE)
+                ->setThematicEnable(RubricDto::TRUE)
+                ->setUnderRubricEnable(RubricDto::TRUE)
+                ->setRubricEnable(RubricDto::TRUE);
         }
 
         return $this->render(
@@ -85,7 +96,8 @@ class HomeController extends AbstractController
             [
                 'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
                 'underrubrics' => $underRubricDtoRepository->findAllForDto($underRubricDto),
-                'backpacks'=>$backpackDtoRepository->findAllForDto($backpackDto)
+                'backpacks'=>$backpackDtoRepository->findAllForDto($backpackDto),
+                'archivings'=>$backpackDtoRepository->findAllForDto($backpackDtoArchiving)
             ]);
     }
 }

@@ -1,15 +1,37 @@
 <div class="row  d-flex " id="anchor_underthematic_{{ underthematic.id }}">
     <div class="col-12">
-        <h3 class="text-muted  text-center d-lg-none">
+        <h5 class="text-muted  text-center d-lg-none">
+
             <span class=" {{ underthematic.enable?'':'text-danger' }}">
-                {{ underthematic.name }}
+                  {{ underthematic.name }}
             </span>
-        </h3>
-        <h3 class="text-muted ml-3 d-none d-lg-block">
+
+            <div class="small text-muted  text-xs">
+                <span class=" {{ rubric.thematic.enable?'':'text-danger' }}">
+                 {{ rubric.thematic.name }}
+                </span><i class="fas fa-angle-right"></i>
+                    <span class=" {{ rubric.enable?'':'text-danger' }}">
+                     {{ rubric.name }}
+                </span>
+
+            </div>
+        </h5>
+        <h5 class="text-muted ml-3 d-none d-lg-block">
+
             <span class=" {{ underthematic.enable?'':'text-danger' }}">
-                {{ underthematic.name }}
+                  {{ underthematic.name }}
             </span>
-        </h3>
+
+            <div class="small text-muted  text-xs">
+                <span class=" {{ rubric.thematic.enable?'':'text-danger' }}">
+                 {{ rubric.thematic.name }}
+                </span><i class="fas fa-angle-right"></i>
+                <span class=" {{ rubric.enable?'':'text-danger' }}">
+                     {{ rubric.name }}
+                </span>
+
+            </div>
+        </h5>
         <a class="float-right text-primary " href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
     </div>
 </div>

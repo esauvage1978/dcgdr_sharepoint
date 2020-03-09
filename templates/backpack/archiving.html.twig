@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} Consultation des archives  {% endblock %}
+
+ {% block body_header %}
+     <div class="col-sm-12 col-md-6">
+         {% set nbr=backpacks|length %}
+         <h3 class="m-0 text-dark">{{ nbr }} porte-document{{ nbr>1?'s':'' }} archivé{{ nbr>1?'s':'' }}</h3>
+     </div>
+     <div class="col-sm-12 col-md-6">
+         <ol class="breadcrumb float-sm-right">
+             <li class="breadcrumb-item"><a href="{{ path('home') }}">Page d'accueil</a></li>
+             <li class="breadcrumb-item active">Archive</li>
+         </ol>
+     </div>
+
+ {% endblock %}
+
+{% block body %}
+
+    {{ include('backpack/_view/_tree.html.twig') }}
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

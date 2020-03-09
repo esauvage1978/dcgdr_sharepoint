@@ -3,11 +3,13 @@
 namespace App\Controller\Backpack;
 
 use App\Controller\AppControllerAbstract;
+use App\Dto\BackpackDto;
 use App\Entity\Backpack;
 use App\Entity\Thematic;
 use App\Form\Admin\ThematicType;
 use App\Form\Backpack\BackpackType;
 use App\Manager\BackpackManager;
+use App\Repository\BackpackDtoRepository;
 use App\Repository\ThematicRepository;
 use App\Manager\ThematicManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +25,36 @@ class BackpackController extends AppControllerAbstract
     const ENTITYS = 'backpacks';
     const ENTITY = 'backpack';
 
+    /**
+     * @Route("/backpack/archiving", name="backpack_archiving", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function homeSearchAction(
+        Request $request,
+        BackpackDtoRepository $backpackDtoRepository
+    ): Response
+    {
+        $backpackDtoArchiving = new BackpackDto();
 
+        $backpackDtoArchiving
+            ->setArchiving(BackpackDto::TRUE);
+
+
+        if (!$this->isGranted('ROLE_GESTIONNAIRE')) {
+            $backpackDtoArchiving
+                ->setEnable(BackpackDto::TRUE)
+                ->setUnderThematicEnable(BackpackDto::TRUE)
+                ->setThematicEnable(BackpackDto::TRUE)
+                ->setUnderRubricEnable(BackpackDto::TRUE)
+                ->setRubricEnable(BackpackDto::TRUE);
+        }
+
+        return $this->render(
+            'backpack/archiving.html.twig',
+            [
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDtoArchiving)
+            ]);
+    }
 
     /**
      * @Route("/backpack/new", name="backpack_new", methods={"GET","POST"})
@@ -111,4 +142,6 @@ class BackpackController extends AppControllerAbstract
     {
         return $this->delete($request, $entity, $manager, self::ENTITY);
     }
+
+
 }

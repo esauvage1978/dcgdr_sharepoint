@@ -61,6 +61,11 @@ class Backpack implements EntityInterface
      */
     private $dir5;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archiving;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -177,6 +182,18 @@ class Backpack implements EntityInterface
     public function setDir5(?string $dir5): self
     {
         $this->dir5 = $dir5;
+
+        return $this;
+    }
+
+    public function getArchiving(): ?bool
+    {
+        return $this->archiving;
+    }
+
+    public function setArchiving(bool $archiving): self
+    {
+        $this->archiving = $archiving;
 
         return $this;
     }

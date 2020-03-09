@@ -7,6 +7,7 @@ use App\Entity\UnderRubric;
 use App\Form\AppTypeAbstract;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,6 +32,11 @@ class BackpackType extends AppTypeAbstract
                         ->select('c')
                         ->orderBy('c.name', 'ASC');
                 }])
+            ->add('archiving', CheckboxType::class,
+                [
+                    self::LABEL => ' ',
+                    self::REQUIRED => false,
+                ])
             ->add('dir1', TextType::class, [
                 self::REQUIRED => false
             ])
