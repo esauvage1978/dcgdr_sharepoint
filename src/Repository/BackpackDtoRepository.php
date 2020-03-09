@@ -194,6 +194,11 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
             $builder
                 ->andwhere(
                     self::ALIAS . '.content like :search' .
+                    ' OR ' . self::ALIAS . '.dir1 like :search' .
+                    ' OR ' . self::ALIAS . '.dir2 like :search' .
+                    ' OR ' . self::ALIAS . '.dir3 like :search' .
+                    ' OR ' . self::ALIAS . '.dir4 like :search' .
+                    ' OR ' . self::ALIAS . '.dir5 like :search' .
                     ' OR ' . self::ALIAS . '.name like :search'  );
 
             $this->addParams('search', '%' . $dto->getWordSearch() . '%');

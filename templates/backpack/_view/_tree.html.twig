@@ -1,3 +1,7 @@
+{% set ur_c="" %}
+{% set ur_p="" %}
+{% set ur_same=false %}
+
 {% set n1_c="" %}
 {% set n1_p="" %}
 {% set n1_same=false %}
@@ -30,11 +34,36 @@
 
 
 {% for bp in backpacks %}
+{% set ur_c=bp.underRubric.name %}
 {% set n1_c=bp.dir1 %}
 {% set n2_c=bp.dir2 %}
 {% set n3_c=bp.dir3 %}
 {% set n4_c=bp.dir4 %}
 {% set n5_c=bp.dir5 %}
+
+{% set ur_same=  ur_c == ur_p ? true : false %}
+
+{% if ur_same == false %}
+    {{ n1_open?'</div></div>':'' }}
+    {% set n1_open=false %}
+    {{ n2_open?'</div></div>':'' }}
+    {% set n2_open=false %}
+    {{ n3_open?'</div></div>':'' }}
+    {% set n3_open=false %}
+    {{ n4_open?'</div></div>':'' }}
+    {% set n4_open=false %}
+    {{ n5_open?'</div></div>':'' }}
+    {% set n5_open=false %}
+
+    {% set n1_p="" %}
+    {% set n2_p="" %}
+    {% set n3_p="" %}
+    {% set n4_p="" %}
+    {% set n5_p="" %}
+
+
+{% endif %}
+
 
 {% set n1_same=  n1_c == n1_p ? true : false %}
 {% set n1_present=  n1_c is empty ? false : true %}
@@ -120,12 +149,18 @@
 
 {% endif %}
 
+{% if ur_same == false  %}
+{{ include('underrubric/_view/_title.html.twig',{underrubric:bp.underRubric}) }}
+
+
+        {% endif %}
+
 
 {% if n1_same == false and n1_present==true %}
 {{ n1_open?'</div></div>':'' }}
-<div class="card ">
+<div class="card  card-light">
 <div class="card-header " data-card-widget="collapse">
-<i class="fas fa-minus"></i>
+<i class="fas fa-minus text-gray"></i>
 <i class="fas fa-folder-open text-yellow"></i> {{ bp.dir1 }}
 </div>
 
@@ -136,21 +171,21 @@
 
 {% if n2_same == false and n2_present==true %}
 {{ n2_open?'</div></div>':'' }}
-<div class="card collapsed-card">
+<div class="card collapsed-card  card-light">
 <div class="card-header " data-card-widget="collapse">
-<i class="fas fa-minus"></i>
+<i class="fas fa-plus text-gray"></i>
 <i class="fas fa-folder-open text-yellow"></i> {{ bp.dir2 }}
 </div>
 
-<div class="card-body  p-2">
+<div class="card-body p-2 ">
 {% set n2_open=true %}
 {% endif %}
 
 {% if n3_same == false and n3_present==true %}
 {{ n3_open?'</div></div>':'' }}
-<div class="card collapsed-card">
+<div class="card collapsed-card card-light">
 <div class="card-header " data-card-widget="collapse">
-<i class="fas fa-minus"></i>
+<i class="fas fa-plus text-gray"></i>
 <i class="fas fa-folder-open text-yellow"></i> {{ bp.dir3 }}
 </div>
 
@@ -160,9 +195,9 @@
 
 {% if n4_same == false and n4_present==true %}
 {{ n4_open?'</div></div>':'' }}
-<div class="card collapsed-card">
+<div class="card collapsed-card card-light">
 <div class="card-header " data-card-widget="collapse">
-<i class="fas fa-minus"></i>
+<i class="fas fa-plus text-gray"></i>
 <i class="fas fa-folder-open text-yellow"></i> {{ bp.dir4 }}
 </div>
 
@@ -172,9 +207,9 @@
 
 {% if n5_same == false and n5_present==true %}
 {{ n5_open?'</div></div>':'' }}
-<div class="card collapsed-card">
+<div class="card collapsed-card card-light">
 <div class="card-header " data-card-widget="collapse">
-<i class="fas fa-minus"></i>
+<i class="fas fa-plus text-gray"></i>
 <i class="fas fa-folder-open text-yellow"></i> {{ bp.dir5 }}
 </div>
 
@@ -197,6 +232,9 @@ href="{{ path('backpack_show',{id:bp.id})}}"> {{ bp.name }}</a>
 </div>
 </div>
 {% endif %}
+
+    {% set ur_p=ur_c %}
+    {% set ur_same=false %}
 
 {% set n1_p=bp.dir1 %}
 {% set n1_same=false %}
