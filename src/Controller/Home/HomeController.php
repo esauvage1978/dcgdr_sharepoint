@@ -25,9 +25,11 @@ class HomeController extends AbstractController
         RubricDtoRepository $rubricDtoRepository
     )
     {
-        $rubricDto
-            ->setEnable(RubricDto::TRUE)
-            ->setThematicEnable(RubricDto::TRUE);
+        if (!$this->isGranted('ROLE_GESTIONNAIRE')) {
+            $rubricDto
+                ->setEnable(RubricDto::TRUE)
+                ->setThematicEnable(RubricDto::TRUE);
+        }
 
         return $this->render('home/home.html.twig', [
             'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
@@ -47,27 +49,36 @@ class HomeController extends AbstractController
     ): Response
     {
         $underRubricDto = new UnderRubricDto();
-        $underRubricDto
-            ->setEnable(UnderRubricDto::TRUE)
-            ->setThematicEnable(UnderRubricDto::TRUE)
-            ->setUnderThematicEnable(UnderRubricDto::TRUE)
-            ->setRubricEnable(UnderRubricDto::TRUE)
-            ->setWordSearch($request->request->get('search'));;
-
         $rubricDto = new RubricDto();
+        $backpackDto = new BackpackDto();
+
+
+        $underRubricDto
+            ->setWordSearch($request->request->get('search'));;
         $rubricDto
-            ->setEnable(RubricDto::TRUE)
-            ->setThematicEnable(RubricDto::TRUE)
+            ->setWordSearch($request->request->get('search'));
+        $backpackDto
             ->setWordSearch($request->request->get('search'));
 
-        $backpackDto = new BackpackDto();
-        $backpackDto
-            ->setEnable(BackpackDto::TRUE)
-            ->setUnderRubricEnable(BackpackDto::TRUE)
-            ->setThematicEnable(BackpackDto::TRUE)
-            ->setUnderThematicEnable(BackpackDto::TRUE)
-            ->setRubricEnable(BackpackDto::TRUE)
-            ->setWordSearch($request->request->get('search'));
+
+        if (!$this->isGranted('ROLE_GESTIONNAIRE')) {
+            $underRubricDto
+                ->setEnable(UnderRubricDto::TRUE)
+                ->setThematicEnable(UnderRubricDto::TRUE)
+                ->setUnderThematicEnable(UnderRubricDto::TRUE)
+                ->setRubricEnable(UnderRubricDto::TRUE);
+
+            $rubricDto
+                ->setEnable(RubricDto::TRUE)
+                ->setThematicEnable(RubricDto::TRUE);
+
+            $backpackDto
+                ->setEnable(RubricDto::TRUE)
+                ->setUnderThematicEnable(RubricDto::TRUE)
+                ->setThematicEnable(RubricDto::TRUE)
+                ->setUnderRubricEnable(RubricDto::TRUE)
+                ->setRubricEnable(RubricDto::TRUE);
+        }
 
         return $this->render(
             'home/search.html.twig',

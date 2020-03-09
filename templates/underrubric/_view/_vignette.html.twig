@@ -17,8 +17,11 @@
                  alt="{{ underrubric.underthematic.name }}">
         {% endif %}
         <div class="card-body text-center">
-            <h5 class="text-bold ">{{ underrubric.name }}</h5>
-            <div class="text-muted">{{ underrubric.underthematic.name }}
+            <h5 class="text-bold  {{ underrubric.enable?'':'text-danger' }}">{{ underrubric.name }}</h5>
+            <div class="text-muted">
+                <span class="{{ underrubric.underthematic.enable?'':'text-danger' }}">
+                    {{ underrubric.underthematic.name }}
+                </span>
                 <br/>
                 {% set nbr=underrubric.backpacks | sumBackpackForUnderRubricEnable %}
                 <small class="text-muted">{{nbr}} PORTE-DOCUMENT</small></div>

@@ -50,13 +50,13 @@
                                                 {{ include('picture/_show/_picture_mini.html.twig',{picture:entity.picture}) }}
                                             {% endif %}
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle text-{{ entity.rubric.thematic.enable ? 'gray-dark' : 'danger text-bold' }}">
                                             {{ entity.rubric.thematic.name }}
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle text-{{ entity.rubric.enable ? 'gray-dark' : 'danger text-bold' }}">
                                             {{ entity.rubric.name }}
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle text-{{ entity.underthematic.enable ? 'gray-dark' : 'danger text-bold' }}">
                                             {{ entity.underthematic.name }}
                                         </td>
                                         <td class="align-middle text-{{ entity.enable ? 'gray-dark' : 'danger text-bold' }}">

@@ -1,7 +1,15 @@
 <div class="row  d-flex " id="anchor_thematic_{{ thematic.id }}">
     <div class="col-12">
-        <h3 class="text-muted  text-center d-lg-none"> {{ thematic.name }} </h3>
-        <h3 class="text-muted ml-3 d-none d-lg-block"> {{ thematic.name }} </h3>
+        <h3 class="text-muted  text-center d-lg-none">
+            <span class=" {{ thematic.enable?'':'text-danger' }}">
+                {{ thematic.name }}
+            </span>
+        </h3>
+        <h3 class="text-muted ml-3 d-none d-lg-block">
+            <span class=" {{ thematic.enable?'':'text-danger' }}">
+                {{ thematic.name }}
+            </span>
+        </h3>
         <a class="float-right text-primary " href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
     </div>
 </div>
