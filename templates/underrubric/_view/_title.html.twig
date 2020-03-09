@@ -1,15 +1,40 @@
 <div class="row  d-flex " id="anchor_underrubric_{{ underrubric.id }}">
     <div class="col-12">
-        <h3 class="text-muted  text-center d-lg-none">
+        <h5 class="text-muted  text-center d-lg-none">
+ <i class="fas fa-angle-double-right"></i>
+            <span class=" {{ underrubric.underthematic.enable?'':'text-danger' }}">
+                 {{ underrubric.underthematic.name }}
+            </span><i class="fas fa-angle-right"></i>
             <span class=" {{ underrubric.enable?'':'text-danger' }}">
                 {{ underrubric.name }}
             </span>
-        </h3>
-        <h3 class="text-muted ml-3 d-none d-lg-block">
+            <div class="small text-muted  text-xs">
+                <span class=" {{ underrubric.rubric.thematic.enable?'':'text-danger' }}">
+                 {{ underrubric.rubric.thematic.name }}
+            </span><i class="fas fa-angle-right"></i>
+                <span class=" {{ underrubric.rubric.enable?'':'text-danger' }}">
+                 {{ underrubric.rubric.name }}
+            </span>
+
+            </div>
+        </h5>
+        <h5 class="text-muted ml-3 d-none d-lg-block">
+            <span class=" {{ underrubric.underthematic.enable?'':'text-danger' }}">
+                 {{ underrubric.underthematic.name }}
+            </span><i class="fas fa-angle-right"></i>
             <span class=" {{ underrubric.enable?'':'text-danger' }}">
                 {{ underrubric.name }}
             </span>
-        </h3>
+            <div class="small text-muted text-xs">
+                <span class=" {{ underrubric.rubric.thematic.enable?'':'text-danger' }}">
+                 {{ underrubric.rubric.thematic.name }}
+            </span><i class="fas fa-angle-right "></i>
+                <span class=" {{ underrubric.rubric.enable?'':'text-danger' }}">
+                 {{ underrubric.rubric.name }}
+            </span>
+
+            </div>
+        </h5>
         <a class="float-right text-primary " href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
     </div>
 </div>

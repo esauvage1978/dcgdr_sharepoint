@@ -31,6 +31,7 @@ class UnderRubricController extends AppControllerAbstract
         BackpackDtoRepository $backpackDtoRepository
     ) {
         $backpackDto
+            ->setArchiving(BackpackDto::FALSE)
             ->setUnderRubric($underrubric);
 
         if (!$this->isGranted('ROLE_GESTIONNAIRE')) {

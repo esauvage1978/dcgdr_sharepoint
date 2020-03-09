@@ -25,23 +25,30 @@
                 <div class=" p-0 pt-1">
                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                         <li class="nav-item ">
-                            <a class="nav-link active" id="custom-tabs-one-partenaire-tab" data-toggle="pill" href="#custom-tabs-one-partenaire" role="tab"
-                               aria-controls="custom-tabs-one-partenaire" aria-selected="true">
-                                Porte-documents
+                            <a class="nav-link active" id="custom-tabs-one-backpack-tab" data-toggle="pill" href="#custom-tabs-one-backpack" role="tab"
+                               aria-controls="custom-tabs-one-backpack" aria-selected="true">
+                                <i class="fas fa-suitcase text-info "></i> Porte-documents
                                 <span class="badge badge-info">{{ backpacks | length }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" id="custom-tabs-one-archiving-tab" data-toggle="pill" href="#custom-tabs-one-archiving" role="tab"
+                               aria-controls="custom-tabs-one-archiving" aria-selected="true">
+                                <i class="fas fa-archive text-yellow "></i> Porte-documents archivés
+                                <span class="badge badge-info">{{ archivings | length }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-rubric-tab" data-toggle="pill" href="#custom-tabs-one-rubric" role="tab"
                                aria-controls="custom-tabs-one-rubric" aria-selected="false">
-                                Rubriques
+                                <i class="fas fa-box text-fuchsia"></i> Rubriques
                                 <span class="badge badge-info">{{ rubrics | length }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-underrubric-tab" data-toggle="pill" href="#custom-tabs-one-underrubric" role="tab"
                                aria-controls="custom-tabs-one-underrubric" aria-selected="false">
-                                Sous-rubriques
+                                <i class="fas fa-boxes text-fuchsia"></i> Sous-rubriques
                                 <span class="badge badge-info">{{ underrubrics | length }}</span>
                             </a>
                         </li>
@@ -49,8 +56,11 @@
                 </div>
                 <div class=" mt-4">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
-                        <div class="tab-pane fade active show" id="custom-tabs-one-partenaire" role="tabpanel" aria-labelledby="custom-tabs-one-partenaire-tab">
+                        <div class="tab-pane fade active show" id="custom-tabs-one-backpack" role="tabpanel" aria-labelledby="custom-tabs-one-backpack-tab">
                                 {{ include('backpack/_view/_tree.html.twig') }}
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-one-archiving" role="tabpanel" aria-labelledby="custom-tabs-one-archiving-tab">
+                            {{ include('backpack/_view/_tree.html.twig',{backpacks:archivings}) }}
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-rubric" role="tabpanel" aria-labelledby="custom-tabs-one-rubric-tab">
                             <div class="row col-12 d-flex align-items-stretch justify-content-center"  >

@@ -46,7 +46,33 @@
                             </a>
 
                         </li>
-
+                    <li class="nav-item has-treeview ">
+                        <a href="#" class="nav-link {{ '/backpack' in app.request.uri ? 'active' :'' }}">
+                            <i class="nav-icon fas fa-suitcase text-info"></i>
+                            <p>
+                                Porte-documents
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            {% if is_granted('ROLE_EDITEUR') %}
+                                <li class="nav-item {{ '/backpack/new' in app.request.uri ? 'active' :'' }}">
+                                    <a href="{{ path('backpack_new') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ajout</p>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if is_granted('ROLE_EDITEUR') %}
+                                <li class="nav-item {{ '/backpack/archiving' in app.request.uri ? 'active' :'' }}">
+                                    <a href="{{ path('backpack_archiving') }}" class="nav-link">
+                                        <i class="fas fa-archive nav-icon"></i>
+                                        <p>Les archives</p>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </li>
 
                         <li class="nav-item">
                             <a href="{{ path('admin_home') }}" class="nav-link

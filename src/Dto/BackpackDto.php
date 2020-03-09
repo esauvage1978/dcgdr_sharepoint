@@ -25,7 +25,10 @@ class BackpackDto implements DtoInterface
      * @var ?String
      */
     private $enable;
-
+    /**
+     * @var ?String
+     */
+    private $archiving;
     /**
      * @var ?String
      */
@@ -189,6 +192,23 @@ class BackpackDto implements DtoInterface
     public function setEnable($enable)
     {
         $this->enable = $enable;
+        return $this;
+    }
+    /**
+     * @return mixed
+     */
+    public function getArchiving()
+    {
+        return $this->archiving;
+    }
+
+    /**
+     * @param mixed $enable
+     * @return BackpackDto
+     */
+    public function setArchiving($archiving)
+    {
+        $this->archiving = $archiving;
         return $this;
     }
 }
