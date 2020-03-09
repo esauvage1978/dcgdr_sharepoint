@@ -2,8 +2,10 @@
 
 namespace App\Controller\Home;
 
+use App\Dto\BackpackDto;
 use App\Dto\RubricDto;
 use App\Dto\UnderRubricDto;
+use App\Repository\BackpackDtoRepository;
 use App\Repository\RubricDtoRepository;
 use App\Repository\UnderRubricDtoRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -40,7 +42,8 @@ class HomeController extends AbstractController
     public function homeSearchAction(
         Request $request,
         RubricDtoRepository $rubricDtoRepository,
-        UnderRubricDtoRepository $underRubricDtoRepository
+        UnderRubricDtoRepository $underRubricDtoRepository,
+        BackpackDtoRepository $backpackDtoRepository
     ): Response
     {
         $underRubricDto = new UnderRubricDto();
@@ -57,11 +60,21 @@ class HomeController extends AbstractController
             ->setThematicEnable(RubricDto::TRUE)
             ->setWordSearch($request->request->get('search'));
 
+        $backpackDto = new BackpackDto();
+        $backpackDto
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE)
+            ->setWordSearch($request->request->get('search'));
+
         return $this->render(
             'home/search.html.twig',
             [
                 'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
-                'underrubrics' => $underRubricDtoRepository->findAllForDto($underRubricDto)
+                'underrubrics' => $underRubricDtoRepository->findAllForDto($underRubricDto),
+                'backpacks'=>$backpackDtoRepository->findAllForDto($backpackDto)
             ]);
     }
 }
