@@ -95,7 +95,7 @@ class Step1000_UserFixtures extends Fixture implements FixtureGroupInterface
             ->setEmail(
                 filter_var($data['mail'], FILTER_VALIDATE_EMAIL) ?
                     $data['mail'] :
-                    'achanger@live.fr')
+                    md5(random_bytes(50)). '@live.fr')
             ->setRoles($roles)
             ->setPlainPassword(('achanger' === $data['mdp'] || null === $data['mdp'] || '' === $data['mdp']) ?
                 'AchangerMerci1' :

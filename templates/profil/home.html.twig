@@ -144,7 +144,30 @@
                 </div>
             </div>
 
+            <div class="card mt-3">
+                <div class="card-footer d-flex">
+                    Organismes
+                    {% if is_granted('ROLE_GESTIONNAIRE') %}
+                        <small class="ml-auto">
+                            <a href="{{ path('user_edit',{'id': user.id}) }}">modifier</a>
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% for organisme in user.organismes %}
+                        {{ include('organisme/_view/_item.html.twig', {'show_code_organisme': true, 'link' : false}) }}
+                    {% else %}
+                        <div class="list-group-item">
+                            {% if is_granted('ROLE_GESTIONNAIRE') %}
+                                <a class="text-success" href="{{ path('organisme_new') }}">Créer un organisme</a>
+                            {% else %}
+                                pas d'information
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
 
+            </div>
         </div>
     </div>
 {% endblock %}

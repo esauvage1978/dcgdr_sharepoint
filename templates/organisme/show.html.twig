@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Organisme' %}
+{% set route_index='organisme_index' %}
+{% set entityName='organisme' %}
+{% set entity=organisme %}
+
+{% block title %}{{ parent() }} {{ title }}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body_header %}
+    {{ include('admin/_body_header.html.twig', {domaine: title , id : entity.id, index :route_index}) }}
+{% endblock %}
+
+{% block sidebar_sommaire %}
+    <li class="nav-item ">
+        <a class="nav-link" href="#anchor_user">
+            <i class="fas fa-users"></i> Utilisateurs
+        </a>
+    </li>
+{% endblock %}
+
+{% block sidebar_button %}
+    {% if is_granted('ROLE_GESTIONNAIRE') %}
+
+        {{ include('share/__btn_edit.html.twig',
+            {   'url':entityName ~'_edit',
+                'id':entity.id
+            }) }}
+
+        <span class="mb-3"></span>
+
+        <span class="btn btn-danger " onclick="$('#delete').click();">
+            <i class="fas fa-trash"></i> Supprimer
+        </span>
+
+    {% endif %}
+
+    <span class="mb-3"></span>
+
+    {{ include('share/__btn_return_list.html.twig',
+        {   url:route_index
+        }) }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="row justify-content-center">
+        <div id="anchor_name" class="jumbotron col-12 text-center text-purple">
+            <h3>
+                {{ organisme.ref }} <i class="fas fa-angle-right"></i> {{ entity.name }}
+            </h3>
+            <small class="float-right">
+                {% if entity.enable %}
+                    <span class="text-success">Visible</span>
+                {% else %}
+                    <span class="text-danger">Masquée</span>
+                {% endif %}
+            </small>
+        </div>
+        {{ include(entityName~'/_show/_content.html.twig',{content:entity.content}) }}
+
+
+        <div class="col-10 mb-4">
+            <h5 class="text-purple p-1 pt-4 text-center ">
+                <i class="fas fa-boxes"></i> Corbeilles
+            </h5>
+            <div class="card ">
+                <div class="list-group list-group-flush dropright">
+                </div>
+            </div>
+        </div>
+
+        {% if organisme.users | length >0 %}
+        <div class="col-10">
+            <h5 class="text-purple p-1 pt-4 text-center ">
+                <i class="fas fa-users"></i> Utilisateurs
+            </h5>
+            <div class="card ">
+                <div class="card-body text-justify">
+                    {% for user in organisme.users %}
+                        {{ include('user/_show_item.html.twig') }}
+                    {% else %}
+                        <div class="list-group-item">En attente d'ajout</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
+{% endblock %}
