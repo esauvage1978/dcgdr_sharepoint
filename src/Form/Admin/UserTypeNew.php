@@ -18,7 +18,7 @@ class UserTypeNew extends AppTypeAbstract
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder = $this->buildFormNameEnableContent($builder);
-
+        $this->buildFormOrganismes($builder);
         $roles = [
             'Utilisateur' => 'ROLE_USER',
             'Editeur' => 'ROLE_EDITEUR',

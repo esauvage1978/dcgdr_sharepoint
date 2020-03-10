@@ -107,9 +107,15 @@ class User implements UserInterface, EntityInterface
      */
     private $histories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Organisme", mappedBy="users")
+     * @ORM\OrderBy({"name" = "ASC"})
+     */
+    private $organismes;
 
     public function __construct()
     {
+        $this->organismes = new ArrayCollection();
         $this->histories = new ArrayCollection();
     }
 
@@ -380,7 +386,33 @@ class User implements UserInterface, EntityInterface
         return $this;
     }
 
+    /**
+     * @return Collection|Organisme[]
+     */
+    public function getOrganismes(): Collection
+    {
+        return $this->organismes;
+    }
 
+    public function addOrganisme(Organisme $organisme): self
+    {
+        if (!$this->organismes->contains($organisme)) {
+            $this->organismes[] = $organisme;
+            $organisme->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganisme(Organisme $organisme): self
+    {
+        if ($this->organismes->contains($organisme)) {
+            $this->organismes->removeElement($organisme);
+            $organisme->removeUser($this);
+        }
+
+        return $this;
+    }
 
 
 

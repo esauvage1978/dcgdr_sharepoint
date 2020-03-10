@@ -134,11 +134,11 @@
 <!-- Summernote -->
 <script src="{{ absolute_url( asset('plugins/summernote/summernote-bs4.min.js')) }}"></script>
 <script src="{{ absolute_url( asset('plugins/summernote/lang/summernote-fr-FR.js')) }}"></script>
-<script src="{{ absolute_url( asset('plugins/select2/js/select2.full.min.js')) }}"></script>
-<script src="{{ absolute_url( asset('plugins/select2/js/i18n/fr.js')) }}"></script>
+
 <script src="{{ absolute_url( asset('js/switch_sidebar.js')) }}"></script>
-
-
+{% block javascripts %}{% endblock %}
+<script src="{{ absolute_url( asset('plugins/select2/js/select2.min.js')) }}"></script>
+<script src="{{ absolute_url( asset('plugins/select2/js/i18n/fr.js')) }}"></script>
 <!-- iCheck for checkboxes and radio inputs -->
 <link rel="stylesheet" href="{{ absolute_url( asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')) }}">
 <script>
@@ -154,16 +154,22 @@
         $('label.form-check-label').addClass('custom-control-label');
 
         //Initialize Select2 Elements
+
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $(document).ready(function() {
         $('.select2').select2({
             language: "fr",
             theme: 'bootstrap4'
         });
-        $('.select2').addClass('bg-white');
-        $('.select2-selection__choice').addClass('bg-light');
 
-        $('[data-toggle="tooltip"]').tooltip();
-    })
+        $('.select2').addClass('bg-white col');
+        $('.select2-selection__choice').addClass('bg-light');
+    });
 </script>
-{% block javascripts %}{% endblock %}
+
 </body>
 </html>

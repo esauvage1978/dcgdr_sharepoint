@@ -108,7 +108,7 @@ class Step1500_BackpackFixtures extends Fixture implements FixtureGroupInterface
             ->setDir3($data['n3'])
             ->setDir4($data['n4'])
             ->setDir5($data['n5'])
-
+            ->setArchiving(false)
         ;
 
         if (!empty($underrubric)) {

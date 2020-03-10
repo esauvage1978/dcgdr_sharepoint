@@ -17,8 +17,8 @@
 
 {% block sidebar_sommaire %}
     <li class="nav-item ">
-        <a class="nav-link" href="#anchor_contact">
-            <i class="fas fa-users"></i> Contacts
+        <a class="nav-link" href="#anchor_habilitations">
+            <i class="fas fa-users"></i> Habilitations
         </a>
     </li>
 {% endblock %}
@@ -149,7 +149,7 @@
             </div>
 
             <div class="card">
-                <div class="card-footer">
+                <div class="card-footer" id="anchor_habilitations">
                     Habilitations
                 </div>
                 <div class="list-group list-group-flush dropright">
@@ -186,6 +186,19 @@
 
             <div class="d-none">
                 {{ include('share/_delete_form.html.twig',{domaine: entityName ,id:entity.id}) }}
+            </div>
+        </div>
+        <div class="{{ col_secondary }}">
+            <div class="card mt-3">
+                <div class="card-footer d-flex">
+                    Organismes
+                </div>
+                <div class="card-body">
+                    {% for organisme in user.organismes %}
+                        {{ include('organisme/_view/_item.html.twig', {'show_code_organisme': true, 'link' : false}) }}
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
     </div>
