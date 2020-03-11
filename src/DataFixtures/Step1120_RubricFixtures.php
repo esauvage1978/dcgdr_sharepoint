@@ -123,7 +123,8 @@ class Step1120_RubricFixtures extends Fixture implements FixtureGroupInterface
             ->setName($data['nom'])
             ->setEnable($data['afficher'])
             ->setContent($data['description'])
-            ->setShowOrder($data['ordre']);
+            ->setShowOrder($data['ordre'])
+            ->setShowAll($data['consultation_all']=='1'?true:false);
 
         if (!empty($thematic)) {
             $instance->setThematic($thematic);

@@ -11,7 +11,7 @@
     </div>
     {% endif %}
     <a href="{{ path('rubric_show',{id:rubric.id}) }}"  data-html="true"
-       data-toggle="tooltip" data-placement="top" title="{{ rubric.content }}">
+       data-toggle="tooltip" data-placement="top" title="{{ rubric.content }}" data-container="body">
         {% if rubric.picture %}
             <img src="{{ absolute_url( asset(rubric.picture.href))}}" class="card-img-top rounded-top rounded-lg "
                  alt="{{ rubric.picture.name }}">
@@ -29,3 +29,4 @@
         </div>
     </a>
 </div>
+

@@ -15,8 +15,6 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
 {
     use TraitDtoRepository;
 
-    const SELECT_ALL='select_all';
-    const SELECT_PAGINATOR='select';
 
     const ALIAS = 'r';
 
@@ -42,22 +40,14 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
             ->getQuery()->getSingleScalarResult();
     }
 
-    public function findAllForDtoPaginator(DtoInterface $dto, $page = null, $limit = null,$select=self::SELECT_ALL)
+    public function findAllForDtoPaginator(DtoInterface $dto, $page = null, $limit = null)
     {
         /**
          * var ContactDto
          */
         $this->dto = $dto;
 
-        switch($select) {
-            case self::SELECT_PAGINATOR:
-                $this->initialise_select();
-                break;
-            default:
-                $this->initialise_selectAll();
-                break;
-
-        }
+        $this->initialise_selectAll();
 
         $this->initialise_where();
 
@@ -76,22 +66,14 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
         return new Paginator($this->builder);
     }
 
-    public function findAllForDto(DtoInterface $dto,$select=self::SELECT_ALL)
+    public function findAllForDto(DtoInterface $dto)
     {
         /**
          * var ContactDto
          */
         $this->dto = $dto;
 
-        switch($select) {
-            case self::SELECT_PAGINATOR:
-                $this->initialise_select();
-                break;
-            default:
-                $this->initialise_selectAll();
-                break;
-
-        }
+        $this->initialise_selectAll();
 
         $this->initialise_where();
 
@@ -103,21 +85,7 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
 
     }
 
-    private function initialise_select()
-    {
-        $this->builder = $this->createQueryBuilder(self::ALIAS)
-            ->select(
-                self::ALIAS,
-                ThematicRepository::ALIAS
-            )
-            ->leftJoin(self::ALIAS . '.thematic', ThematicRepository::ALIAS)
-            ->leftJoin(self::ALIAS . '.underRubrics', UnderRubricRepository::ALIAS)
-            ;
 
-        if (empty($this->dto->getUnderRubric())) {
-            $this->builder->addSelect(UnderRubricRepository::ALIAS);
-        }
-    }
     private function initialise_selectAll()
     {
         $this->builder = $this->createQueryBuilder(self::ALIAS)
@@ -127,13 +95,22 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
                 ThematicRepository::ALIAS,
                 UnderRubricRepository::ALIAS,
                 UnderThematicRepository::ALIAS,
-                BackpackRepository::ALIAS
+                BackpackRepository::ALIAS,
+                CorbeilleRepository::ALIAS_RUBRIC_WRITERS,
+                UserRepository::ALIAS_RUBRIC_WRITERS,
+                CorbeilleRepository::ALIAS_RUBRIC_READERS,
+                CorbeilleRepository::ALIAS_RUBRIC_READERS
             )
             ->leftJoin(self::ALIAS . '.picture', PictureRepository::ALIAS)
             ->leftJoin(self::ALIAS . '.thematic', ThematicRepository::ALIAS)
             ->leftJoin(self::ALIAS . '.underRubrics', UnderRubricRepository::ALIAS)
             ->leftJoin(UnderRubricRepository::ALIAS . '.underThematic', UnderThematicRepository::ALIAS)
-        ->leftJoin(UnderRubricRepository::ALIAS . '.backpacks', BackpackRepository::ALIAS);
+            ->leftJoin(UnderRubricRepository::ALIAS . '.backpacks', BackpackRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.writers', CorbeilleRepository::ALIAS_RUBRIC_WRITERS)
+            ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_WRITERS . '.users', UserRepository::ALIAS_RUBRIC_WRITERS)
+            ->leftJoin(self::ALIAS . '.readers', CorbeilleRepository::ALIAS_RUBRIC_READERS)
+            ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_READERS . '.users', UserRepository::ALIAS_RUBRIC_READERS)
+        ;
 
 
     }
@@ -142,7 +119,11 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
         $this->builder = $this->createQueryBuilder(self::ALIAS)
             ->select('count(distinct ' . self::ALIAS . '.id)')
             ->leftJoin(self::ALIAS . '.thematic', ThematicRepository::ALIAS)
-            ->leftJoin(self::ALIAS . '.underRubrics', UnderRubricRepository::ALIAS);
+            ->leftJoin(self::ALIAS . '.underRubrics', UnderRubricRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.writers', CorbeilleRepository::ALIAS_RUBRIC_WRITERS)
+            ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_WRITERS . '.users', UserRepository::ALIAS_RUBRIC_WRITERS)
+            ->leftJoin(self::ALIAS . '.readers', CorbeilleRepository::ALIAS_RUBRIC_READERS)
+        ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_READERS . '.users', UserRepository::ALIAS_RUBRIC_READERS);
     }
 
     private function initialise_where()
@@ -159,6 +140,9 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
 
         $this->initialise_where_enable();
 
+        $this->initialise_where_user_can_show();
+
+
         $this->initialise_where_search();
 
         if (count($this->params) > 0) {
@@ -166,6 +150,8 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
         }
 
     }
+
+
 
     private function initialise_where_thematic()
     {
@@ -218,6 +204,18 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
             $this->addParams('search', '%' . $dto->getWordSearch() . '%');
         }
 
+    }
+    private function initialise_where_user_can_show()
+    {
+        if (!empty($this->dto->getUser())) {
+            $this->builder
+                ->andwhere(
+                    UserRepository::ALIAS_RUBRIC_WRITERS . '.id like :userId' .
+                    ' OR ' . UserRepository::ALIAS_RUBRIC_READERS . '.id like :userId' .
+                    ' OR ' . self::ALIAS . '.showAll = 1' );
+
+            $this->addParams('userId', $this->dto->getUser()->getId());
+        }
     }
 
     private function initialise_orderBy()

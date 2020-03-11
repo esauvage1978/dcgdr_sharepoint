@@ -31,11 +31,20 @@
                                     <th class="all">Thématique</th>
                                     <th class="all">Nom</th>
                                     <th class="all">Ordre d'affichage</th>
+                                    <th class="all">Description</th>
                                     <th class="desktop text-center">
                                         <i class="fas fa-project-diagram" data-toggle="tooltip" data-placement="top"
                                            title="Nombre de sous rubrique'"></i>
                                     </th>
-                                    <th class="all">Description</th>
+                                    <th class="desktop text-center">
+                                        <i class="fa fa-eye"  data-toggle="tooltip" data-placement="top" title="Consultable par tous"></i>
+                                    </th>
+                                    <th class="desktop text-center">
+                                        <i class="fa fa-boxes"  data-toggle="tooltip" data-placement="top" title="Nombre de corbeilles de consultation"></i>
+                                    </th>
+                                    <th class="desktop text-center">
+                                        <i class="fa fa-boxes"  data-toggle="tooltip" data-placement="top" title="Nombre de corbeilles de modification"></i>
+                                    </th>
                                     <th class="all text-center"></th>
                                 </tr>
                                 </thead>
@@ -57,6 +66,9 @@
                                         <td class="align-middle text-center">
                                             {{ entity.showOrder }}
                                         </td>
+                                        <td class="align-middle">
+                                            {{ entity.content |raw }}
+                                        </td>
                                         <td class="align-middle text-center">
                                             {% if   entity.underRubrics.count==0 %}
                                                 <span class="text-light" ><i class="fas fa-circle"></i></span>
@@ -64,8 +76,22 @@
                                                 <small class="badge bg-info">{{ entity.underRubrics.count}}</small>
                                             {% endif %}
                                         </td>
-                                        <td class="align-middle">
-                                            {{ entity.content |raw }}
+                                        <td class="align-middle text-center">
+                                            <span class="text-{{ entity.showAll ? 'primary' : 'light' }} " ><i class="fas fa-circle"></i></span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            {% if   entity.readers.count==0 %}
+                                                <span class="text-light" ><i class="fas fa-circle"></i></span>
+                                            {% else %}
+                                                <small class="badge bg-info">{{ entity.readers.count}}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            {% if   entity.writers.count==0 %}
+                                                <span class="text-light" ><i class="fas fa-circle"></i></span>
+                                            {% else %}
+                                                <small class="badge bg-info">{{ entity.writers.count}}</small>
+                                            {% endif %}
                                         </td>
 
                                         <td class=" d-flex  justify-content-end ">

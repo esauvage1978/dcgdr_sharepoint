@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Corbeille;
 use App\Entity\Organisme;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
@@ -63,7 +64,48 @@ abstract class AppTypeAbstract extends AbstractType
                 self::ATTR => [self::ROWS => 3, self::CSS_CLASS => 'textarea'],
             ]);
     }
-
+    public function buildFormReaders(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        return $builder
+            ->add('readers', EntityType::class, [
+                'class' => Corbeille::class,
+                self::CHOICE_LABEL => 'fullname',
+                self::LABEL=>'Consultant',
+                self::MULTIPLE => true,
+                self::ATTR => ['class' => 'select2'],
+                self::REQUIRED => false,
+                self::QUERY_BUILDER => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->select('c', 'o')
+                        ->leftJoin('c.organisme', 'o')
+                        ->where('o.enable = true')
+                        ->andWhere('c.enable = true')
+                        ->andWhere('c.showRead = true')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ]);
+    }
+    public function buildFormWriters(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        return $builder
+            ->add('writers', EntityType::class, [
+                'class' => Corbeille::class,
+                self::LABEL=>'Pilote',
+                self::CHOICE_LABEL => 'fullname',
+                self::MULTIPLE => true,
+                self::ATTR => ['class' => 'select2'],
+                self::REQUIRED => false,
+                self::QUERY_BUILDER => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->select('c', 'o')
+                        ->leftJoin('c.organisme', 'o')
+                        ->where('o.enable = true')
+                        ->andWhere('c.enable = true')
+                        ->andWhere('c.showWrite = true')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ]);
+    }
     public function buildFormOrganisme(FormBuilderInterface $builder): FormBuilderInterface
     {
         return $builder

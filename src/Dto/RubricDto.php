@@ -15,6 +15,9 @@ class RubricDto implements DtoInterface
      */
     private $wordSearch;
 
+
+
+
     /**
      * @var ?Thematic
      */
@@ -34,6 +37,29 @@ class RubricDto implements DtoInterface
      * @var ?String
      */
     private $thematicEnable;
+
+    /**
+     * @var ?User
+     */
+    private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return RubricDto
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
 
     /**
      * @return mixed
