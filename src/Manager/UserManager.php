@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Avatar;
 use App\Entity\User;
 use App\Helper\ToolCollecion;
+use App\Repository\CorbeilleRepository;
 use App\Repository\OrganismeRepository;
 use App\Repository\UserRepository;
 use App\Validator\UserValidator;
@@ -38,6 +39,11 @@ class UserManager
     private $organismeRepository;
 
     /**
+     * @var CorbeilleRepository
+     */
+    private $corbeilleRepository;
+
+    /**
      * @var UserRepository
      */
     private $userRepository;
@@ -47,12 +53,14 @@ class UserManager
         UserValidator $validator,
         UserPasswordEncoderInterface $passwordEncoder,
         OrganismeRepository $organismeRepository,
+        CorbeilleRepository $corbeilleRepository,
     UserRepository $userRepository
     ) {
         $this->manager = $manager;
         $this->validator = $validator;
         $this->passwordEncoder = $passwordEncoder;
         $this->organismeRepository = $organismeRepository;
+        $this->corbeilleRepository = $corbeilleRepository;
         $this->userRepository = $userRepository;
     }
 
@@ -98,6 +106,11 @@ class UserManager
                 $user,
                 $this->organismeRepository->findAllForUser($user->getId()),
                 $user->getOrganismes()
+            );
+            $this->setRelation(
+                $user,
+                $this->corbeilleRepository->findAllForUser($user->getId()),
+                $user->getCorbeilles()
             );
         }
 

@@ -24,7 +24,13 @@ class UserRepository extends ServiceEntityRepository
     public function findAllForAdmin()
     {
         return $this->createQueryBuilder(self::ALIAS)
-            ->select(self::ALIAS)
+            ->select(
+                self::ALIAS,
+                OrganismeRepository::ALIAS,
+                CorbeilleRepository::ALIAS
+            )
+            ->leftJoin(self::ALIAS.'.organismes',OrganismeRepository::ALIAS)
+            ->leftJoin(self::ALIAS.'.corbeilles',CorbeilleRepository::ALIAS)
             ->orderBy(self::ALIAS . '.name', 'ASC')
             ->getQuery()
             ->getResult()

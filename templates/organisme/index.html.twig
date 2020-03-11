@@ -23,9 +23,6 @@
                             <th class="desktop text-center">Référence</th>
                             <th class="all">Description</th>
                             <th class="desktop text-center">
-                                <i class="fa fa-pencil-ruler"  data-toggle="tooltip" data-placement="top" title="Administrable"></i>
-                            </th>
-                            <th class="desktop text-center">
                                 <i class="fa fa-boxes"  data-toggle="tooltip" data-placement="top" title="Nombre de corbeilles"></i>
                             </th>
                             <th class="desktop text-center">
@@ -45,12 +42,13 @@
                                 </td>
                                 <td class="text-center ">{{ organisme.ref }}</td>
                                 <td>{{ organisme.content | raw }}</td>
-                                <td class="text-center ">
-                                    <span class="text-{{ organisme.alterable ? 'info' : 'light' }}"><i
-                                                class="fas fa-circle"></i></span>
-                                </td>
-                                <td class="text-center">
 
+                                <td class="text-center">
+                                    {% if   organisme.corbeilles.count==0 %}
+                                        <span class="text-light"><i class="fas fa-circle"></i></span>
+                                    {% else %}
+                                        <small class="badge  bg-info">{{ organisme.corbeilles.count }}</small>
+                                    {% endif %}
                                 </td>
                                 <td class="text-center">
                                     {% if   organisme.users.count==0 %}

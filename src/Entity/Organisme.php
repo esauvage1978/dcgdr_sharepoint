@@ -28,10 +28,6 @@ class Organisme implements EntityInterface
      */
     private $ref;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $alterable;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -49,9 +45,16 @@ class Organisme implements EntityInterface
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Corbeille", mappedBy="organisme", orphanRemoval=true)
+     * @ORM\OrderBy({"name" = "ASC"})
+     */
+    private $corbeilles;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->corbeilles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,17 +93,7 @@ class Organisme implements EntityInterface
         return $this;
     }
 
-    public function getAlterable(): ?bool
-    {
-        return $this->alterable;
-    }
 
-    public function setAlterable(bool $alterable): self
-    {
-        $this->alterable = $alterable;
-
-        return $this;
-    }
 
     public function getContent(): ?string
     {
@@ -157,6 +150,36 @@ class Organisme implements EntityInterface
         return $this;
     }
 
+    /**
+     * @return Collection|Corbeille[]
+     */
+    public function getCorbeilles(): Collection
+    {
+        return $this->corbeilles;
+    }
+
+    public function addCorbeille(Corbeille $corbeille): self
+    {
+        if (!$this->corbeilles->contains($corbeille)) {
+            $this->corbeilles[] = $corbeille;
+            $corbeille->setOrganisme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCorbeille(Corbeille $corbeille): self
+    {
+        if ($this->corbeilles->contains($corbeille)) {
+            $this->corbeilles->removeElement($corbeille);
+            // set the owning side to null (unless already changed)
+            if ($corbeille->getOrganisme() === $this) {
+                $corbeille->setOrganisme(null);
+            }
+        }
+
+        return $this;
+    }
 
 
 }

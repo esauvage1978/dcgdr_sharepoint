@@ -72,7 +72,6 @@ class Step1130_OrganismeFixtures extends Fixture implements FixtureGroupInterfac
             ->setId($data['n0_num'])
             ->setName($data['nom'])
             ->setRef($data['code'])
-            ->setAlterable($data['administrable'])
             ->setContent($data['description'])
             ->setEnable($data['afficher']);
         return $instance;

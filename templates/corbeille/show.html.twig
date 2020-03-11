@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Corbeille' %}
+{% set route_index='corbeille_index' %}
+{% set entityName='corbeille' %}
+{% set entity=corbeille %}
+
+{% block title %}{{ parent() }} {{ title }}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body_header %}
+    {{ include('admin/_body_header.html.twig', {domaine: title , id : entity.id, index :route_index}) }}
+{% endblock %}
+
+{% block sidebar_sommaire %}
+    <li class="nav-item ">
+        <a class="nav-link" href="#anchor_user">
+            <i class="fas fa-users"></i> Utilisateurs
+        </a>
+    </li>
+{% endblock %}
+
+{% block sidebar_button %}
+    {% if is_granted('ROLE_GESTIONNAIRE') %}
+
+        {{ include('share/__btn_edit.html.twig',
+            {   'url':entityName ~'_edit',
+                'id':entity.id
+            }) }}
+
+        <span class="mb-3"></span>
+
+        <span class="btn btn-danger " onclick="$('#delete').click();">
+            <i class="fas fa-trash"></i> Supprimer
+        </span>
+
+    {% endif %}
+
+    <span class="mb-3"></span>
+
+    {{ include('share/__btn_return_list.html.twig',
+        {   url:route_index
+        }) }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="row justify-content-center">
+        <div id="anchor_name" class="jumbotron col-12 text-center text-purple">
+            <h3>
+                {{ entity.name }}
+            </h3>
+            <br>
+            <h5>
+                <a href="{{ path('organisme_show',{id:entity.organisme.id}) }}">
+                    {{ entity.organisme.ref }} <i class="fas fa-angle-right"></i> {{ entity.organisme.name }}
+                </a>
+            </h5>
+            <small class="float-right">
+                {% if entity.enable %}
+                    <span class="text-success">Visible</span>
+                {% else %}
+                    <span class="text-danger">Masquée</span>
+                {% endif %}
+            </small>
+        </div>
+        <div class="row  col-10 ">
+                {{ include(entityName~'/_show/_read.html.twig',{content:entity.content}) }}
+                {{ include(entityName~'/_show/_write.html.twig',{content:entity.content}) }}
+                {{ include(entityName~'/_show/_content.html.twig',{content:entity.content}) }}
+        </div>
+
+        {% if entity.users | length >0 %}
+            <div class="col-10">
+                <h5 class="text-purple p-1 pt-4 text-center ">
+                    <i class="fas fa-users"></i> Utilisateurs
+                </h5>
+                <div class="card ">
+                    <div class="card-body text-justify">
+                        {% for user in entity.users %}
+                            {{ include('user/_view/_item.html.twig') }}
+                        {% else %}
+                            <div class="list-group-item">En attente d'ajout</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
+{% endblock %}

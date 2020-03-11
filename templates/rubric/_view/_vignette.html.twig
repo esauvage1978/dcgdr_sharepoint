@@ -25,7 +25,7 @@
             <div class="text-muted  "><span class="{{ rubric.thematic.enable?'':'text-danger' }}">{{ rubric.thematic.name }}</span>
                 <br/>
                 {% set nbr=rubric.underRubrics | sumBackpackForRubricEnable %}
-                <small class="text-muted">{{nbr}} PORTE-DOCUMENT</small></div>
+                <small class="text-muted">{{nbr}} PORTE-DOCUMENT{{ nbr>1?'S':'' }}</small></div>
         </div>
     </a>
 </div>

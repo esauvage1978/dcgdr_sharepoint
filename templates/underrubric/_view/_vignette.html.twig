@@ -26,7 +26,7 @@
                 </span>
                 <br/>
                 {% set nbr=underrubric.backpacks | sumBackpackForUnderRubricEnable %}
-                <small class="text-muted">{{ nbr }} PORTE-DOCUMENT</small></div>
+                <small class="text-muted">{{ nbr }} PORTE-DOCUMENT{{ nbr>1?'S':'' }}</small></div>
         </div>
     </a>
 </div>
