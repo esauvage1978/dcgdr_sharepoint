@@ -3,7 +3,7 @@
     <h5 class="text-purple p-1  text-center ">
         Intervenants
     </h5>
-
+<div class="bg-white shadow">
     {% if rubric.writers.count >0 %}
 
         <article class="card-body bg-white">
@@ -19,19 +19,17 @@
         </article>
     {% else %}
         <article class="card-body  bg-white">
-            <div class="mt-4 p-3 col-12 bg-light text-xs">
-                <span class="text-muted">
-                   Personne ne peut modifier cette rubrique
-                </span>
+            <div class="mt-4 p-3 col-12 text-danger text-center ">
+                <i class="fas fa-times-circle fa-2x"></i> <br>
+                Personne ne peut modifier la rubrique
             </div>
         </article>
     {% endif %}
     {% if rubric.showall %}
-        <article class="card-body  bg-white">
-            <div class="mt-4 p-3 col-12 bg-light text-xs">
-                <span class="text-muted">
+        <article class="card-body">
+            <div class="mt-4 p-3 col-12 text-success  text-center">
+                <i class="fas fa-check-circle fa-2x"></i><br>
                     Consultable par les utilisateurs connectées
-                </span>
             </div>
         </article>
     {% elseif rubric.readers.count >0 %}
@@ -47,14 +45,16 @@
                 {% endfor %}
             </div>
         </article>
-        {% else %}
-            <article class="card-body  bg-white">
-                <div class="mt-4 p-3 col-12 bg-light text-xs">
-                <span class="text-muted">
-                   Personne ne peut consulter cette rubrique
-                </span>
-                </div>
-            </article>
+
     {% endif %}
+    {% if rubric.readers.count ==0 and rubric.writers.count ==0 %}
+    <article class="card-body ">
+        <div class="mt-4 p-3 col-12 text-danger text-center ">
+            <i class="fas fa-times-circle fa-2x"></i> <br>
+            Personne ne peut consulter la rubrique
+        </div>
+    </article>
+    {% endif %}
+</div>
 </section>
 

@@ -11,6 +11,8 @@ use App\Repository\RubricDtoRepository;
 use App\Repository\RubricRepository;
 use App\Manager\RubricManager;
 use App\Repository\UnderRubricDtoRepository;
+use App\Security\ActionVoter;
+use App\Security\RubricVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,6 +37,8 @@ class RubricController extends AppControllerAbstract
         UnderRubricDto $underrubricDto,
         UnderRubricDtoRepository $underrubricDtoRepository
     ) {
+        $this->denyAccessUnlessGranted(RubricVoter::READ, $rubric);
+
         $underrubricDto
             ->setRubric($rubric)
             ->setEnable(RubricDto::TRUE)

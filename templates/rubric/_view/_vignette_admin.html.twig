@@ -1,4 +1,4 @@
-<div class="card mb-5 shadow ml-2 mr-2">
+<article class="card mb-5 shadow ml-2 mr-2">
 
 
     {% if rubric.picture %}
@@ -21,9 +21,8 @@
             </a>
             <br/>
             {% set nbr=rubric.underRubrics | sumBackpackForRubricEnable %}
-            <small class="text-muted">{{nbr}} PORTE-DOCUMENT{{ nbr>1?'S':'' }}</small></div>
+            <small class="text-muted">{{ nbr }} PORTE-DOCUMENT{{ nbr>1?'S':'' }}</small>
         </div>
-
     </div>
-    </a>
-</div>
+
+</article>

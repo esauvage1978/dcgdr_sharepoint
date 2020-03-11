@@ -15,6 +15,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class CorbeilleRepository extends ServiceEntityRepository
 {
     const ALIAS = 'c';
+    const ALIAS_RUBRIC_WRITERS='crw';
+    const ALIAS_RUBRIC_READERS='crr';
 
     public function __construct(ManagerRegistry $registry)
     {

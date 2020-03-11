@@ -68,8 +68,8 @@
         </div>
         <div class="row  col-12 ">
             {{ include(entityShortName~'/_show/_intervenant.html.twig') }}
-            {{ include(entityShortName~'/_show/_content.html.twig',{content:entity.content}) }}
             {{ include(entityShortName~'/_view/_vignette_admin.html.twig') }}
+            {{ include(entityShortName~'/_show/_content.html.twig',{content:entity.content}) }}
         </div>
 
         {{ include('underrubric/_view/_vignettes_admin.html.twig',{underrubrics:entity.underrubrics}) }}

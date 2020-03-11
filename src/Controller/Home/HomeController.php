@@ -25,9 +25,8 @@ class HomeController extends AbstractController
         RubricDtoRepository $rubricDtoRepository
     )
     {
-
         return $this->render('home/home.html.twig', [
-            'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
+            'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto->setUser($this->getUser())),
         ]);
     }
 
