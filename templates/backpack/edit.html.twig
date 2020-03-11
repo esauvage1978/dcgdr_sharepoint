@@ -196,7 +196,19 @@
                 $('#'+ selecteurCible).change();
 
             });
-        })
+        });
+
+            $(function () {
+
+
+                $('#picture_updateAt_date_month').val(new Date().getMonth());
+                $('#picture_updateAt_date_day').val(new Date().getDay());
+                $('#picture_updateAt_date_year').val(new Date().getFullYear());
+                $('#picture_updateAt_time_hour').val(new Date().getHours());
+                $('#picture_updateAt_time_minute').val(new Date().getMinutes());
+
+
+            })
     </script>
 
 {% endblock %}

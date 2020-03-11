@@ -66,6 +66,11 @@ class Backpack implements EntityInterface
      */
     private $archiving;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updateAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -194,6 +199,18 @@ class Backpack implements EntityInterface
     public function setArchiving(bool $archiving): self
     {
         $this->archiving = $archiving;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(\DateTimeInterface $updateAt): self
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }

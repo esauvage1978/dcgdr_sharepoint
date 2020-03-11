@@ -12,6 +12,7 @@ use App\Repository\ThematicRepository;
 use App\Repository\UnderRubricRepository;
 use App\Validator\BackpackValidator;
 use App\Validator\RubricValidator;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -109,6 +110,7 @@ class Step1500_BackpackFixtures extends Fixture implements FixtureGroupInterface
             ->setDir4($data['n4'])
             ->setDir5($data['n5'])
             ->setArchiving(false)
+            ->setUpdateAt($this->convertDate($data['date_update']));
         ;
 
         if (!empty($underrubric)) {
@@ -117,6 +119,15 @@ class Step1500_BackpackFixtures extends Fixture implements FixtureGroupInterface
 
 
         return $instance;
+    }
+
+    public function convertDate(?string $date): ?\DateTimeInterface
+    {
+        if (null === $date) {
+            return null;
+        }
+
+        return new DateTime(str_replace('/', '-', $date));
     }
 
     public static function getGroups(): array

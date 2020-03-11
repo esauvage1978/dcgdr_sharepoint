@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200310132718 extends AbstractMigration
+final class Version20200310160152 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,7 +23,7 @@ final class Version20200310132718 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE avatar (id INT AUTO_INCREMENT NOT NULL, image LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE backpack (id INT AUTO_INCREMENT NOT NULL, under_rubric_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, enable TINYINT(1) NOT NULL, content LONGTEXT DEFAULT NULL, dir1 VARCHAR(100) DEFAULT NULL, dir2 VARCHAR(100) DEFAULT NULL, dir3 VARCHAR(100) DEFAULT NULL, dir4 VARCHAR(100) DEFAULT NULL, dir5 VARCHAR(100) DEFAULT NULL, archiving TINYINT(1) NOT NULL, INDEX IDX_C3585697133F41C (under_rubric_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE backpack (id INT AUTO_INCREMENT NOT NULL, under_rubric_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, enable TINYINT(1) NOT NULL, content LONGTEXT DEFAULT NULL, dir1 VARCHAR(100) DEFAULT NULL, dir2 VARCHAR(100) DEFAULT NULL, dir3 VARCHAR(100) DEFAULT NULL, dir4 VARCHAR(100) DEFAULT NULL, dir5 VARCHAR(100) DEFAULT NULL, archiving TINYINT(1) NOT NULL, update_at DATETIME NOT NULL, INDEX IDX_C3585697133F41C (under_rubric_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE history (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, created_at DATETIME NOT NULL, content JSON NOT NULL, INDEX IDX_27BA704BA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE organisme (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(30) NOT NULL, ref VARCHAR(5) NOT NULL, alterable TINYINT(1) NOT NULL, content LONGTEXT DEFAULT NULL, enable TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE organisme_user (organisme_id INT NOT NULL, user_id INT NOT NULL, INDEX IDX_A53730645DDD38F5 (organisme_id), INDEX IDX_A5373064A76ED395 (user_id), PRIMARY KEY(organisme_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

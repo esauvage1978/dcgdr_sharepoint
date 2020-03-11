@@ -5,7 +5,9 @@ namespace App\Controller\Backpack;
 use App\Controller\AppControllerAbstract;
 use App\Dto\BackpackDto;
 use App\Entity\Backpack;
+use App\Entity\Rubric;
 use App\Entity\Thematic;
+use App\Entity\UnderRubric;
 use App\Form\Admin\ThematicType;
 use App\Form\Backpack\BackpackType;
 use App\Manager\BackpackManager;
@@ -26,10 +28,38 @@ class BackpackController extends AppControllerAbstract
     const ENTITY = 'backpack';
 
     /**
+     * @Route("/backpack/new", name="backpack_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function backpackNew(
+        Request $request,
+        BackpackDtoRepository $backpackDtoRepository
+    ): Response
+    {
+        $backpackDto = new BackpackDto();
+
+        $backpackDto
+            ->setNew(BackpackDto::TRUE)
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE);
+
+
+        return $this->render(
+            'backpack/listNew.html.twig',
+            [
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto)
+            ]);
+    }
+
+
+    /**
      * @Route("/backpack/archiving", name="backpack_archiving", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function homeSearchAction(
+    public function archiving(
         Request $request,
         BackpackDtoRepository $backpackDtoRepository
     ): Response
@@ -37,17 +67,12 @@ class BackpackController extends AppControllerAbstract
         $backpackDtoArchiving = new BackpackDto();
 
         $backpackDtoArchiving
-            ->setArchiving(BackpackDto::TRUE);
-
-
-        if (!$this->isGranted('ROLE_GESTIONNAIRE')) {
-            $backpackDtoArchiving
-                ->setEnable(BackpackDto::TRUE)
-                ->setUnderThematicEnable(BackpackDto::TRUE)
-                ->setThematicEnable(BackpackDto::TRUE)
-                ->setUnderRubricEnable(BackpackDto::TRUE)
-                ->setRubricEnable(BackpackDto::TRUE);
-        }
+            ->setArchiving(BackpackDto::TRUE)
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE);
 
         return $this->render(
             'backpack/archiving.html.twig',
@@ -57,11 +82,92 @@ class BackpackController extends AppControllerAbstract
     }
 
     /**
-     * @Route("/backpack/new", name="backpack_new", methods={"GET","POST"})
+     * @Route("/backpack/disable", name="backpack_disable", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function disable(
+        Request $request,
+        BackpackDtoRepository $backpackDtoRepository
+    ): Response
+    {
+        $backpackDtoArchiving = new BackpackDto();
+
+        $backpackDtoArchiving
+            ->setEnable(BackpackDto::FALSE);
+
+        return $this->render(
+            'backpack/disable.html.twig',
+            [
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDtoArchiving)
+            ]);
+    }
+
+
+    /**
+     * @Route("/backpack/new/rubric/{id}", name="backpack_new_rubric", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function backpackNewRubric(
+        Request $request,
+        BackpackDtoRepository $backpackDtoRepository,
+        Rubric $rubric
+    ): Response
+    {
+        $backpackDto = new BackpackDto();
+
+        $backpackDto
+            ->setRubric($rubric)
+            ->setNew(BackpackDto::TRUE)
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE);
+
+
+        return $this->render(
+            'backpack/listNew.html.twig',
+            [
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto)
+            ]);
+    }
+
+    /**
+     * @Route("/backpack/new/underrubric/{id}", name="backpack_new_underrubric", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function backpackNewUnderRubric(
+        Request $request,
+        BackpackDtoRepository $backpackDtoRepository,
+        UnderRubric $underrubric
+    ): Response
+    {
+        $backpackDto = new BackpackDto();
+
+        $backpackDto
+            ->setUnderRubric($underrubric)
+            ->setNew(BackpackDto::TRUE)
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE);
+
+
+        return $this->render(
+            'backpack/listNew.html.twig',
+            [
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto)
+            ]);
+    }
+
+
+    /**
+     * @Route("/backpack/add", name="backpack_add", methods={"GET","POST"})
      * @return Response
      * @IsGranted("ROLE_GESTIONNAIRE")
      */
-    public function newAction(Request $request, ThematicManager $manager): Response
+    public function addAction(Request $request, ThematicManager $manager): Response
     {
         $entity=new Thematic();
         $form = $this->createForm(ThematicType::class, $entity);

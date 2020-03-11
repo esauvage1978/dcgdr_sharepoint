@@ -16,6 +16,10 @@ class BackpackDto implements DtoInterface
      * @var ?UnderRubric
      */
     private $underrubric;
+    /**
+     * @var ?Rubric
+     */
+    private $rubric;
 
     /**
      * @var ?String
@@ -29,6 +33,10 @@ class BackpackDto implements DtoInterface
      * @var ?String
      */
     private $archiving;
+    /**
+     * @var ?String
+     */
+    private $new;
     /**
      * @var ?String
      */
@@ -64,6 +72,24 @@ class BackpackDto implements DtoInterface
     public function setUnderRubric($underrubric)
     {
         $this->underrubric = $underrubric;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRubric()
+    {
+        return $this->rubric;
+    }
+
+    /**
+     * @param mixed $rubric
+     * @return BackpackDto
+     */
+    public function setRubric($rubric)
+    {
+        $this->rubric = $rubric;
         return $this;
     }
 
@@ -194,6 +220,24 @@ class BackpackDto implements DtoInterface
         $this->enable = $enable;
         return $this;
     }
+    /**
+     * @return mixed
+     */
+    public function getNew()
+    {
+        return $this->new;
+    }
+
+    /**
+     * @param mixed $new
+     * @return BackpackDto
+     */
+    public function setNew($new)
+    {
+        $this->new = $new;
+        return $this;
+    }
+
     /**
      * @return mixed
      */

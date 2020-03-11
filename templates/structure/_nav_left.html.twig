@@ -70,6 +70,12 @@
                                         <p>Les archives</p>
                                     </a>
                                 </li>
+                                <li class="nav-item {{ '/backpack/disable' in app.request.uri ? 'active' :'' }}">
+                                    <a href="{{ path('backpack_disable') }}" class="nav-link">
+                                        <i class="fas fa-eye-slash nav-icon"></i>
+                                        <p>Les masqués</p>
+                                    </a>
+                                </li>
                             {% endif %}
                         </ul>
                     </li>

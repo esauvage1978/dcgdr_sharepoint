@@ -1,12 +1,15 @@
 <div class="card mb-5 shadow m-0 p-0">
 
+    {% set nbr=rubric.underRubrics | hasNewForRubric %}
+    {% if nbr >0 %}
     <div class="ribbon-wrapper ribbon-lg">
         <div class="ribbon  bg-gradient-light">
-            <a href="{{ path('admin_thematic_show',{id:rubric.thematic.id}) }}">
-                <i class="fas fa-certificate"></i> Nouveautés
+            <a href="{{ path('backpack_new_rubric',{id:rubric.id}) }}">
+                <i class="fas fa-certificate"></i> {{ nbr }} Nouveauté {{ nbr>1 ?'s':'' }}
             </a>
         </div>
     </div>
+    {% endif %}
     <a href="{{ path('rubric_show',{id:rubric.id}) }}"  data-html="true"
        data-toggle="tooltip" data-placement="top" title="{{ rubric.content }}">
         {% if rubric.picture %}

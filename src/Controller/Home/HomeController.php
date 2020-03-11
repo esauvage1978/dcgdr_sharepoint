@@ -25,11 +25,6 @@ class HomeController extends AbstractController
         RubricDtoRepository $rubricDtoRepository
     )
     {
-        if (!$this->isGranted('ROLE_GESTIONNAIRE')) {
-            $rubricDto
-                ->setEnable(RubricDto::TRUE)
-                ->setThematicEnable(RubricDto::TRUE);
-        }
 
         return $this->render('home/home.html.twig', [
             'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
@@ -52,44 +47,39 @@ class HomeController extends AbstractController
         $rubricDto = new RubricDto();
         $backpackDto = new BackpackDto();
         $backpackDtoArchiving = new BackpackDto();
+        $backpackDtoEnable = new BackpackDto();
 
         $underRubricDto
-            ->setWordSearch($request->request->get('search'));;
+            ->setWordSearch($request->request->get('search'))
+            ->setEnable(UnderRubricDto::TRUE)
+            ->setThematicEnable(UnderRubricDto::TRUE)
+            ->setUnderThematicEnable(UnderRubricDto::TRUE)
+            ->setRubricEnable(UnderRubricDto::TRUE);
         $rubricDto
-            ->setWordSearch($request->request->get('search'));
+            ->setWordSearch($request->request->get('search'))
+            ->setEnable(RubricDto::TRUE)
+            ->setThematicEnable(RubricDto::TRUE);
         $backpackDto
             ->setArchiving(BackpackDto::FALSE)
-            ->setWordSearch($request->request->get('search'));
+            ->setWordSearch($request->request->get('search'))
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE);
         $backpackDtoArchiving
             ->setArchiving(BackpackDto::TRUE)
-            ->setWordSearch($request->request->get('search'));
+            ->setWordSearch($request->request->get('search'))
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE);
 
+        $backpackDtoEnable
+            ->setWordSearch($request->request->get('search'))
+            ->setEnable(BackpackDto::FALSE);
 
-        if (!$this->isGranted('ROLE_GESTIONNAIRE')) {
-            $underRubricDto
-                ->setEnable(UnderRubricDto::TRUE)
-                ->setThematicEnable(UnderRubricDto::TRUE)
-                ->setUnderThematicEnable(UnderRubricDto::TRUE)
-                ->setRubricEnable(UnderRubricDto::TRUE);
-
-            $rubricDto
-                ->setEnable(RubricDto::TRUE)
-                ->setThematicEnable(RubricDto::TRUE);
-
-            $backpackDto
-                ->setEnable(RubricDto::TRUE)
-                ->setUnderThematicEnable(RubricDto::TRUE)
-                ->setThematicEnable(RubricDto::TRUE)
-                ->setUnderRubricEnable(RubricDto::TRUE)
-                ->setRubricEnable(RubricDto::TRUE);
-
-            $backpackDtoArchiving
-                ->setEnable(RubricDto::TRUE)
-                ->setUnderThematicEnable(RubricDto::TRUE)
-                ->setThematicEnable(RubricDto::TRUE)
-                ->setUnderRubricEnable(RubricDto::TRUE)
-                ->setRubricEnable(RubricDto::TRUE);
-        }
 
         return $this->render(
             'home/search.html.twig',
@@ -97,7 +87,8 @@ class HomeController extends AbstractController
                 'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
                 'underrubrics' => $underRubricDtoRepository->findAllForDto($underRubricDto),
                 'backpacks'=>$backpackDtoRepository->findAllForDto($backpackDto),
-                'archivings'=>$backpackDtoRepository->findAllForDto($backpackDtoArchiving)
+                'archivings'=>$backpackDtoRepository->findAllForDto($backpackDtoArchiving),
+                'enables'=>$this->isGranted('ROLE_EDITEUR')?$backpackDtoRepository->findAllForDto($backpackDtoEnable):[]
             ]);
     }
 }

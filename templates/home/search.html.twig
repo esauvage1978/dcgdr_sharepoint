@@ -24,6 +24,7 @@
         <div class="col-12">
                 <div class=" p-0 pt-1">
                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                        {%  if backpacks | length >0 %}
                         <li class="nav-item ">
                             <a class="nav-link active" id="custom-tabs-one-backpack-tab" data-toggle="pill" href="#custom-tabs-one-backpack" role="tab"
                                aria-controls="custom-tabs-one-backpack" aria-selected="true">
@@ -31,6 +32,8 @@
                                 <span class="badge badge-info">{{ backpacks | length }}</span>
                             </a>
                         </li>
+                        {% endif %}
+                        {%  if archivings | length >0 %}
                         <li class="nav-item ">
                             <a class="nav-link" id="custom-tabs-one-archiving-tab" data-toggle="pill" href="#custom-tabs-one-archiving" role="tab"
                                aria-controls="custom-tabs-one-archiving" aria-selected="true">
@@ -38,6 +41,17 @@
                                 <span class="badge badge-info">{{ archivings | length }}</span>
                             </a>
                         </li>
+                        {% endif %}
+                        {%  if enables | length >0 %}
+                            <li class="nav-item ">
+                                <a class="nav-link" id="custom-tabs-one-enable-tab" data-toggle="pill" href="#custom-tabs-one-enable" role="tab"
+                                   aria-controls="custom-tabs-one-enable" aria-selected="true">
+                                    <i class="fas fa-archive text-yellow "></i> Porte-documents masqués
+                                    <span class="badge badge-info">{{ enables | length }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {%  if rubrics | length >0 %}
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-rubric-tab" data-toggle="pill" href="#custom-tabs-one-rubric" role="tab"
                                aria-controls="custom-tabs-one-rubric" aria-selected="false">
@@ -45,6 +59,8 @@
                                 <span class="badge badge-info">{{ rubrics | length }}</span>
                             </a>
                         </li>
+                        {% endif %}
+                        {%  if underrubrics | length >0 %}
                         <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-underrubric-tab" data-toggle="pill" href="#custom-tabs-one-underrubric" role="tab"
                                aria-controls="custom-tabs-one-underrubric" aria-selected="false">
@@ -52,15 +68,19 @@
                                 <span class="badge badge-info">{{ underrubrics | length }}</span>
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class=" mt-4">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
                         <div class="tab-pane fade active show" id="custom-tabs-one-backpack" role="tabpanel" aria-labelledby="custom-tabs-one-backpack-tab">
-                                {{ include('backpack/_view/_tree.html.twig') }}
+                                {{ include('backpack/_view/_tree.html.twig',{open:true}) }}
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-archiving" role="tabpanel" aria-labelledby="custom-tabs-one-archiving-tab">
-                            {{ include('backpack/_view/_tree.html.twig',{backpacks:archivings}) }}
+                            {{ include('backpack/_view/_tree.html.twig',{backpacks:archivings,open:true}) }}
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-one-enable" role="tabpanel" aria-labelledby="custom-tabs-one-enable-tab">
+                            {{ include('backpack/_view/_tree.html.twig',{backpacks:enables,open:true}) }}
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-rubric" role="tabpanel" aria-labelledby="custom-tabs-one-rubric-tab">
                             <div class="row col-12 d-flex align-items-stretch justify-content-center"  >

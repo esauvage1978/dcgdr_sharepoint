@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Dto\BackpackDto;
 use App\Dto\DtoInterface;
 use App\Entity\Backpack;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -14,9 +15,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class BackpackDtoRepository extends ServiceEntityRepository implements DtoRepositoryInterface
 {
     use TraitDtoRepository;
-
-    const SELECT_ALL = 'select_all';
-    const SELECT_PAGINATOR = 'select';
 
     const ALIAS = 'b';
 
@@ -49,15 +47,7 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
          */
         $this->dto = $dto;
 
-        switch ($select) {
-            case self::SELECT_PAGINATOR:
-                $this->initialise_select();
-                break;
-            default:
-                $this->initialise_selectAll();
-                break;
-
-        }
+        $this->initialise_select();
 
         $this->initialise_where();
 
@@ -76,22 +66,14 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
         return new Paginator($this->builder);
     }
 
-    public function findAllForDto(DtoInterface $dto, $select = self::SELECT_ALL)
+    public function findAllForDto(DtoInterface $dto)
     {
         /**
          * var ContactDto
          */
         $this->dto = $dto;
 
-        switch ($select) {
-            case self::SELECT_PAGINATOR:
-                $this->initialise_select();
-                break;
-            default:
-                $this->initialise_selectAll();
-                break;
-
-        }
+        $this->initialise_select();
 
         $this->initialise_where();
 
@@ -109,24 +91,14 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
             ->select(
                 self::ALIAS,
                 UnderRubricRepository::ALIAS,
-                RubricRepository::ALIAS
+                UnderThematicRepository::ALIAS,
+                RubricRepository::ALIAS,
+                ThematicRepository::ALIAS
             )
             ->leftJoin(self::ALIAS . '.underRubric', UnderRubricRepository::ALIAS)
-            ->leftJoin(UnderRubricRepository::ALIAS . '.rubric', RubricRepository::ALIAS);
-
-
-    }
-
-    private function initialise_selectAll()
-    {
-        $this->builder = $this->createQueryBuilder(self::ALIAS)
-            ->select(
-                self::ALIAS,
-                UnderRubricRepository::ALIAS,
-                RubricRepository::ALIAS
-            )
-            ->leftJoin(self::ALIAS . '.underRubric', UnderRubricRepository::ALIAS)
-            ->leftJoin(UnderRubricRepository::ALIAS . '.rubric', RubricRepository::ALIAS);
+            ->leftJoin(UnderRubricRepository::ALIAS . '.underThematic', UnderThematicRepository::ALIAS)
+            ->leftJoin(UnderRubricRepository::ALIAS . '.rubric', RubricRepository::ALIAS)
+            ->leftJoin(RubricRepository::ALIAS . '.thematic', ThematicRepository::ALIAS);
 
 
     }
@@ -136,7 +108,9 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
         $this->builder = $this->createQueryBuilder(self::ALIAS)
             ->select('count(distinct ' . self::ALIAS . '.id)')
             ->leftJoin(self::ALIAS . '.underRubric', UnderRubricRepository::ALIAS)
-            ->leftJoin(UnderRubricRepository::ALIAS . '.rubric', RubricRepository::ALIAS);
+            ->leftJoin(UnderRubricRepository::ALIAS . '.underThematic', UnderThematicRepository::ALIAS)
+            ->leftJoin(UnderRubricRepository::ALIAS . '.rubric', RubricRepository::ALIAS)
+            ->leftJoin(RubricRepository::ALIAS . '.thematic', ThematicRepository::ALIAS);
     }
 
     private function initialise_where()
@@ -148,6 +122,10 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
             ->where(self::ALIAS . '.id>0');
 
         $this->initialise_where_underRubric();
+
+        $this->initialise_where_rubric();
+
+        $this->initialise_where_new();
 
         $this->initialise_where_enable();
 
@@ -161,6 +139,19 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
 
     }
 
+    private function initialise_where_new()
+    {
+        if ($this->dto->getNew()==BackpackDto::TRUE ) {
+            $to = date('Y-m-d', strtotime((new DateTime())->format('Y-m-d') . ' +1 day'));
+            $from = date('Y-m-d', strtotime((new DateTime())->format('Y-m-d') . ' -8 day'));
+
+            $this->builder->andWhere(
+                self::ALIAS . '.updateAt BETWEEN  :from AND :to');
+
+            $this->addParams('from', $from);
+            $this->addParams('to', $to);
+        }
+    }
 
     private function initialise_where_archiving()
     {
@@ -226,6 +217,14 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
         }
     }
 
+    private function initialise_where_rubric()
+    {
+        if (!empty($this->dto->getRubric())) {
+            $this->builder->andwhere(RubricRepository::ALIAS . '.id = :rubricid');
+            $this->addParams('rubricid', $this->dto->getRubric()->getId());
+        }
+    }
+
     private function initialise_where_search()
     {
         $dto = $this->dto;
@@ -249,8 +248,8 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
     private function initialise_orderBy()
     {
         $this->builder
-            ->addOrderBy(RubricRepository::ALIAS.'.name','ASC')
-            ->addOrderBy(UnderRubricRepository::ALIAS.'.name','ASC')
+            ->addOrderBy(RubricRepository::ALIAS . '.name', 'ASC')
+            ->addOrderBy(UnderRubricRepository::ALIAS . '.name', 'ASC')
             ->addOrderBy(self::ALIAS . '.dir1', 'ASC')
             ->addOrderBy(self::ALIAS . '.dir2', 'ASC')
             ->addOrderBy(self::ALIAS . '.dir3', 'ASC')
