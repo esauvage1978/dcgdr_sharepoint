@@ -1,0 +1,60 @@
+<!-- Intervenants -->
+<section id="anchor_intervenant" class="col-4">
+    <h5 class="text-purple p-1  text-center ">
+        Intervenants
+    </h5>
+
+    {% if rubric.writers.count >0 %}
+
+        <article class="card-body bg-white">
+            <h6>Pilote</h6>
+            <div class="list-group list-group-flush  bg-light">
+
+                {% for corbeille in rubric.writers %}
+                    {{ include('corbeille/_view/_list_group_item.html.twig' , {'show_code_organisme': true, 'link' : true}) }}
+                {% else %}
+                    <div class="list-group-item">En attente d'ajout</div>
+                {% endfor %}
+            </div>
+        </article>
+    {% else %}
+        <article class="card-body  bg-white">
+            <div class="mt-4 p-3 col-12 bg-light text-xs">
+                <span class="text-muted">
+                   Personne ne peut modifier cette rubrique
+                </span>
+            </div>
+        </article>
+    {% endif %}
+    {% if rubric.showall %}
+        <article class="card-body  bg-white">
+            <div class="mt-4 p-3 col-12 bg-light text-xs">
+                <span class="text-muted">
+                    Consultable par les utilisateurs connectées
+                </span>
+            </div>
+        </article>
+    {% elseif rubric.readers.count >0 %}
+        <article class="card-body  bg-white">
+            <h6>Consultant</h6>
+
+            <div class="list-group list-group-flush">
+
+                {% for corbeille in rubric.readers %}
+                    {{ include('corbeille/_view/_list_group_item.html.twig' , {'show_code_organisme': true, 'link' : true}) }}
+                {% else %}
+                    <div class="list-group-item">En attente d'ajout</div>
+                {% endfor %}
+            </div>
+        </article>
+        {% else %}
+            <article class="card-body  bg-white">
+                <div class="mt-4 p-3 col-12 bg-light text-xs">
+                <span class="text-muted">
+                   Personne ne peut consulter cette rubrique
+                </span>
+                </div>
+            </article>
+    {% endif %}
+</section>
+

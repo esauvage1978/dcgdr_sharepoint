@@ -66,6 +66,11 @@ class Rubric implements EntityInterface
      */
     private $writers;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showAll;
+
 
     public function __construct()
     {
@@ -238,6 +243,18 @@ class Rubric implements EntityInterface
         if ($this->writers->contains($writer)) {
             $this->writers->removeElement($writer);
         }
+
+        return $this;
+    }
+
+    public function getShowAll(): ?bool
+    {
+        return $this->showAll;
+    }
+
+    public function setShowAll(bool $showAll): self
+    {
+        $this->showAll = $showAll;
 
         return $this;
     }

@@ -12,15 +12,16 @@
     <div class="card-body text-center">
         <a href="{{ path('admin_rubric_show',{id:rubric.id}) }}" data-html="true"
            data-toggle="tooltip" data-placement="top" title="{{ rubric.content }}">
-            <h5 class="text-bold ">{{ rubric.name }}</h5>
+            <h5 class="text-bold {{ rubric.enable?'':'text-danger' }}">{{ rubric.name }}</h5>
         </a>
         <div class="text-muted">
             <a href="{{ path('admin_thematic_show',{id:rubric.thematic.id}) }}" data-html="true"
                data-toggle="tooltip" data-placement="top" title="{{ rubric.thematic.content }}">
-                {{ rubric.thematic.name }}
+                <span class="{{ rubric.thematic.enable?'':'text-danger' }}">{{ rubric.thematic.name }}</span>
             </a>
             <br/>
-            <small class="text-muted">0 PORTE-DOCUMENT</small>
+            {% set nbr=rubric.underRubrics | sumBackpackForRubricEnable %}
+            <small class="text-muted">{{nbr}} PORTE-DOCUMENT{{ nbr>1?'S':'' }}</small></div>
         </div>
 
     </div>
