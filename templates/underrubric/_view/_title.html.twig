@@ -1,11 +1,10 @@
 <div class="row  d-flex " id="anchor_underrubric_{{ underrubric.id }}">
     <div class="col-12">
-        <h5 class="text-muted  text-center d-lg-none">
- <i class="fas fa-angle-double-right"></i>
-            <span class=" {{ underrubric.underthematic.enable?'':'text-danger' }}">
+        <h5 class="text-muted  d-lg-none  mt-5">
+            <span class="text-purple {{ underrubric.underthematic.enable?'':'text-danger' }}">
                  {{ underrubric.underthematic.name }}
             </span><i class="fas fa-angle-right"></i>
-            <span class=" {{ underrubric.enable?'':'text-danger' }}">
+            <span class="text-purple {{ underrubric.enable?'':'text-danger' }}">
                 {{ underrubric.name }}
             </span>
             <div class="small text-muted  text-xs">
@@ -18,11 +17,11 @@
 
             </div>
         </h5>
-        <h5 class="text-muted ml-3 d-none d-lg-block">
-            <span class=" {{ underrubric.underthematic.enable?'':'text-danger' }}">
+        <h3 class="text-muted d-none d-lg-block mt-5">
+            <span class="text-purple {{ underrubric.underthematic.enable?'':'text-danger' }}">
                  {{ underrubric.underthematic.name }}
             </span><i class="fas fa-angle-right"></i>
-            <span class=" {{ underrubric.enable?'':'text-danger' }}">
+            <span class="text-purple {{ underrubric.enable?'':'text-danger' }}">
                 {{ underrubric.name }}
             </span>
             <div class="small text-muted text-xs">
@@ -34,7 +33,7 @@
             </span>
 
             </div>
-        </h5>
+        </h3>
         <a class="float-right text-primary " href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
     </div>
 </div>

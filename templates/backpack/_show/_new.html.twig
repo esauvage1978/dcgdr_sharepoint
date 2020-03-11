@@ -1,0 +1,11 @@
+{% if bp.updateAt %}
+    {% set difference = date("today").diff(date(bp.updateAt)) %}
+    {% set leftDays = difference.days %}
+
+    {% if leftDays <8 %}
+        <span class="badge badge-primary">
+            <i class="fas fa-certificate"></i> Nouveautés
+        </span>
+
+    {% endif %}
+{% endif %}

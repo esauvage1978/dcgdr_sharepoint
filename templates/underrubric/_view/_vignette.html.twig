@@ -1,16 +1,18 @@
 <div class="card mb-5 shadow  m-0 p-0">
 
-    <div class="ribbon-wrapper ribbon-lg">
-        <div class="ribbon  bg-gradient-light">
-            <a href="{{ path('admin_underthematic_show',{id:underrubric.underthematic.id}) }}">
-                <i class="fas fa-certificate"></i> Nouveautés
-            </a>
+    {% set nbrNew=underrubric.backpacks | hasNewForUnderRubric %}
+    {% if nbrNew >0 %}
+        <div class="ribbon-wrapper ribbon-lg">
+            <div class="ribbon  bg-gradient-light">
+                <a href="{{ path('backpack_new_underrubric',{id:underrubric.id}) }}">
+                    <i class="fas fa-certificate"></i> {{ nbrNew }} Nouveauté {{ nbrNew>1 ?'s':'' }}
+                </a>
+            </div>
         </div>
-    </div>
-
+    {% endif %}
     <a href="{{ path('underrubric_show',{id:underrubric.id}) }}">
         {% if underrubric.picture %}
-            <img src="{{ absolute_url( asset(underrubric.picture.href))}}" class="card-img-top rounded-top rounded-lg "
+            <img src="{{ absolute_url( asset(underrubric.picture.href)) }}" class="card-img-top rounded-top rounded-lg "
                  alt="{{ underrubric.picture.name }}">
         {% else %}
             <img src="{{ absolute_url( asset('img/vignette.jpg')) }}" class="card-img-top rounded-top rounded-lg "
@@ -24,7 +26,7 @@
                 </span>
                 <br/>
                 {% set nbr=underrubric.backpacks | sumBackpackForUnderRubricEnable %}
-                <small class="text-muted">{{nbr}} PORTE-DOCUMENT</small></div>
+                <small class="text-muted">{{ nbr }} PORTE-DOCUMENT</small></div>
         </div>
     </a>
 </div>

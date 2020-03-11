@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -52,7 +53,11 @@ class BackpackType extends AppTypeAbstract
             ->add('dir5', TextType::class, [
                 self::REQUIRED => false
             ])
-            ;
+            ->add('updateAt', DateTimeType::class,
+                [
+                    self::LABEL			=> 'dater',
+                    self::REQUIRED=>false
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
