@@ -168,6 +168,31 @@
                 </div>
 
             </div>
+
+            <div class="card mt-3">
+                <div class="card-footer  d-flex">
+                    Corbeilles
+                    {% if is_granted('ROLE_GESTIONNAIRE') %}
+                        <small class="ml-auto">
+                            <a href="{{ path('user_edit',{'id': user.id}) }}">modifier</a>
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="list-group list-group-flush dropright">
+                    {% for corbeille in user.corbeilles %}
+                        {{ include('corbeille/_view/_list_group_item.html.twig', {'show_code_organisme': true}) }}
+                    {% else %}
+                        <div class="list-group-item">
+                            {% if is_granted('ROLE_GESTIONNAIRE') %}
+                                <a class="text-success" href="{{ path('corbeille_new') }}">Créer une corbeille</a>
+                            {% else %}
+                                pas d'information
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Corbeille' %}
+{% set entityName='corbeille' %}
+{% set entity=corbeille %}
+
+{% block title %}{{ parent() }} {{title}}{% endblock %}
+
+{% block body_header %}
+    {{ include('admin/_body_header.html.twig', {domaine:title , 'id' : entity.id, index : entityName~'_index'}) }}
+{% endblock %}
+
+{% block sidebar_sommaire %}
+
+{% endblock %}
+
+{% block sidebar_button %}
+    {% if is_granted('ROLE_GESTIONNAIRE') %}
+
+        {{ include('share/__btn_save_onclick.html.twig') }}
+
+        <span class="mb-3"></span>
+
+        <span class="btn btn-danger " onclick="$('#delete').click();">
+            <i class="fas fa-trash"></i> Supprimer
+        </span>
+
+    {% endif %}
+
+    <span class="mb-3"></span>
+
+    {{ include('share/__btn_return_show.html.twig',
+        {   url:entityName~'_show',
+            id:entity.id
+        }) }}
+
+    <span class="mb-3"></span>
+
+    {{ include('share/__btn_return_list.html.twig',
+        {   url:entityName~'_index'
+        }) }}
+
+{% endblock %}
+
+{% block body %}
+
+
+    {{ form_start(form) }}
+    <div class="row justify-content-center">
+        <div class="row col-12 ">
+            <div id="col1"
+                 class="col-sm-12  order-sm-second  col-md-12 order-sm-second col-lg-6 order-lg-second col-xl-2 order-xl-first ">
+                <div class="shadow">
+                    {{ include(entityName~'/_edit/_afficher.html.twig') }}
+                    {{ include(entityName~'/_edit/_read.html.twig') }}
+                    {{ include(entityName~'/_edit/_write.html.twig') }}
+                </div>
+            </div>
+            <div id="col2"
+                 class=" col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-10 order-xl-second ">
+                <div class="shadow bg-white pl-5 pr-5 pb-5">
+                    {{ include(entityName~'/_edit/_name.html.twig') }}
+                </div>
+                <div class="d-none">
+                    <button name="update" id="update">{{ button_label|default('Save') }}</button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="d-none">
+        {{ include('share/__btn_save.html.twig') }}
+    </div>
+    {{ form_end(form) }}
+    <div class="d-none">
+        {{ include('share/_delete_form.html.twig',{domaine:entityName,'id':entity.id}) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
+{% endblock %}
+

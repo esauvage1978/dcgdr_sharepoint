@@ -1,18 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} Organisme{% endblock %}
+{% set title='Organisme' %}
+{% set entityName='organisme' %}
+{% set entity=organisme %}
 
-{% block stylesheets %}
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/select2/css/select2.min.css')) }}">
-    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')) }}">
-
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')) }}">
-{% endblock %}
+{% block title %}{{ parent() }} {{ title }}{% endblock %}
 
 {% block body_header %}
-    {{ include('admin/_body_header.html.twig', {'domaine': 'Organisme' , 'index' : 'organisme_index'}) }}
+    {{ include('admin/_body_header.html.twig', {domaine:title ,index : entityName~'_index'}) }}
+{% endblock %}
+
+{% block sidebar_sommaire %}
+
+{% endblock %}
+
+{% block sidebar_button %}
+    {% if is_granted('ROLE_GESTIONNAIRE') %}
+
+        {{ include('share/__btn_save_onclick.html.twig') }}
+    {% endif %}
+
+
+    <span class="mb-3"></span>
+
+    {{ include('share/__btn_return_list.html.twig',
+        {   url:entityName~'_index'
+        }) }}
+
 {% endblock %}
 
 {% block body %}
@@ -20,41 +34,38 @@
 
     {{ form_start(form) }}
     <div class="row justify-content-center">
-        <div class="{{ col_primary }}">
-            <div class="card ">
-
-                {{  include ('organisme/_form.html.twig') }}
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col  d-flex justify-content-between align-items-center">
-
-                            {{ include('share/__btn_return_list.html.twig',
-                                {   'url':'organisme_index'
-                                }) }}
-
-                            {{ include('share/__btn_save.html.twig') }}
-                        </div>
-                    </div>
+        <div class="row col-12 ">
+            <div id="col1"
+                 class="col-sm-12  order-sm-second  col-md-12 order-sm-second col-lg-6 order-lg-second col-xl-2 order-xl-first ">
+                <div class="shadow">
+                    {{ include(entityName~'/_edit/_afficher.html.twig') }}
                 </div>
             </div>
-        </div>
-        <div class="{{ col_secondary}}">
-            <div class="card ">
-                <div class="card-footer">
-                    Utilisateurs
+            <div id="col2"
+                 class=" col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-10 order-xl-second ">
+                <div class="shadow bg-white pl-5 pr-5 pb-5">
+                    {{ include(entityName~'/_edit/_name.html.twig') }}
                 </div>
-                <div class="card-body select2-primary">
-                    {{ form_widget(form.users) }}
+                <div class="d-none">
+                    <button name="update" id="update">{{ button_label|default('Save') }}</button>
                 </div>
             </div>
+
+
         </div>
+
+    </div>
+
+    <div class="d-none">
+        {{ include('share/__btn_save.html.twig') }}
     </div>
     {{ form_end(form) }}
 
 {% endblock %}
 
-{% block javascripts %}
-    <!-- Select2 -->
-    <script src="{{ absolute_url( asset('plugins/select2/js/select2.full.min.js')) }}"></script>
 
+
+{% block javascripts %}
+    <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
 {% endblock %}
+

@@ -1,0 +1,6 @@
+<a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-default m-1">
+
+    <span class="{{ user.enable?'':'text-danger' }}">
+        {{ user.name }}
+    </span>
+</a>

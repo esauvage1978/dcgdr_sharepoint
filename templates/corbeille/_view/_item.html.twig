@@ -1,0 +1,6 @@
+<a href="{{ path('corbeille_show', {'id': corbeille.id}) }}" class="btn btn-default m-1">
+
+    <span class="{{ corbeille.enable?'':'text-danger' }}">
+        {{ corbeille.name }}
+    </span>
+</a>

@@ -200,6 +200,16 @@
                 </div>
 
             </div>
+
+            <div class="card mt-3">
+                <div class="card-footer d-flex">
+                    Corbeilles
+                </div>
+                    {% for corbeille in user.corbeilles %}
+                        {{ include('corbeille/_view/_list_group_item.html.twig') }}
+                    {% endfor %}
+
+            </div>
         </div>
     </div>
 

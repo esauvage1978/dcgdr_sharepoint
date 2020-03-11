@@ -50,7 +50,7 @@
     <div class="row justify-content-center">
         <div id="anchor_name" class="jumbotron col-12 text-center text-purple">
             <h3>
-                {{ organisme.ref }} <i class="fas fa-angle-right"></i> {{ entity.name }}
+                {{ entity.ref }} <i class="fas fa-angle-right"></i> {{ entity.name }}
             </h3>
             <small class="float-right">
                 {% if entity.enable %}
@@ -63,25 +63,32 @@
         {{ include(entityName~'/_show/_content.html.twig',{content:entity.content}) }}
 
 
-        <div class="col-10 mb-4">
-            <h5 class="text-purple p-1 pt-4 text-center ">
-                <i class="fas fa-boxes"></i> Corbeilles
-            </h5>
-            <div class="card ">
-                <div class="list-group list-group-flush dropright">
+        {% if entity.corbeilles | length >0 %}
+            <div class="col-10">
+                <h5 class="text-purple p-1 pt-4 text-center ">
+                    <i class="fas fa-users"></i> Corbeilles
+                </h5>
+                <div class="card ">
+                    <div class="card-body text-justify">
+                        {% for corbeille in entity.corbeilles %}
+                            {{ include('corbeille/_view/_item.html.twig') }}
+                        {% else %}
+                            <div class="list-group-item">En attente d'ajout</div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
-        {% if organisme.users | length >0 %}
+        {% if entity.users | length >0 %}
         <div class="col-10">
             <h5 class="text-purple p-1 pt-4 text-center ">
                 <i class="fas fa-users"></i> Utilisateurs
             </h5>
             <div class="card ">
                 <div class="card-body text-justify">
-                    {% for user in organisme.users %}
-                        {{ include('user/_show_item.html.twig') }}
+                    {% for user in entity.users %}
+                        {{ include('user/_view/_item.html.twig') }}
                     {% else %}
                         <div class="list-group-item">En attente d'ajout</div>
                     {% endfor %}
