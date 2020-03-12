@@ -46,6 +46,52 @@ class RubricDto implements DtoInterface
     /**
      * @return mixed
      */
+    public function getUnderThematicEnable()
+    {
+        return $this->underThematicEnable;
+    }
+
+    /**
+     * @param mixed $underThematicEnable
+     * @return RubricDto
+     */
+    public function setUnderThematicEnable($underThematicEnable)
+    {
+        $this->underThematicEnable = $underThematicEnable;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUnderRubricEnable()
+    {
+        return $this->underRubricEnable;
+    }
+
+    /**
+     * @param mixed $underRubricEnable
+     * @return RubricDto
+     */
+    public function setUnderRubricEnable($underRubricEnable)
+    {
+        $this->underRubricEnable = $underRubricEnable;
+        return $this;
+    }
+
+    /**
+     * @var ?String
+     */
+    private $underThematicEnable;
+
+    /**
+     * @var ?String
+     */
+    private $underRubricEnable;
+
+    /**
+     * @return mixed
+     */
     public function getUser()
     {
         return $this->user;

@@ -31,6 +31,7 @@ class UnderRubricController extends AppControllerAbstract
         BackpackDtoRepository $backpackDtoRepository
     ) {
         $backpackDto
+            ->setUser($this->getUser())
             ->setArchiving(BackpackDto::FALSE)
             ->setUnderRubric($underrubric)
             ->setEnable(RubricDto::TRUE)
@@ -38,6 +39,11 @@ class UnderRubricController extends AppControllerAbstract
             ->setThematicEnable(RubricDto::TRUE)
             ->setUnderRubricEnable(RubricDto::TRUE)
             ->setRubricEnable(RubricDto::TRUE);
+
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $backpackDto
+                ->setUser($this->getUser());
+        }
 
         return $this->render(self::ENTITY.'/list.html.twig', [
             self::ENTITY => $underrubric,

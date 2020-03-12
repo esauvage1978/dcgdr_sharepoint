@@ -28,16 +28,25 @@
                                 <tr>
                                     <th class="all">#</th>
                                     <th class="all">Image de présentation</th>
-                                    <th class="all">Thématique des rubriques</th>
                                     <th class="all">Rubrique</th>
                                     <th class="all">Thématique des sous rubriques</th>
                                     <th class="all">Nom</th>
                                     <th class="all">Ordre d'affichage</th>
+                                    <th class="all col-2">Description</th>
                                     <th class="desktop text-center">
                                         <i class="fas fa-project-diagram" data-toggle="tooltip" data-placement="top"
-                                           title="Nombre de porte document'"></i>
+                                           title="Nombre de porte document"></i>
                                     </th>
-                                    <th class="all">Description</th>
+                                    <th class="desktop text-center">
+                                        <i class="fa fa-eye"  data-toggle="tooltip" data-placement="top" title="Consultable par tous"></i>
+                                    </th>
+                                    <th class="desktop text-center">
+                                        <i class="fa fa-boxes"  data-toggle="tooltip" data-placement="top" title="Nombre de corbeilles de consultation"></i>
+                                    </th>
+                                    <th class="desktop text-center">
+                                        <i class="fa fa-boxes"  data-toggle="tooltip" data-placement="top" title="Nombre de corbeilles de modification"></i>
+                                    </th>
+
                                     <th class="all text-center"></th>
                                 </tr>
                                 </thead>
@@ -50,11 +59,14 @@
                                                 {{ include('picture/_show/_picture_mini.html.twig',{picture:entity.picture}) }}
                                             {% endif %}
                                         </td>
-                                        <td class="align-middle text-{{ entity.rubric.thematic.enable ? 'gray-dark' : 'danger text-bold' }}">
-                                            {{ entity.rubric.thematic.name }}
-                                        </td>
-                                        <td class="align-middle text-{{ entity.rubric.enable ? 'gray-dark' : 'danger text-bold' }}">
-                                            {{ entity.rubric.name }}
+
+                                        <td class="align-middle ">
+                                            <span class="text-{{ entity.rubric.enable ? 'gray-dark' : 'danger text-bold' }}">
+                                                <a href="{{ path('admin_rubric_show',{id:entity.rubric.id}) }}">
+                                                    {{ entity.rubric.name }}
+                                                </a>
+                                            </span><br>
+                                            <span class="text-muted text-{{ entity.rubric.thematic.enable ? 'gray-dark' : 'danger' }}">{{ entity.rubric.thematic.name }}</span>
                                         </td>
                                         <td class="align-middle text-{{ entity.underthematic.enable ? 'gray-dark' : 'danger text-bold' }}">
                                             {{ entity.underthematic.name }}
@@ -65,12 +77,35 @@
                                         <td class="align-middle text-center">
                                             {{ entity.showOrder }}
                                         </td>
-                                        <td class="align-middle text-center">
-
-                                        </td>
                                         <td class="align-middle">
                                             {{ entity.content |raw }}
                                         </td>
+
+                                        <td class="align-middle text-center">
+                                            {% if   entity.backpacks.count==0 %}
+                                                <span class="text-light" ><i class="fas fa-circle"></i></span>
+                                            {% else %}
+                                                <small class="badge bg-info">{{ entity.backpacks.count}}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-{{ entity.showAll ? 'primary' : 'light' }} " ><i class="fas fa-circle"></i></span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            {% if   entity.readers.count==0 %}
+                                                <span class="text-light" ><i class="fas fa-circle"></i></span>
+                                            {% else %}
+                                                <small class="badge bg-info">{{ entity.readers.count}}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            {% if   entity.writers.count==0 %}
+                                                <span class="text-light" ><i class="fas fa-circle"></i></span>
+                                            {% else %}
+                                                <small class="badge bg-info">{{ entity.writers.count}}</small>
+                                            {% endif %}
+                                        </td>
+
 
                                         <td class=" d-flex  justify-content-end ">
 

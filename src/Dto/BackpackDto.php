@@ -58,6 +58,29 @@ class BackpackDto implements DtoInterface
     private $thematicEnable;
 
     /**
+     * @var ?User
+     */
+    private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return BackpackDto
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getUnderRubric()

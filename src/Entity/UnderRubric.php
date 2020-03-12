@@ -59,12 +59,30 @@ class UnderRubric implements EntityInterface
      */
     private $backpacks;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Corbeille", inversedBy="underrubricReaders")
+     * @ORM\JoinTable("underrubricreader_corbeille")
+     */
+    private $readers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Corbeille", inversedBy="underrubricWriters")
+     * @ORM\JoinTable("underrubricwriter_corbeille")
+     */
+    private $writers;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showAll;
 
 
     public function __construct()
     {
         $this->showOrder=0;
         $this->backpacks = new ArrayCollection();
+        $this->readers = new ArrayCollection();
+        $this->writers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,6 +213,70 @@ class UnderRubric implements EntityInterface
                 $backpack->setUnderRubric(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Corbeille[]
+     */
+    public function getReaders(): Collection
+    {
+        return $this->readers;
+    }
+
+    public function addReader(Corbeille $reader): self
+    {
+        if (!$this->readers->contains($reader)) {
+            $this->readers[] = $reader;
+        }
+
+        return $this;
+    }
+
+    public function removeReader(Corbeille $reader): self
+    {
+        if ($this->readers->contains($reader)) {
+            $this->readers->removeElement($reader);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Corbeille[]
+     */
+    public function getWriters(): Collection
+    {
+        return $this->writers;
+    }
+
+    public function addWriter(Corbeille $writer): self
+    {
+        if (!$this->writers->contains($writer)) {
+            $this->writers[] = $writer;
+        }
+
+        return $this;
+    }
+
+    public function removeWriter(Corbeille $writer): self
+    {
+        if ($this->writers->contains($writer)) {
+            $this->writers->removeElement($writer);
+        }
+
+        return $this;
+    }
+
+    public function getShowAll(): ?bool
+    {
+        return $this->showAll;
+    }
+
+    public function setShowAll(bool $showAll): self
+    {
+        $this->showAll = $showAll;
 
         return $this;
     }

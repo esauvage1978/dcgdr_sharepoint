@@ -17,6 +17,30 @@ class UnderRubricDto implements DtoInterface
      * @var ?Rubric
      */
     private $rubric;
+
+    /**
+     * @var ?User
+     */
+    private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return UnderRubricDto
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
     /**
      * @var ?UnderThematic
      */

@@ -41,10 +41,15 @@ class RubricController extends AppControllerAbstract
 
         $underrubricDto
             ->setRubric($rubric)
-            ->setEnable(RubricDto::TRUE)
-            ->setRubricEnable(RubricDto::TRUE)
-            ->setUnderThematicEnable(RubricDto::TRUE)
-            ->setThematicEnable(RubricDto::TRUE);
+            ->setEnable(UnderRubricDto::TRUE)
+            ->setRubricEnable(UnderRubricDto::TRUE)
+            ->setUnderThematicEnable(UnderRubricDto::TRUE)
+            ->setThematicEnable(UnderRubricDto::TRUE);
+
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $underrubricDto
+                ->setUser($this->getUser());
+        }
 
         return $this->render(self::ENTITY.'/list.html.twig', [
             self::ENTITY => $rubric,

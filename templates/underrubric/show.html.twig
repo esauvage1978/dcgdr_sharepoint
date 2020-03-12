@@ -68,7 +68,14 @@
                 {% endif %}
             </small>
         </div>
-
+        <div class="row  col-12 ">
+            {{ include('underrubric/_show/_intervenant.html.twig') }}
+            {{ include('underrubric/_view/_vignette_admin.html.twig') }}
+            {{ include('underrubric/_show/_content.html.twig',{content:entity.content}) }}
+        </div>
+        <div class="col-12">
+        {{ include('backpack/_view/_tree.html.twig',{backpacks:entity.backpacks}) }}
+        </div>
         <div class="d-none">
             {{ include('share/_delete_form.html.twig',{domaine: entityName ,id:entity.id}) }}
         </div>

@@ -150,7 +150,8 @@ class Step1230_UnderRubricFixtures extends Fixture implements FixtureGroupInterf
             ->setName($data['nom'])
             ->setEnable($data['afficher'])
             ->setContent($data['description'])
-            ->setShowOrder(empty($data['ordre'])?0:$data['ordre']);
+            ->setShowOrder(empty($data['ordre'])?0:$data['ordre'])
+            ->setShowAll($data['consultation_all']=='1'?true:false);
 
         if (!empty($rubric)) {
             $instance->setRubric($rubric);

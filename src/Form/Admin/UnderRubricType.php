@@ -22,7 +22,14 @@ class UnderRubricType extends AppTypeAbstract
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder = $this->buildFormNameEnableContent($builder);
+        $builder = $this->buildFormReaders($builder);
+        $builder = $this->buildFormWriters($builder);
         $builder
+            ->add('showall', CheckboxType::class,
+                [
+                    self::LABEL => '  Visible par tous',
+                    self::REQUIRED => false,
+                ])
             ->add('picture', EntityType::class, [
                 self::CSS_CLASS => Picture::class,
                 self::LABEL=>'Image de présentaion',

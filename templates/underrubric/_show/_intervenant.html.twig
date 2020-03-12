@@ -1,0 +1,60 @@
+<!-- Intervenants -->
+<section id="anchor_intervenant" class="col-4">
+    <h5 class="text-purple p-1  text-center ">
+        Intervenants
+    </h5>
+<div class="bg-white shadow">
+    {% if underrubric.writers.count >0 %}
+
+        <article class="card-body bg-white">
+            <h6>Pilote</h6>
+            <div class="list-group list-group-flush  bg-light">
+
+                {% for corbeille in underrubric.writers %}
+                    {{ include('corbeille/_view/_list_group_item.html.twig' , {'show_code_organisme': true, 'link' : true}) }}
+                {% else %}
+                    <div class="list-group-item">En attente d'ajout</div>
+                {% endfor %}
+            </div>
+        </article>
+    {% else %}
+        <article class="card-body  bg-white">
+            <div class="mt-4 p-3 col-12 text-danger text-center ">
+                <i class="fas fa-times-circle fa-2x"></i> <br>
+                Personne ne peut modifier la rubrique
+            </div>
+        </article>
+    {% endif %}
+    {% if underrubric.showall %}
+        <article class="card-body">
+            <div class="mt-4 p-3 col-12 text-success  text-center">
+                <i class="fas fa-check-circle fa-2x"></i><br>
+                    Consultable par les utilisateurs connectées
+            </div>
+        </article>
+    {% elseif underrubric.readers.count >0 %}
+        <article class="card-body  bg-white">
+            <h6>Consultant</h6>
+
+            <div class="list-group list-group-flush">
+
+                {% for corbeille in underrubric.readers %}
+                    {{ include('corbeille/_view/_list_group_item.html.twig' , {'show_code_organisme': true, 'link' : true}) }}
+                {% else %}
+                    <div class="list-group-item">En attente d'ajout</div>
+                {% endfor %}
+            </div>
+        </article>
+
+    {% endif %}
+    {% if underrubric.readers.count ==0 and underrubric.writers.count ==0 %}
+    <article class="card-body ">
+        <div class="mt-4 p-3 col-12 text-danger text-center ">
+            <i class="fas fa-times-circle fa-2x"></i> <br>
+            Personne ne peut consulter la rubrique
+        </div>
+    </article>
+    {% endif %}
+</div>
+</section>
+
