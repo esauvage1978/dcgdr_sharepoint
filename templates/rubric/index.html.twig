@@ -57,8 +57,12 @@
                                                 {{ include('picture/_show/_picture_mini.html.twig',{picture:entity.picture}) }}
                                             {% endif %}
                                         </td>
-                                        <td class="align-middle text-{{ entity.thematic.enable ? 'gray-dark' : 'danger text-bold' }}">
-                                            {{ entity.thematic.name }}
+                                        <td class="align-middle ">
+                                            <a href{{ path('admin_thematic_show',{id:entity.thematic.id}) }}>
+                                                <span class="text-{{ entity.thematic.enable ? 'gray-primary' : 'danger text-bold' }}">
+                                                    {{ entity.thematic.name }}
+                                                </span>
+                                            </a>
                                         </td>
                                         <td class="align-middle text-{{ entity.enable ? 'gray-dark' : 'danger text-bold' }}">
                                             {{ entity.name }}

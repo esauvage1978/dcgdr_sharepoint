@@ -46,6 +46,10 @@ class BackpackController extends AppControllerAbstract
             ->setUnderRubricEnable(BackpackDto::TRUE)
             ->setRubricEnable(BackpackDto::TRUE);
 
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $backpackDto
+                ->setUser($this->getUser());
+        }
 
         return $this->render(
             'backpack/listNew.html.twig',
@@ -74,6 +78,11 @@ class BackpackController extends AppControllerAbstract
             ->setUnderRubricEnable(BackpackDto::TRUE)
             ->setRubricEnable(BackpackDto::TRUE);
 
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $backpackDtoArchiving
+                ->setUser($this->getUser());
+        }
+
         return $this->render(
             'backpack/archiving.html.twig',
             [
@@ -90,15 +99,20 @@ class BackpackController extends AppControllerAbstract
         BackpackDtoRepository $backpackDtoRepository
     ): Response
     {
-        $backpackDtoArchiving = new BackpackDto();
+        $backpackDto = new BackpackDto();
 
-        $backpackDtoArchiving
+        $backpackDto
             ->setEnable(BackpackDto::FALSE);
+
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $backpackDto
+                ->setUser($this->getUser());
+        }
 
         return $this->render(
             'backpack/disable.html.twig',
             [
-                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDtoArchiving)
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto)
             ]);
     }
 
@@ -124,6 +138,10 @@ class BackpackController extends AppControllerAbstract
             ->setUnderRubricEnable(BackpackDto::TRUE)
             ->setRubricEnable(BackpackDto::TRUE);
 
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $backpackDto
+                ->setUser($this->getUser());
+        }
 
         return $this->render(
             'backpack/listNew.html.twig',
@@ -153,6 +171,10 @@ class BackpackController extends AppControllerAbstract
             ->setUnderRubricEnable(BackpackDto::TRUE)
             ->setRubricEnable(BackpackDto::TRUE);
 
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $backpackDto
+                ->setUser($this->getUser());
+        }
 
         return $this->render(
             'backpack/listNew.html.twig',

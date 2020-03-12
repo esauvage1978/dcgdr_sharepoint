@@ -71,6 +71,21 @@ class RubricVoter extends Voter
                 return true;
             }
         }
+        foreach ($rubric->getUnderRubrics() as $underRubric) {
+            foreach ($underRubric->getReaders() as $corbeille) {
+                if (in_array($user, $corbeille->getUsers()->toArray())) {
+                    return true;
+                }
+            }
+            foreach ($underRubric->getWriters() as $corbeille) {
+                if (in_array($user, $corbeille->getUsers()->toArray())) {
+                    return true;
+                }
+            }
+            if ($underRubric->getShowAll()) {
+                return true;
+            }
+        }
 
         return $this->canUpdate($rubric, $user);
     }

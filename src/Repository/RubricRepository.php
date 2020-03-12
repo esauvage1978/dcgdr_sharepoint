@@ -28,11 +28,15 @@ class RubricRepository extends ServiceEntityRepository
             ->select(self::ALIAS,
                 ThematicRepository::ALIAS,
                 UnderRubricRepository::ALIAS,
-                PictureRepository::ALIAS
+                PictureRepository::ALIAS,
+                CorbeilleRepository::ALIAS_RUBRIC_WRITERS,
+                CorbeilleRepository::ALIAS_RUBRIC_READERS
                 )
             ->leftJoin(self::ALIAS.'.thematic',ThematicRepository::ALIAS)
             ->leftJoin(self::ALIAS.'.underRubrics',UnderRubricRepository::ALIAS)
             ->leftJoin(self::ALIAS.'.picture',PictureRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.writers', CorbeilleRepository::ALIAS_RUBRIC_WRITERS)
+            ->leftJoin(self::ALIAS . '.readers', CorbeilleRepository::ALIAS_RUBRIC_READERS)
             ->orderBy(self::ALIAS.'.name', 'ASC')
             ->getQuery()
             ->getResult();

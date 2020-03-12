@@ -25,8 +25,19 @@ class HomeController extends AbstractController
         RubricDtoRepository $rubricDtoRepository
     )
     {
+        $rubricDto
+            ->setEnable(RubricDto::TRUE)
+            ->setThematicEnable(RubricDto::TRUE)
+            ->setUnderRubricEnable(RubricDto::TRUE)
+            ->setUnderThematicEnable(RubricDto::TRUE);
+
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $rubricDto
+                ->setUser($this->getUser());
+        }
+
         return $this->render('home/home.html.twig', [
-            'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto->setUser($this->getUser())),
+            'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
         ]);
     }
 
@@ -49,15 +60,21 @@ class HomeController extends AbstractController
         $backpackDtoEnable = new BackpackDto();
 
         $underRubricDto
+            ->setUser($this->getUser())
             ->setWordSearch($request->request->get('search'))
             ->setEnable(UnderRubricDto::TRUE)
             ->setThematicEnable(UnderRubricDto::TRUE)
             ->setUnderThematicEnable(UnderRubricDto::TRUE)
             ->setRubricEnable(UnderRubricDto::TRUE);
+
         $rubricDto
+            ->setUser($this->getUser())
             ->setWordSearch($request->request->get('search'))
             ->setEnable(RubricDto::TRUE)
-            ->setThematicEnable(RubricDto::TRUE);
+            ->setThematicEnable(RubricDto::TRUE)
+            ->setUnderRubricEnable(RubricDto::TRUE)
+            ->setUnderThematicEnable(RubricDto::TRUE);
+
         $backpackDto
             ->setArchiving(BackpackDto::FALSE)
             ->setWordSearch($request->request->get('search'))
@@ -66,6 +83,7 @@ class HomeController extends AbstractController
             ->setThematicEnable(BackpackDto::TRUE)
             ->setUnderRubricEnable(BackpackDto::TRUE)
             ->setRubricEnable(BackpackDto::TRUE);
+
         $backpackDtoArchiving
             ->setArchiving(BackpackDto::TRUE)
             ->setWordSearch($request->request->get('search'))
@@ -79,6 +97,18 @@ class HomeController extends AbstractController
             ->setWordSearch($request->request->get('search'))
             ->setEnable(BackpackDto::FALSE);
 
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $rubricDto
+                ->setUser($this->getUser());
+            $underRubricDto
+                ->setUser($this->getUser());
+            $backpackDto
+                ->setUser($this->getUser());
+            $backpackDtoArchiving
+                ->setUser($this->getUser());
+            $backpackDtoEnable
+                ->setUser($this->getUser());
+        }
 
         return $this->render(
             'home/search.html.twig',

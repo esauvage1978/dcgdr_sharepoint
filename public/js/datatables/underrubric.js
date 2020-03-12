@@ -5,7 +5,7 @@ $('#tableAdministration').DataTable({
     paging: false,
     scrollX: false,
     ordering: true,
-    "order": [[6, 'asc']],
+    "order": [[4, 'asc']],
     "columns": [
         null,
         {"orderable": false},
@@ -15,7 +15,9 @@ $('#tableAdministration').DataTable({
         null,
         null,
         {"orderable": false},
-        null,
+        {"orderable": false},
+        {"orderable": false},
+        {"orderable": false},
         {"orderable": false}
     ],
     "language": {

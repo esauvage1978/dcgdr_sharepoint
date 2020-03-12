@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Dto\RubricDto;
 use App\Dto\DtoInterface;
+use App\Dto\UnderRubricDto;
 use App\Entity\Rubric;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -96,10 +97,7 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
                 UnderRubricRepository::ALIAS,
                 UnderThematicRepository::ALIAS,
                 BackpackRepository::ALIAS,
-                CorbeilleRepository::ALIAS_RUBRIC_WRITERS,
-                UserRepository::ALIAS_RUBRIC_WRITERS,
-                CorbeilleRepository::ALIAS_RUBRIC_READERS,
-                CorbeilleRepository::ALIAS_RUBRIC_READERS
+
             )
             ->leftJoin(self::ALIAS . '.picture', PictureRepository::ALIAS)
             ->leftJoin(self::ALIAS . '.thematic', ThematicRepository::ALIAS)
@@ -110,6 +108,10 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
             ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_WRITERS . '.users', UserRepository::ALIAS_RUBRIC_WRITERS)
             ->leftJoin(self::ALIAS . '.readers', CorbeilleRepository::ALIAS_RUBRIC_READERS)
             ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_READERS . '.users', UserRepository::ALIAS_RUBRIC_READERS)
+            ->leftJoin(UnderRubricRepository::ALIAS . '.writers', CorbeilleRepository::ALIAS_UNDERRUBRIC_WRITERS)
+            ->leftJoin(CorbeilleRepository::ALIAS_UNDERRUBRIC_WRITERS . '.users', UserRepository::ALIAS_UNDERRUBRIC_WRITERS)
+            ->leftJoin(UnderRubricRepository::ALIAS . '.readers', CorbeilleRepository::ALIAS_UNDERRUBRIC_READERS)
+            ->leftJoin(CorbeilleRepository::ALIAS_UNDERRUBRIC_READERS . '.users', UserRepository::ALIAS_UNDERRUBRIC_READERS)
         ;
 
 
@@ -123,14 +125,17 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
             ->leftJoin(self::ALIAS . '.writers', CorbeilleRepository::ALIAS_RUBRIC_WRITERS)
             ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_WRITERS . '.users', UserRepository::ALIAS_RUBRIC_WRITERS)
             ->leftJoin(self::ALIAS . '.readers', CorbeilleRepository::ALIAS_RUBRIC_READERS)
-        ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_READERS . '.users', UserRepository::ALIAS_RUBRIC_READERS);
+            ->leftJoin(CorbeilleRepository::ALIAS_RUBRIC_READERS . '.users', UserRepository::ALIAS_RUBRIC_READERS)
+            ->leftJoin(UnderRubricRepository::ALIAS . '.writers', CorbeilleRepository::ALIAS_UNDERRUBRIC_WRITERS)
+            ->leftJoin(CorbeilleRepository::ALIAS_UNDERRUBRIC_WRITERS . '.users', UserRepository::ALIAS_UNDERRUBRIC_WRITERS)
+            ->leftJoin(UnderRubricRepository::ALIAS . '.readers', CorbeilleRepository::ALIAS_UNDERRUBRIC_READERS)
+            ->leftJoin(CorbeilleRepository::ALIAS_UNDERRUBRIC_READERS . '.users', UserRepository::ALIAS_UNDERRUBRIC_READERS);
     }
 
     private function initialise_where()
     {
         $this->params = [];
         $dto = $this->dto;
-
         $this->builder
             ->where(self::ALIAS . '.id>0');
 
@@ -156,7 +161,7 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
     private function initialise_where_thematic()
     {
         if (!empty($this->dto->getThematic())) {
-            $this->builder->andwhere(ThematicRepository::ALIAS . '.id = :thematicid');
+            $this->builder->andWhere(ThematicRepository::ALIAS . '.id = :thematicid');
             $this->addParams('thematicid', $this->dto->getThematic()->getId());
         }
     }
@@ -167,17 +172,34 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
     {
         if (!empty($this->dto->getEnable())) {
             if($this->dto->getEnable()== RubricDto::TRUE) {
-                $this->builder->andwhere(self::ALIAS . '.enable= true');
+
+                $this->builder->andWhere(self::ALIAS . '.enable= true');
             } elseif($this->dto->getEnable()== RubricDto::FALSE) {
-                $this->builder->andwhere(self::ALIAS . '.enable= false');
+                $this->builder->andWhere(self::ALIAS . '.enable= false');
             }
         }
 
         if (!empty($this->dto->getThematicEnable())) {
             if($this->dto->getThematicEnable()== RubricDto::TRUE) {
-                $this->builder->andwhere(ThematicRepository::ALIAS . '.enable= true');
+                $this->builder->andWhere(ThematicRepository::ALIAS . '.enable= true');
             } elseif($this->dto->getThematicEnable()== RubricDto::FALSE) {
-                $this->builder->andwhere(ThematicRepository::ALIAS . '.enable= false');
+                $this->builder->andWhere(ThematicRepository::ALIAS . '.enable= false');
+            }
+        }
+
+        if (!empty($this->dto->getUnderThematicEnable())) {
+            if($this->dto->getUnderThematicEnable()== RubricDto::TRUE) {
+                $this->builder->andWhere(UnderThematicRepository::ALIAS . '.enable= true');
+            } elseif($this->dto->getUnderThematicEnable()== RubricDto::FALSE) {
+                $this->builder->andWhere(UnderThematicRepository::ALIAS . '.enable= false');
+            }
+        }
+
+        if (!empty($this->dto->getUnderRubricEnable())) {
+            if($this->dto->getUnderRubricEnable()== RubricDto::TRUE) {
+                $this->builder->andWhere(UnderRubricRepository::ALIAS . '.enable= true');
+            } elseif($this->dto->getUnderRubricEnable()== RubricDto::FALSE) {
+                $this->builder->andWhere(UnderRubricRepository::ALIAS . '.enable= false');
             }
         }
     }
@@ -185,7 +207,7 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
     private function initialise_where_underRubric()
     {
         if (!empty($this->dto->getUnderRubric())) {
-            $this->builder->andwhere(UnderRubricRepository::ALIAS . '.id = :underrubricid');
+            $this->builder->andWhere(UnderRubricRepository::ALIAS . '.id = :underrubricid');
             $this->addParams('underrubricid', $this->dto->getUnderRubric()->getId());
         }
     }
@@ -196,7 +218,7 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
         $builder = $this->builder;
         if (!empty($dto->getWordSearch())) {
             $builder
-                ->andwhere(
+                ->andWhere(
                     self::ALIAS . '.content like :search' .
                     ' OR ' . self::ALIAS . '.name like :search' .
                     ' OR ' . ThematicRepository::ALIAS . '.name like :search' );
@@ -209,10 +231,13 @@ class RubricDtoRepository extends ServiceEntityRepository implements DtoReposito
     {
         if (!empty($this->dto->getUser())) {
             $this->builder
-                ->andwhere(
+                ->andWhere(
                     UserRepository::ALIAS_RUBRIC_WRITERS . '.id like :userId' .
                     ' OR ' . UserRepository::ALIAS_RUBRIC_READERS . '.id like :userId' .
-                    ' OR ' . self::ALIAS . '.showAll = 1' );
+                    ' OR ' . self::ALIAS . '.showAll = 1'.
+                    ' OR ' . UserRepository::ALIAS_UNDERRUBRIC_WRITERS . '.id like :userId' .
+                    ' OR ' . UserRepository::ALIAS_UNDERRUBRIC_READERS . '.id like :userId' .
+                    ' OR ' . UnderRubricRepository::ALIAS . '.showAll = 1' );
 
             $this->addParams('userId', $this->dto->getUser()->getId());
         }

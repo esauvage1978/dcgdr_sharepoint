@@ -29,12 +29,18 @@ class UnderRubricRepository extends ServiceEntityRepository
                 PictureRepository::ALIAS,
                 UnderThematicRepository::ALIAS,
                 ThematicRepository::ALIAS,
-                RubricRepository::ALIAS
+                RubricRepository::ALIAS,
+                CorbeilleRepository::ALIAS_UNDERRUBRIC_WRITERS,
+                CorbeilleRepository::ALIAS_UNDERRUBRIC_READERS,
+                BackpackRepository::ALIAS
             )
             ->leftJoin(self::ALIAS.'.picture',PictureRepository::ALIAS)
             ->leftJoin(self::ALIAS.'.underThematic',UnderThematicRepository::ALIAS)
             ->leftJoin(self::ALIAS.'.rubric',RubricRepository::ALIAS)
             ->leftJoin(RubricRepository::ALIAS.'.thematic',ThematicRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.writers', CorbeilleRepository::ALIAS_UNDERRUBRIC_WRITERS)
+            ->leftJoin(self::ALIAS . '.readers', CorbeilleRepository::ALIAS_UNDERRUBRIC_READERS)
+            ->leftJoin(self::ALIAS . '.backpacks', BackpackRepository::ALIAS)
             ->orderBy(self::ALIAS.'.name', 'ASC')
             ->getQuery()
             ->getResult();
