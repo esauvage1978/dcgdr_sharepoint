@@ -10,7 +10,7 @@ interface DtoRepositoryInterface
 {
     public function findAllForDtoPaginator(DtoInterface $dto,$page=null, $limit=null);
 
-    public function findAllForDto(DtoInterface $dto);
+    public function findAllForDto(DtoInterface $dto,string $filtre="");
 
     public function countForDto(DtoInterface $dto);
 }

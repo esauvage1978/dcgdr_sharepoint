@@ -1,7 +1,7 @@
 {% set openClass= 'collapsed-card' %}
     {% set openIcon= 'plus' %}
 
-{% if open is defined  %}
+{% if open is defined %}
     {% set openClass= open?'':'collapsed-card' %}
     {% set openIcon= open?'minus':'plus' %}
 {% endif %}
@@ -237,7 +237,7 @@
                                                 {{ include('backpack/_show/_new.html.twig') }}
                                             </div>
                                             <div class="col-sm-1 text-muted text-xs">
-                                                {{ bp.updateAt  | date('d/m/Y') }}
+                                                {{ bp.updateAt  | date('d/m/Y H:i:s') }}
                                             </div>
                                             <div class="col-sm-1 text-muted  text-xs">
                                                 Porte-document
@@ -250,16 +250,15 @@
                                                         </span>
                                                 {% endif %}
                                             </div>
-                                        </div>
-                                        {% if bp.content %}
-                                            <div class="row">
-                                                <div class="col-sm-12  d-flex">
-                                                    <small class="text-muted ml-5 ">
+
+                                            {% if bp.content %}
+                                                <div class="col-12  d-flex border-top">
+                                                    <small class="text-muted ml-5 mt-2  ">
                                                         {{ bp.content | raw }}
                                                     </small>
                                                 </div>
-                                            </div>
-                                        {% endif %}
+                                            {% endif %}
+                                        </div>
 
                                         {% set ur_p=ur_c %}
                                         {% set ur_same=false %}

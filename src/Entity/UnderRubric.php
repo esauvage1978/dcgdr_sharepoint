@@ -50,7 +50,7 @@ class UnderRubric implements EntityInterface
     private $picture;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UnderThematic", inversedBy="underrubrics")
+     * @ORM\ManyToOne(targetEntity="App\Entity\UnderThematic", inversedBy="underrubrics", fetch="EAGER")
      */
     private $underThematic;
 

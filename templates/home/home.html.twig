@@ -46,27 +46,29 @@
 
         {% for rubric in rubrics %}
 
-            {% set t_c=rubric.thematic.name %}
 
-            {% set t_same=  t_c == t_p ? true : false %}
-            {% set t_present=  t_c is empty ? false : true %}
+                {% set t_c=rubric.thematic.name %}
 
-            {% if t_same == false and t_present==true %}
+                {% set t_same=  t_c == t_p ? true : false %}
+                {% set t_present=  t_c is empty ? false : true %}
 
-                {{ t_open ?'</div>':'' }}
+                {% if t_same == false and t_present==true %}
 
-                {{  include('thematic/_view/_title.html.twig',{thematic:rubric.thematic}) }}
+                    {{ t_open ?'</div>':'' }}
 
-                <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
-                {% set t_open=true %}
+                    {{  include('thematic/_view/_title.html.twig',{thematic:rubric.thematic}) }}
 
-            {% endif %}
+                    <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+                    {% set t_open=true %}
+
+                {% endif %}
 
 
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
-                {{ include('rubric/_view/_vignette.html.twig') }}
-            </div>
-            {% set t_p=rubric.thematic.name %}
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+                    {{ include('rubric/_view/_vignette.html.twig') }}
+                </div>
+                {% set t_p=rubric.thematic.name %}
+
         {% endfor %}
 
     {{ t_open ?'</div>':'' }}

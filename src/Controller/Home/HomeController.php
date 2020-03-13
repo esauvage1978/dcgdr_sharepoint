@@ -7,6 +7,7 @@ use App\Dto\RubricDto;
 use App\Dto\UnderRubricDto;
 use App\Repository\BackpackDtoRepository;
 use App\Repository\RubricDtoRepository;
+use App\Repository\RubricRepository;
 use App\Repository\UnderRubricDtoRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,8 @@ class HomeController extends AbstractController
      */
     public function index(
         RubricDto $rubricDto,
-        RubricDtoRepository $rubricDtoRepository
+        RubricDtoRepository $rubricDtoRepository,
+        RubricRepository $rp
     )
     {
         $rubricDto
@@ -37,7 +39,7 @@ class HomeController extends AbstractController
         }
 
         return $this->render('home/home.html.twig', [
-            'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto),
+            'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto, RubricDtoRepository::FILTRE_DTO_INIT_HOME),
         ]);
     }
 
