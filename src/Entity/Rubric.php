@@ -39,7 +39,7 @@ class Rubric implements EntityInterface
     private $showOrder;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Thematic", inversedBy="rubrics")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Thematic", inversedBy="rubrics", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $thematic;

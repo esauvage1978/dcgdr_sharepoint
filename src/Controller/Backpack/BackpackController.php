@@ -14,6 +14,9 @@ use App\Manager\BackpackManager;
 use App\Repository\BackpackDtoRepository;
 use App\Repository\ThematicRepository;
 use App\Manager\ThematicManager;
+use App\Security\BackpackVoter;
+use App\Security\RubricVoter;
+use App\Security\UnderRubricVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +39,7 @@ class BackpackController extends AppControllerAbstract
         BackpackDtoRepository $backpackDtoRepository
     ): Response
     {
+
         $backpackDto = new BackpackDto();
 
         $backpackDto
@@ -112,7 +116,7 @@ class BackpackController extends AppControllerAbstract
         return $this->render(
             'backpack/disable.html.twig',
             [
-                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto)
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto,BackpackDtoRepository::FILTRE_DTO_INIT_HOME)
             ]);
     }
 
@@ -127,6 +131,8 @@ class BackpackController extends AppControllerAbstract
         Rubric $rubric
     ): Response
     {
+        $this->denyAccessUnlessGranted(RubricVoter::READ, $rubric);
+
         $backpackDto = new BackpackDto();
 
         $backpackDto
@@ -160,6 +166,9 @@ class BackpackController extends AppControllerAbstract
         UnderRubric $underrubric
     ): Response
     {
+
+        $this->denyAccessUnlessGranted(UnderRubricVoter::READ, $underrubric);
+
         $backpackDto = new BackpackDto();
 
         $backpackDto
@@ -222,27 +231,29 @@ class BackpackController extends AppControllerAbstract
      */
     public function editAction(
         Request $request,
-        Backpack $entity,
+        Backpack $backpack,
         BackpackManager $manager
     ): Response
     {
-        $form = $this->createForm(BackpackType::class, $entity);
+        $this->denyAccessUnlessGranted(BackpackVoter::UPDATE, $backpack);
+
+        $form = $this->createForm(BackpackType::class, $backpack);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($manager->save($entity)) {
+            if ($manager->save($backpack)) {
                 $this->addFlash(self::SUCCESS, self::MSG_MODIFY);
 
 
-                    return $this->redirectToRoute(self::ENTITY . '_edit', ['id' => $entity->getId()]);
+                    return $this->redirectToRoute(self::ENTITY . '_edit', ['id' => $backpack->getId()]);
 
             }
-            $this->addFlash(self::DANGER, self::MSG_ERROR . $manager->getErrors($entity));
+            $this->addFlash(self::DANGER, self::MSG_ERROR . $manager->getErrors($backpack));
         }
 
         return $this->render(self::ENTITY . '/edit.html.twig', [
-            self::ENTITY => $entity,
+            self::ENTITY => $backpack,
             self::FORM => $form->createView(),
         ]);
     }
@@ -256,6 +267,8 @@ class BackpackController extends AppControllerAbstract
         Backpack $backpack
     ): Response
     {
+        $this->denyAccessUnlessGranted(BackpackVoter::READ, $backpack);
+
         return $this->render(self::ENTITY.'/show.html.twig', [
             self::ENTITY => $backpack
         ]);

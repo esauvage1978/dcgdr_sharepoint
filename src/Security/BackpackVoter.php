@@ -2,13 +2,13 @@
 
 namespace App\Security;
 
-use App\Entity\Rubric;
+use App\Entity\Backpack;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
-class RubricVoter extends Voter
+class BackpackVoter extends Voter
 {
     const READ = 'read';
     const UPDATE = 'update';
@@ -28,7 +28,7 @@ class RubricVoter extends Voter
         }
 
         // only vote on Post objects inside this voter
-        if (null !== $subject and !$subject instanceof Rubric) {
+        if (null !== $subject and !$subject instanceof Backpack) {
             return false;
         }
 
@@ -43,46 +43,46 @@ class RubricVoter extends Voter
             return false;
         }
 
-        /** @var Rubric $rubric */
-        $rubric = $subject;
+        /** @var Backpack $backpack */
+        $backpack = $subject;
 
         switch ($attribute) {
             case self::READ:
-                return $this->canRead($rubric, $user);
+                return $this->canRead($backpack, $user);
             case self::UPDATE:
-                return $this->canUpdate($rubric, $user);
+                return $this->canUpdate($backpack, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
-    public function canRead(Rubric $rubric, User $user)
+    public function canRead(Backpack $backpack, User $user)
     {
         if ($this->security->isGranted('ROLE_GESTIONNAIRE')) {
             return true;
         }
 
-        if ($rubric->getShowAll()) {
+        if ($backpack->getShowAll()) {
             return true;
         }
 
-        foreach ($rubric->getReaders() as $corbeille) {
+        foreach ($backpack->getReaders() as $corbeille) {
             if (in_array($user, $corbeille->getUsers()->toArray())) {
                 return true;
             }
         }
-        foreach ($rubric->getUnderRubrics() as $underRubric) {
-            if ($underRubric->getShowAll()) {
+        foreach ($backpack->getRubric() as $rubric) {
+            if ($rubric->getShowAll()) {
                 return true;
             }
 
-            foreach ($underRubric->getReaders() as $corbeille) {
+            foreach ($rubric->getReaders() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
                     return true;
                 }
             }
 
-            foreach ($underRubric->getWriters() as $corbeille) {
+            foreach ($rubric->getWriters() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
                     return true;
                 }
@@ -90,16 +90,16 @@ class RubricVoter extends Voter
 
         }
 
-        return $this->canUpdate($rubric, $user);
+        return $this->canUpdate($backpack, $user);
     }
 
-    public function canUpdate(Rubric $rubric, User $user)
+    public function canUpdate(Backpack $backpack, User $user)
     {
         if ($this->security->isGranted('ROLE_GESTIONNAIRE')) {
             return true;
         }
 
-        foreach ($rubric->getWriters() as $corbeille) {
+        foreach ($backpack->getWriters() as $corbeille) {
             if (in_array($user, $corbeille->getUsers()->toArray())) {
                 return true;
             }

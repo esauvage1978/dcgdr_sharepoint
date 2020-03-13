@@ -53,7 +53,7 @@ class RubricController extends AppControllerAbstract
 
         return $this->render(self::ENTITY.'/list.html.twig', [
             self::ENTITY => $rubric,
-            'underRubrics'=> $underrubricDtoRepository->findAllForDto($underrubricDto)
+            'underRubrics'=> $underrubricDtoRepository->findAllForDto($underrubricDto, UnderRubricDtoRepository::FILTRE_DTO_INIT_HOME)
         ]);
     }
 

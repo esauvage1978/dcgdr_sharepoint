@@ -31,7 +31,6 @@ class UnderRubricController extends AppControllerAbstract
         BackpackDtoRepository $backpackDtoRepository
     ) {
         $backpackDto
-            ->setUser($this->getUser())
             ->setArchiving(BackpackDto::FALSE)
             ->setUnderRubric($underrubric)
             ->setEnable(RubricDto::TRUE)
