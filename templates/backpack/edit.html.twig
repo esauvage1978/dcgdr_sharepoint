@@ -61,6 +61,7 @@
                  class=" col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-7 order-xl-second ">
                 <div class="shadow bg-white card-body">
                     {{ include('backpack/_edit/_name.html.twig') }}
+                    {{ include(entityName~'/_edit/_backpackFile.html.twig') }}
                 </div>
                 <div class="d-none">
                     <button name="update" id="update">{{ button_label|default('Save') }}</button>
@@ -111,6 +112,7 @@
 
 {% block javascripts %}
     <!-- Select2 -->
+    <script src="{{ absolute_url( asset('js/file/backpack_file.js')) }}"></script>
     <script src="{{ absolute_url( asset('plugins/select2/js/select2.full.min.js')) }}"></script>
     <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
     <script src="{{ absolute_url( asset('js/fillCombobox/arborescence.js')) }}"></script>
@@ -208,7 +210,14 @@
                 $('#picture_updateAt_time_minute').val(new Date().getMinutes());
 
 
-            })
+            });
+
+
+        $(document).on('change', '.custom-file-input', function () {
+            let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+            $(this).parent('.custom-file').find('.custom-file-label').text(fileName);
+        });
+
     </script>
 
 {% endblock %}

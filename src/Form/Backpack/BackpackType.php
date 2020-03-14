@@ -5,10 +5,13 @@ namespace App\Form\Backpack;
 use App\Entity\Backpack;
 use App\Entity\UnderRubric;
 use App\Form\AppTypeAbstract;
+use App\Form\File\BackpackFileType;
+use App\Form\File\BackpackLinkType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -57,7 +60,17 @@ class BackpackType extends AppTypeAbstract
                 [
                     self::LABEL			=> 'dater',
                     self::REQUIRED=>false
-                ]);
+                ])
+            ->add('backpackFiles', CollectionType::class, [
+                'entry_type' => BackpackFileType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
+            ->add('backpackLinks', CollectionType::class, [
+                'entry_type' => BackpackLinkType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

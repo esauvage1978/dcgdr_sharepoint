@@ -10,7 +10,8 @@
             </div>
         </div>
     {% endif %}
-    <a href="{{ path('underrubric_show',{id:underrubric.id}) }}">
+    <a href="{{ path('underrubric_show',{id:underrubric.id}) }}"  data-html="true"
+       data-toggle="tooltip" data-placement="top" title="{{ underrubric.content }}" data-container="body">
         {% if underrubric.picture %}
             <img src="{{ absolute_url( asset(underrubric.picture.href)) }}" class="card-img-top rounded-top rounded-lg "
                  alt="{{ underrubric.picture.name }}">

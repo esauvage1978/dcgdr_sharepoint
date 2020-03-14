@@ -113,9 +113,13 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
                 RubricRepository::ALIAS,
                 ThematicRepository::ALIAS,
                 UnderThematicRepository::ALIAS,
-                UnderRubricRepository::ALIAS
+                UnderRubricRepository::ALIAS,
+                BackpackLinkRepository::ALIAS,
+                BackpackFileRepository::ALIAS
             )
             ->join(self::ALIAS . '.underRubric', UnderRubricRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.backpackLinks', BackpackLinkRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.backpackFiles', BackpackFileRepository::ALIAS)
             ->join(UnderRubricRepository::ALIAS . '.underThematic', UnderThematicRepository::ALIAS)
             ->join(UnderRubricRepository::ALIAS . '.rubric', RubricRepository::ALIAS)
             ->join(RubricRepository::ALIAS . '.thematic', ThematicRepository::ALIAS)
@@ -149,6 +153,7 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
             ->join(UnderRubricRepository::ALIAS . '.underThematic', UnderThematicRepository::ALIAS)
             ->join(UnderRubricRepository::ALIAS . '.rubric', RubricRepository::ALIAS)
             ->join(RubricRepository::ALIAS . '.thematic', ThematicRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.backpackLinks', BackpackLinkRepository::ALIAS)
             ;
     }
 
@@ -324,6 +329,11 @@ class BackpackDtoRepository extends ServiceEntityRepository implements DtoReposi
                 ->andwhere(
                     self::ALIAS . '.content like :search' .
                     ' OR ' . self::ALIAS . '.dir1 like :search' .
+                    ' OR ' . BackpackLinkRepository::ALIAS . '.title like :search' .
+                    ' OR ' . BackpackLinkRepository::ALIAS . '.content like :search' .
+                    ' OR ' . BackpackLinkRepository::ALIAS . '.link like :search' .
+                    ' OR ' . BackpackFileRepository::ALIAS . '.title like :search' .
+                    ' OR ' . BackpackFileRepository::ALIAS . '.content like :search' .
                     ' OR ' . self::ALIAS . '.dir2 like :search' .
                     ' OR ' . self::ALIAS . '.dir3 like :search' .
                     ' OR ' . self::ALIAS . '.dir4 like :search' .
