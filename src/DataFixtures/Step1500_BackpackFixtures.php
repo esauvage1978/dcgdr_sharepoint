@@ -110,8 +110,12 @@ class Step1500_BackpackFixtures extends Fixture implements FixtureGroupInterface
             ->setDir4($data['n4'])
             ->setDir5($data['n5'])
             ->setArchiving(false)
-            ->setUpdateAt($this->convertDate($data['date_update']));
-        ;
+            ->setUpdateAt
+            (
+                $data['date_update'] == "01/01/0001 00:00:00" ?
+                    $this->convertDate($data['date_create']) :
+                    $this->convertDate($data['date_update'])
+            );
 
         if (!empty($underrubric)) {
             $instance->setUnderRubric($underrubric);

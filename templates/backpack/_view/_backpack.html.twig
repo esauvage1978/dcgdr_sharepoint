@@ -1,0 +1,65 @@
+<div class="card card-light  card-outline shadow">
+
+    <div class=" card-header ">
+        <div class="row ">
+            <div class="col-sm-9   ">
+                <i class="fas fa-suitcase text-info mr-3"></i>
+                <a class="{{ backpack.enable?'':'text-danger' }}"
+                   href="{{ path('backpack_show',{id:backpack.id}) }}">
+                    {{ backpack.name }} {{ backpack.enable?'':' (masqué)' }}
+                </a>
+
+            </div>
+            <div class="col-lg-2">
+                {% if backpack.archiving %}
+                    <span class="badge bg-yellow float-right">
+                    <i class="fas fa-archive "></i>
+                    Archive
+                </span>
+                {% endif %}
+                {{ include('backpack/_show/_new.html.twig',{dateNew:backpack.updateAt}) }}
+            </div>
+            <div class="col-lg-1 text-muted text-xs">
+                {{ backpack.updateAt  | date('d/m/Y H:i:s') }}
+            </div>
+        </div>
+    </div>
+    {%  set nbrL=backpack.backpackLinks | length  %}
+    {%  set nbrF=backpack.backpackFiles | length  %}
+    {% if nbrL>0 or nbrF>0 %}
+    <div class="card-body p-2">
+        <table class="table table-condensed table-striped table-bordered table-borderless">
+            <thead>
+            <tr>
+                <th>
+                    Nom du fichier
+                </th>
+                <th class="desktop text-center">
+                    Description
+                </th>
+                <th class="text-center">
+                    Nouveauté
+                </th>
+                <th class="text-center">
+                    Taille
+                </th>
+                <th class="desktop">
+                    Date
+                </th>
+            </tr>
+            </thead>
+            {{ include('backpack/_view/_files_one_row.html.twig') }}
+            {{ include('backpack/_view/_links_one_row.html.twig') }}
+        </table>
+    </div>
+    {% endif %}
+    {% if backpack.content %}
+        <div class="card-body p-2">
+            <small class="text-muted pl-5 ">
+                {{ backpack.content | raw }}
+            </small>
+        </div>
+    {% endif %}
+
+
+</div>

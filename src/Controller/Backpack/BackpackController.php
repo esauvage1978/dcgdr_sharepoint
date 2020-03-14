@@ -4,6 +4,7 @@ namespace App\Controller\Backpack;
 
 use App\Controller\AppControllerAbstract;
 use App\Dto\BackpackDto;
+use App\Entity\Action;
 use App\Entity\Backpack;
 use App\Entity\Rubric;
 use App\Entity\Thematic;
@@ -11,12 +12,16 @@ use App\Entity\UnderRubric;
 use App\Form\Admin\ThematicType;
 use App\Form\Backpack\BackpackType;
 use App\Manager\BackpackManager;
+use App\Repository\ActionFileRepository;
 use App\Repository\BackpackDtoRepository;
+use App\Repository\BackpackFileRepository;
 use App\Repository\ThematicRepository;
 use App\Manager\ThematicManager;
+use App\Security\ActionVoter;
 use App\Security\BackpackVoter;
 use App\Security\RubricVoter;
 use App\Security\UnderRubricVoter;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -284,5 +289,24 @@ class BackpackController extends AppControllerAbstract
         return $this->delete($request, $entity, $manager, self::ENTITY);
     }
 
+    /**
+     * @Route("/backpack/{id}/file/{fileId}", name="backpack_file_show", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actionFileShowAction(
+        Request $request,
+        Backpack $backpack,
+        string $fileId,
+        BackpackFileRepository $backpackFileRepository): Response
+    {
+        $this->denyAccessUnlessGranted(BackpackVoter::READ, $backpack);
 
+        $actionFile = $backpackFileRepository->find($fileId);
+
+        // load the file from the filesystem
+        $file = new File($actionFile->getHref());
+
+        // rename the downloaded file
+        return $this->file($file, $actionFile->getTitle().'.'.$actionFile->getFileExtension());
+    }
 }

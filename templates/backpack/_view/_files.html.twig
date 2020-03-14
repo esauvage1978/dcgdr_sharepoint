@@ -1,0 +1,29 @@
+{% for backpackFile in backpack.backpackFiles %}
+    <a target="_blank"
+       href="{{ path('backpack_file_show',{'id':backpack.id, 'fileId':backpackFile.id}) }}">
+        <div class="row border-bottom">
+            <div class="col-8">
+
+                {{ include('file/_icone_extension.html.twig',{'extension': backpackFile.fileExtension}) }}
+                {{ backpackFile.title }}.{{ backpackFile.fileExtension }}
+            </div>
+            <div class="col-1">
+                {{ include('backpack/_show/_size.html.twig',{size: backpackFile.size})    }}
+
+            </div>
+            <div class="col-3 d-flex align-items-center flex-row-reverse ">
+            <span class="text-muted">
+            {{ backpackFile.modifyAt  | date('d/m/Y H:i:s') }}
+            </span>
+            </div>
+            {% if backpackFile.content %}
+                <div class="col-12 bg-light">
+                <span class="text-muted">
+                {{ backpackFile.content | raw }}
+                </span>
+                </div>
+            {% endif %}
+        </div>
+    </a>
+{% endfor %}
+

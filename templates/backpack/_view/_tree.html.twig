@@ -224,41 +224,7 @@
                                         {% set n5_open=true %}
                                         {% endif %}
 
-                                        <div class="row m-2 {{ n1_present==false?'ml-5 bg-white p-2  rounded shadow':'' }}">
-                                            <div class="col-sm-8  ml-2 ">
-                                                <i class="fas fa-suitcase text-info mr-3"></i>
-                                                <a class="{{ bp.enable?'':'text-danger' }}"
-                                                   href="{{ path('backpack_show',{id:bp.id}) }}">
-                                                    {{ bp.name }} {{ bp.enable?'':' (masqué)' }}
-                                                </a>
-
-                                            </div>
-                                            <div class="col-sm-1">
-                                                {{ include('backpack/_show/_new.html.twig') }}
-                                            </div>
-                                            <div class="col-sm-1 text-muted text-xs">
-                                                {{ bp.updateAt  | date('d/m/Y H:i:s') }}
-                                            </div>
-                                            <div class="col-sm-1 text-muted  text-xs">
-                                                Porte-document
-                                            </div>
-                                            <div class="col-sm-1">
-                                                {% if bp.archiving %}
-                                                    <span class="badge bg-yellow float-right">
-                                                    <i class="fas fa-archive "></i>
-                                                        Archive
-                                                        </span>
-                                                {% endif %}
-                                            </div>
-
-                                            {% if bp.content %}
-                                                <div class="col-12  d-flex border-top">
-                                                    <small class="text-muted ml-5 mt-2  ">
-                                                        {{ bp.content | raw }}
-                                                    </small>
-                                                </div>
-                                            {% endif %}
-                                        </div>
+                                        {{ include('backpack/_view/_backpack.html.twig',{backpack:bp}) }}
 
                                         {% set ur_p=ur_c %}
                                         {% set ur_same=false %}

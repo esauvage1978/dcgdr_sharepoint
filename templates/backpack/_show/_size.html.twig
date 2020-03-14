@@ -1,0 +1,11 @@
+{% if size %}
+    {% if size <1024 %}
+        1 ko
+    {% elseif size < 1048576 %}
+        {%  set nbr=size / 1024 %}
+        {{ nbr|number_format }} Ko
+    {% else %}
+        {%  set nbr=size / 1048576 %}
+        {{ nbr|number_format }} Mo
+    {% endif %}
+{% endif %}

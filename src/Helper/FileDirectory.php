@@ -50,7 +50,7 @@ class FileDirectory
     public function moveFile(string $cheminSource, string $fileSource,string $cheminDestination, string $fileDestination)
     {
         try {
-            $fullpathSource = $cheminSource . "/" . $fileSource;
+            $fullpathSource =$this->fullPathSource($cheminSource,$fileSource);
             $fullpathDestination = $cheminDestination . "/" . $fileDestination;
 
             if($this->fsObject->exists($fullpathSource)) {
@@ -62,5 +62,22 @@ class FileDirectory
         } catch (IOExceptionInterface $exception) {
             echo "Error creating directory at" . $exception->getPath();
         }
+    }
+
+    public function fileExist(string $cheminSource, string $fileSource)
+    {
+        return $this->fsObject->exists($this->fullPathSource($cheminSource,$fileSource));
+    }
+
+    public function fullPathSource(string $cheminSource, string $fileSource)
+    {
+        return $cheminSource . "/" . $fileSource;
+    }
+    public function fileSize(string $cheminSource, string $fileSource)
+    {
+        if($this->fileExist($cheminSource,$fileSource)) {
+            return filesize($this->fullPathSource($cheminSource,$fileSource));
+        }
+        return 0;
     }
 }

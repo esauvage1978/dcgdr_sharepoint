@@ -1,0 +1,27 @@
+{% for backpackLink in backpack.backpackLinks %}
+    <a target="_blank" href="{{ backpackLink.link }}">
+        <div class="row border-bottom">
+            <div class="col-9">
+
+                <i class="fas fa-globe mr-2"></i>
+                {{ backpackLink.title }}
+                <br/>
+                <span class="text-muted">
+            {{  backpackLink.link }}
+            </span>
+            </div>
+            <div class="col-3 d-flex align-items-center flex-row-reverse ">
+            <span class="text-muted">
+            {{ backpackLink.modifyAt  | date('d/m/Y H:i:s') }}
+            </span>
+            </div>
+            {% if backpackLink.content %}
+                <div class="col-12 bg-light">
+                <span class="text-muted">
+                {{ backpackLink.content | raw }}
+                </span>
+                </div>
+            {% endif %}
+        </div>
+    </a>
+{% endfor %}

@@ -50,6 +50,20 @@ class Uploader
      *
      * @return string
      */
+    public function getSize(UploadedFile $file): string
+    {
+        try {
+            return filesize($file);
+        } catch (\Exception $e) {
+            dump($file);
+        }
+    }
+
+    /**
+     * @param UploadedFile $file
+     *
+     * @return string
+     */
     public function getExtension(UploadedFile $file): string
     {
         try {

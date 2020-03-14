@@ -1,0 +1,12 @@
+{% if backpack.backpackFiles.count != 0 or backpack.backpackLinks.count != 0 %}
+
+    <article id="file" class="bg-white">
+        <h5 class="text-purple p-1 pt-3 text-center ">
+            documents joints
+        </h5>
+        <div class="card-body">
+            {{ include('backpack/_view/_files.html.twig') }}
+            {{ include('backpack/_view/_links.html.twig') }}
+        </div>
+    </article>
+{% endif %}

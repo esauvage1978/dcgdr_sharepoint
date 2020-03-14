@@ -16,5 +16,17 @@ class BackpackManager extends ManagerAbstract
     public function initialise(EntityInterface $entity): void
     {
         $entity->setUpdateAt(new \DateTime());
+
+        foreach ($entity->getBackpackFiles() as $backpackFile)
+        {
+            $backpackFile->setBackpack($entity);
+        }
+
+        foreach ($entity->getBackpackLinks() as $backpackLink)
+        {
+            $backpackLink->setBackpack($entity);
+        }
     }
+
+
 }
