@@ -42,6 +42,12 @@
             {% endif %}
 
             {{ form_start(form) }}
+            <div class="card border border-info bg-info">
+                <div class="card-body text-center">
+                    {{ form_row(form.subscription) }}
+                </div>
+            </div>
+
             <div class="card card-primary ">
 
                 <div class="card-body">
@@ -125,13 +131,6 @@
                             <span class="text-success"><i class="fas fa-check"></i> Gestionnaire</span>
                         {% else %}
                             <span class="text-danger"><i class="fas fa-times"></i> Gestionnaire</span>
-                        {% endif %}
-                    </div>
-                    <div class="list-group-item list-group-item-action">
-                        {% if 'ROLE_EDITEUR' in user.roles %}
-                            <span class="text-success"><i class="fas fa-check"></i> Editeur</span>
-                        {% else %}
-                            <span class="text-danger"><i class="fas fa-times"></i> Editeur</span>
                         {% endif %}
                     </div>
                     <div class="list-group-item list-group-item-action">

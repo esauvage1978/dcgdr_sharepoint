@@ -41,6 +41,9 @@
                                         <i class="fa fa-envelope-open-text"  data-toggle="tooltip" data-placement="top" title="Mail non vérifié"></i>
                                         </th>
                                     <th class="desktop text-center">
+                                        <i class="fa fa-rss"  data-toggle="tooltip" data-placement="top" title="Abonné"></i>
+                                    </th>
+                                    <th class="desktop text-center">
                                         <i class="fa fa-globe"  data-toggle="tooltip" data-placement="top" title="Nombre d'organismes"></i>
                                     </th>
                                     <th class="desktop text-center">
@@ -76,8 +79,9 @@
                                         <td class="text-center">
                                             <span class="text-{{ not user.emailvalidated ? 'danger' : 'light' }} " ><i class="fas fa-circle"></i></span>
                                         </td>
-
-
+                                        <td class="text-center">
+                                            <span class="text-{{ user.subscription ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
+                                        </td>
                                         <td class="text-center">
                                             {% if   user.organismes.count==0 %}
                                                 <span class="text-light"><i class="fas fa-circle"></i></span>

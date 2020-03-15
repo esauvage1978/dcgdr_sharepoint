@@ -19,7 +19,6 @@ class UserType extends AppTypeAbstract
         $this->buildFormOrganismes($builder);
         $roles = [
             'Utilisateur' => 'ROLE_USER',
-            'Editeur' => 'ROLE_EDITEUR',
             'Gestionnaire' => 'ROLE_GESTIONNAIRE',
             'Administrateur' => 'ROLE_ADMIN',
         ];
@@ -43,6 +42,12 @@ class UserType extends AppTypeAbstract
                     self::LABEL => ' ',
                     self::REQUIRED => false,
                 ])
+            ->add('subscription', CheckboxType::class,
+                [
+                    self::LABEL => ' Permet d\'abonner l\'utilisateur aux rubriques et de recevoir hebdomadairement toutes les actualités',
+                    self::REQUIRED => false,
+                ])
+
             ->add('loginAt')
             ->add('createdAt')
             ->add('modifiedAt')

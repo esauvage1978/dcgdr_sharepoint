@@ -21,7 +21,6 @@ class UserTypeNew extends AppTypeAbstract
         $this->buildFormOrganismes($builder);
         $roles = [
             'Utilisateur' => 'ROLE_USER',
-            'Editeur' => 'ROLE_EDITEUR',
             'Gestionnaire' => 'ROLE_GESTIONNAIRE',
             'Administrateur' => 'ROLE_ADMIN',
         ];
@@ -31,6 +30,11 @@ class UserTypeNew extends AppTypeAbstract
             ->add('phone',TelType::class,
                 [
                     self::LABEL => 'Téléphone',
+                    self::REQUIRED => false,
+                ])
+            ->add('subscription', CheckboxType::class,
+                [
+                    self::LABEL => ' Permet d\'abonner aux rubrique et de recevoir hebdomadairement toutes les actualités',
                     self::REQUIRED => false,
                 ])
             ->add('plainpassword', RepeatedType::class, [

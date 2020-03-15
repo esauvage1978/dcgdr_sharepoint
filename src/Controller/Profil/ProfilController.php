@@ -5,7 +5,6 @@ namespace App\Controller\Profil;
 use App\Controller\AppControllerAbstract;
 use App\Entity\User;
 use App\Form\Profil\ProfilType;
-use App\Form\ProfileType;
 use App\Manager\UserManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

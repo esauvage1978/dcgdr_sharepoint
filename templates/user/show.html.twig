@@ -85,7 +85,19 @@
                     </p>
                 </div>
             {% endif %}
-
+            <div class="card border border-info">
+                <div class="card-body text-center">
+                    {% if entity.subscription%}
+                        <span class="text-success">
+                            <i class="fa fa-check-circle"></i> L'utilisateur est abonné
+                        </span>
+                    {% else %}
+                        <span class="text-danger">
+                            <i class="fa fa-times-circle"></i> L'utilisateur n'est pas encore abonné
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
             <div class="card">
                 <div class="card-footer">
                     données
@@ -165,13 +177,6 @@
                             <span class="text-success"><i class="fas fa-check"></i> Gestionnaire</span>
                         {% else %}
                             <span class="text-danger"><i class="fas fa-times"></i> Gestionnaire</span>
-                        {% endif %}
-                    </div>
-                    <div class="list-group-item list-group-item-action">
-                        {% if 'ROLE_EDITEUR' in entity.roles %}
-                            <span class="text-success"><i class="fas fa-check"></i> Editeur</span>
-                        {% else %}
-                            <span class="text-danger"><i class="fas fa-times"></i> Editeur</span>
                         {% endif %}
                     </div>
                     <div class="list-group-item list-group-item-action">
