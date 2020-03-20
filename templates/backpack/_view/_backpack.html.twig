@@ -17,6 +17,7 @@
                     Archive
                 </span>
                 {% endif %}
+                {{ include('backpack/_show/_archiving.html.twig',{archiving:backpack.archiving}) }}
                 {{ include('backpack/_show/_new.html.twig',{dateNew:backpack.updateAt}) }}
             </div>
             <div class="col-lg-1 text-muted text-xs">
@@ -27,30 +28,9 @@
     {%  set nbrL=backpack.backpackLinks | length  %}
     {%  set nbrF=backpack.backpackFiles | length  %}
     {% if nbrL>0 or nbrF>0 %}
-    <div class="card-body p-2">
-        <table class="table table-condensed table-striped table-bordered table-borderless">
-            <thead>
-            <tr>
-                <th>
-                    Nom du fichier
-                </th>
-                <th class="desktop text-center">
-                    Description
-                </th>
-                <th class="text-center">
-                    Nouveauté
-                </th>
-                <th class="text-center">
-                    Taille
-                </th>
-                <th class="desktop">
-                    Date
-                </th>
-            </tr>
-            </thead>
-            {{ include('backpack/_view/_files_one_row.html.twig') }}
-            {{ include('backpack/_view/_links_one_row.html.twig') }}
-        </table>
+    <div class="card-body row">
+        {{ include('backpack/_view/_files_bloc.html.twig') }}
+        {{ include('backpack/_view/_links_bloc.html.twig') }}
     </div>
     {% endif %}
     {% if backpack.content %}

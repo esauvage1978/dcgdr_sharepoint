@@ -35,7 +35,7 @@ class BackpackFileType extends AppTypeAbstract
                 ])
             ->add('modifyAt', DateTimeType::class,
                 [
-                    'label' => 'Modification',
+                    'label' => ' ',
                     'required' => false
                 ]);
     }

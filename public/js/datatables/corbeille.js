@@ -18,7 +18,6 @@ $(function () {
             {"orderable": false},
             {"orderable": false},
             {"orderable": false},
-            {"orderable": false},
             {"orderable": false}
         ],
         "language": {

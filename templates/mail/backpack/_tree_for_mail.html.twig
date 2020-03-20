@@ -1,0 +1,103 @@
+{% set ur_c="" %}
+{% set ur_p="" %}
+{% set ur_same=false %}
+{% set ur_present=false %}
+
+
+{% for bp in backpacks %}
+    {% set ur_c=bp.underRubric.name %}
+
+    {% set ur_same=  ur_c == ur_p ? true : false %}
+
+    {% if ur_same == false %}
+        {{ ur_present?'</ul>':'' }}
+<br/>
+<hr>
+    <h3 style="color:#6f42c1;">
+        {{ bp.underrubric.underthematic.name }}
+        >
+        {{ bp.underrubric.name }}
+    </h3>
+    <h6 style="color:grey"> (
+
+        {{ bp.underrubric.rubric.thematic.name }}
+        >
+        {{ bp.underrubric.rubric.name }} )
+    </h6>
+
+<ul class="font-size:80%">
+    {% set ur_present=true %}
+    {% endif %}
+            <li>
+                <b>Porte document : </b>
+                <a style="color:{{ bp.enable?'blue':'red' }}"
+                   href="{{ absolute_url( path('backpack_show',{id:bp.id})) }}">
+                    {{ bp.name }} {{ bp.enable?'':' (masqué)' }}
+                </a>
+                <ul>
+
+            <li>
+                <b>classement : </b>
+                {% if bp.dir1 %}
+                    {{ bp.dir1 }}
+                    {% if bp.dir2 %}
+                        &nbsp;>&nbsp;{{ bp.dir2 }}
+                    {% endif %}
+                    {% if bp.dir3 %}
+                        &nbsp;>&nbsp;{{ bp.dir3 }}
+                    {% endif %}
+                    {% if bp.dir4 %}
+                        &nbsp;>&nbsp;{{ bp.dir4 }}
+                    {% endif %}
+                    {% if bp.dir5 %}
+                        &nbsp;>&nbsp;{{ bp.dir5 }}
+                    {% endif %}
+
+                {% endif %}
+            </li>
+            <li><b>Date de modification : </b>
+                {{ bp.updateAt  | date('d/m/Y H:i:s') }}
+            </li>
+            {% set nbrL=bp.backpackLinks | length %}
+            {% set nbrF=bp.backpackFiles | length %}
+            {% if nbrL>0 or nbrF>0 %}
+                <li><b>Fichiers joints : </b>
+
+                    <table style="border:1px solid blue">
+                        <thead>
+                        <tr style="background-color: lightskyblue; border:1px solid white">
+                            <th >
+                                Nom du fichier
+                            </th>
+                            <th >
+                                Description
+                            </th>
+                            <th >
+                                Nouveauté
+                            </th>
+                            <th >
+                                Taille
+                            </th>
+                            <th >
+                                Date
+                            </th>
+                        </tr>
+                        </thead>
+                        {{ include('backpack/_view/_files_one_row.html.twig',{backpack:bp}) }}
+                        {{ include('backpack/_view/_links_one_row.html.twig',{backpack:bp}) }}
+                    </table>
+                </li>
+            {% endif %}
+            {% if bp.content %}
+                <li><b>Description : </b>
+                    <small class="text-muted pl-5 ">
+                        {{ bp.content | raw }}
+                    </small>
+                </li>
+            {% endif %}
+                </ul>
+            </li>
+    {% set ur_p=ur_c %}
+    {% endfor %}
+
+{{ ur_present?'</ul>':'' }}

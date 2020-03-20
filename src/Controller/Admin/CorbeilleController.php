@@ -84,7 +84,7 @@ class CorbeilleController extends AppControllerAbstract
             if ($manager->save($entity)) {
                 $this->addFlash(self::SUCCESS, $message);
 
-                return $this->redirectToRoute(self::ENTITY . '_index');
+                return $this->redirectToRoute(self::ENTITY . '_edit',['id'=>$entity->getId()]);
             }
             $this->addFlash(self::DANGER, self::MSG_ERROR . $manager->getErrors($entity));
         }
