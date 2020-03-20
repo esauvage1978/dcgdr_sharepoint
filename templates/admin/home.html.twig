@@ -21,9 +21,9 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row  justify-content-md-center">
+    <div class="row">
         <div class="col-6">
-            <h3 id="anchor_organisme" class="text-purple">
+            <h3  class="text-purple ">
                 <small><i class="fas fa-cog"></i> Application</small>
             </h3>
             <div class="card">
@@ -37,6 +37,25 @@
                         {% endif %}
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <h3  class="text-purple mt-3">
+                <small><i class="fas fa-cog"></i> Actions</small>
+            </h3>
+            <div class="card">
+
+                <div class="card-body ">
+                    <ul class="list-unstyled">
+
+                        <li>
+                            <h5>
+                                <a class="btn btn-info" href="{{ path('command_notificator') }}">
+                                    <i class="  fas fa-"></i>
+                                    Lance les notifications pour les modifications à J-8
+                                </a>
+                            </h5>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -61,6 +80,13 @@
                         </table>
                     </div>
                 </div>
+
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_GESTIONNAIRE') %}
+            <div class="col-6">
+
 
             </div>
         {% endif %}

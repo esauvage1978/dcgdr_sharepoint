@@ -1,0 +1,29 @@
+<div>
+    <i class="fas fa-suitcase bg-info"></i>
+
+    <div class="timeline-item">
+    <span class="time">
+        <i class="fas fa-clock"></i>
+        {{ backpack.updateAt  | date('d/m/Y H:i:s') }}
+    </span>
+
+        <h3 class="timeline-header">
+            <a class="{{ backpack.enable?'text-primary':'text-danger' }}"
+               href="{{ path('backpack_show',{id:backpack.id}) }}">
+                {{ backpack.name }} {{ backpack.enable?'':' (masqué)' }}
+            </a>
+        </h3>
+        {{ include('backpack/_show/_new.html.twig',{dateNew:backpack.updateAt}) }}
+        {{ include('backpack/_show/_archiving.html.twig',{archiving:backpack.archiving}) }}
+        <div class="timeline-body">
+            <div class="row">
+                {{ include('backpack/_view/_files_timeline.html.twig') }}
+            </div>
+        </div>
+        {% if backpack.content %}
+        <div class="timeline-footer">
+            {{ backpack.content | raw }}
+        </div>
+        {% endif %}
+    </div>
+</div>

@@ -39,13 +39,15 @@ $(document).ready(function () {
         $container.append($prototype);
 
         if (type === 'link') {
-            $('#backpack_backpackLinks_' + index + '_modifyAt_date_month').val(new Date().getMonth())+1;
+            $('#backpack_backpackLinks_' + index + '_modifyAt').addClass('d-none');
+            $('#backpack_backpackLinks_' + index + '_modifyAt_date_month').val(new Date().getMonth()+1);
             $('#backpack_backpackLinks_' + index + '_modifyAt_date_day').val(new Date().getDate());
             $('#backpack_backpackLinks_' + index + '_modifyAt_date_year').val(new Date().getFullYear());
             $('#backpack_backpackLinks_' + index + '_modifyAt_time_hour').val(new Date().getHours());
             $('#backpack_backpackLinks_' + index + '_modifyAt_time_minute').val(new Date().getMinutes());
         }
         if (type === 'file') {
+            $('#backpack_backpackFiles_' + index + '_modifyAt').addClass('d-none');
             $('#backpack_backpackFiles_' + index + '_modifyAt_date_month').val(new Date().getMonth()+1);
             $('#backpack_backpackFiles_' + index + '_modifyAt_date_day').val(new Date().getDate());
             $('#backpack_backpackFiles_' + index + '_modifyAt_date_year').val(new Date().getFullYear());
@@ -85,7 +87,7 @@ function showOtherFile($index) {
     $('#backpack_edit_backpackFiles_' + $index + '_tempoDate').val(new Date());
     $('#backpackFile_' + $index).removeClass('d-none')
 
-    $('#backpack_backpackFiles_' + $index + '_modifyAt_date_month').val(new Date().getUTCMonth()+1);
+    $('#backpack_backpackFiles_' + $index + '_modifyAt_date_month').val(new Date().getMonth()+1);
     $('#backpack_backpackFiles_' + $index + '_modifyAt_date_day').val(new Date().getDate());
     $('#backpack_backpackFiles_' + $index + '_modifyAt_date_year').val(new Date().getFullYear());
     $('#backpack_backpackFiles_' + $index + '_modifyAt_time_hour').val(new Date().getHours());
@@ -98,7 +100,7 @@ function showOtherFile($index) {
 function showOtherLink($index) {
     $('#backpack_backpackLinks_' + $index + '_modifyAt').addClass('d-none');
 
-    $('#backpack_backpackLinks_' + $index + '_modifyAt_date_month').val(new Date().getUTCMonth()+1);
+    $('#backpack_backpackLinks_' + $index + '_modifyAt_date_month').val(new Date().getMonth()+1);
     $('#backpack_backpackLinks_' + $index + '_modifyAt_date_day').val(new Date().getDate());
     $('#backpack_backpackLinks_' + $index + '_modifyAt_date_year').val(new Date().getFullYear());
     $('#backpack_backpackLinks_' + $index + '_modifyAt_time_hour').val(new Date().getHours());

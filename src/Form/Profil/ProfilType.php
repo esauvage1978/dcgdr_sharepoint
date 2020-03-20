@@ -4,6 +4,7 @@ namespace App\Form\Profil;
 
 use App\Entity\User;
 use App\Form\AppTypeAbstract;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -31,6 +32,11 @@ class ProfilType extends AppTypeAbstract
                 self::LABEL => 'Description',
                 self::REQUIRED => false
             ])
+            ->add('subscription', CheckboxType::class,
+                [
+                    self::LABEL => ' Permet de vous abonner aux rubriques et de recevoir hebdomadairement toutes les actualités',
+                    self::REQUIRED => false,
+                ])
 ;
     }
 

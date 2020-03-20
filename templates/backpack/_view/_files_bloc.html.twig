@@ -1,0 +1,37 @@
+{% for backpackFile in backpack.backpackFiles %}
+
+    {% set color='text-gray'%}
+
+    {% if backpackFile.modifyAt %}
+        {% set difference = date("today").diff(date(backpackFile.modifyAt)) %}
+        {% set leftDays = difference.days %}
+        {% if leftDays <8 %}
+            {% set color='text-fuchsia'%}
+        {% endif %}
+    {% endif %}
+
+<div class="col-12 col-sm-6 col-xl-4">
+    <div class="media ">
+
+        {{ include('file/_icone_extension.html.twig',{'extension': backpackFile.fileExtension,option:' fa-3x align-self-start mt-2 mr-3  ',dateNew:backpackFile.modifyAt}) }}
+        <div class="media-body">
+            <h6 class="m-1">
+                <a target="_blank"
+                   href="{{ path('backpack_file_show',{'id':backpack.id, 'fileId':backpackFile.id}) }}" data-html="true"
+                   data-toggle="tooltip" data-placement="top" title="{{ backpackFile.content }}" data-container="body">
+                    {{ backpackFile.title }}.{{ backpackFile.fileExtension }}
+                </a>
+            </h6>
+            <div class="row">
+                <span class="ml-3 text-muted d-flex">{{ backpackFile.modifyAt  | date('d/m/Y H:i:s') }}</span>
+                <span class="ml-2 text-muted text-bold">{{ include('backpack/_show/_size.html.twig',{size: backpackFile.size}) }}</span>
+
+            </div>
+            <div class="row text-muted ml-2">
+                {{ backpackFile.content | raw }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}

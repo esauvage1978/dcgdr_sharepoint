@@ -21,18 +21,16 @@ class FileDirectory
 
     public function createDir(string $chemin, string $directory)
     {
-        try {
-            $new_dir_path = $chemin . "/" . $directory;
-            if (!$this->fsObject->exists($new_dir_path)) {
-                $old = umask(0);
-                $this->fsObject->mkdir($new_dir_path, 0775);
-                $this->fsObject->chown($new_dir_path, "www-data");
-                $this->fsObject->chgrp($new_dir_path, "www-data");
-                umask($old);
-            }
-        } catch (IOExceptionInterface $exception) {
-            echo "Error creating directory at" . $exception->getPath();
+
+        $new_dir_path = $chemin . "/" . $directory;
+        if (!$this->fsObject->exists($new_dir_path)) {
+            $old = umask(0);
+            $this->fsObject->mkdir($new_dir_path, 0775);
+            $this->fsObject->chown($new_dir_path, "www-data");
+            $this->fsObject->chgrp($new_dir_path, "www-data");
+            umask($old);
         }
+
     }
 
     public function removeFile(string $chemin, string $file)
@@ -47,17 +45,17 @@ class FileDirectory
         }
     }
 
-    public function moveFile(string $cheminSource, string $fileSource,string $cheminDestination, string $fileDestination)
+    public function moveFile(string $cheminSource, string $fileSource, string $cheminDestination, string $fileDestination)
     {
         try {
-            $fullpathSource =$this->fullPathSource($cheminSource,$fileSource);
+            $fullpathSource = $this->fullPathSource($cheminSource, $fileSource);
             $fullpathDestination = $cheminDestination . "/" . $fileDestination;
 
-            if($this->fsObject->exists($fullpathSource)) {
+            if ($this->fsObject->exists($fullpathSource)) {
                 $this->removeFile($cheminDestination, $fileDestination);
                 $this->fsObject->copy($fullpathSource, $fullpathDestination);
             } else {
-                dump('file not exist '. $fullpathSource);
+                dump('file not exist ' . $fullpathSource);
             }
         } catch (IOExceptionInterface $exception) {
             echo "Error creating directory at" . $exception->getPath();
@@ -66,17 +64,18 @@ class FileDirectory
 
     public function fileExist(string $cheminSource, string $fileSource)
     {
-        return $this->fsObject->exists($this->fullPathSource($cheminSource,$fileSource));
+        return $this->fsObject->exists($this->fullPathSource($cheminSource, $fileSource));
     }
 
     public function fullPathSource(string $cheminSource, string $fileSource)
     {
         return $cheminSource . "/" . $fileSource;
     }
+
     public function fileSize(string $cheminSource, string $fileSource)
     {
-        if($this->fileExist($cheminSource,$fileSource)) {
-            return filesize($this->fullPathSource($cheminSource,$fileSource));
+        if ($this->fileExist($cheminSource, $fileSource)) {
+            return filesize($this->fullPathSource($cheminSource, $fileSource));
         }
         return 0;
     }

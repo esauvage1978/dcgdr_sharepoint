@@ -96,7 +96,7 @@ class Step1710_BackpackFileFixtures extends Fixture implements FixtureGroupInter
         /** @var Backpack $backpack */
         $backpack = $this->getInstance($data['obj_num'], $this->backpacks);
 
-        if (is_a($backpack, Backpack::class)
+        if (is_a($backpack, Backpack::class) and $data['titre']!='Thumbs'
         ) {
             $instance
                 ->setTitle($data['titre'])

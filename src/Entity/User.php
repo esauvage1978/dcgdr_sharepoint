@@ -119,6 +119,11 @@ class User implements UserInterface, EntityInterface
      */
     private $corbeilles;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $subscription;
+
     public function __construct()
     {
         $this->organismes = new ArrayCollection();
@@ -446,6 +451,18 @@ class User implements UserInterface, EntityInterface
             $this->corbeilles->removeElement($corbeille);
             $corbeille->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getSubscription(): ?bool
+    {
+        return $this->subscription;
+    }
+
+    public function setSubscription(bool $subscription): self
+    {
+        $this->subscription = $subscription;
 
         return $this;
     }

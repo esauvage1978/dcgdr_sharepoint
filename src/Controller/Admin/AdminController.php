@@ -28,4 +28,20 @@ class AdminController extends AbstractController
             []);
     }
 
+
+    /**
+     * @Route("/command/notificator", name="command_notificator", methods={"GET"})
+     *
+     * @IsGranted("ROLE_GESTIONNAIRE")
+     *
+     * @return Response
+     */
+    public function commandNotificator(NotificatorCommand $notificatorCommand)
+    {
+        $notificatorCommand->runTraitement();
+
+        $this->addFlash('info', $notificatorCommand->getMessagesForAlert());
+
+        return $this->redirectToRoute('admin_home');
+    }
 }

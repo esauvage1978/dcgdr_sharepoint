@@ -75,4 +75,20 @@ class UserRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findAllUserSubscription()
+    {
+        return $this->createQueryBuilder(self::ALIAS)
+            ->select(
+                self::ALIAS
+            )
+            ->where(self::ALIAS.'.enable=true')
+            ->andWhere(self::ALIAS.'.subscription=true')
+            ->andWhere(self::ALIAS.'.emailValidated=true')
+            ->orderBy(self::ALIAS . '.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 }

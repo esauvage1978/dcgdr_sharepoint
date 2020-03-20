@@ -100,7 +100,8 @@ class Step1000_UserFixtures extends Fixture implements FixtureGroupInterface
             ->setPlainPassword(('achanger' === $data['mdp'] || null === $data['mdp'] || '' === $data['mdp']) ?
                 'AchangerMerci1' :
                 $data['mdp'])
-            ->setCreatedAt(new \DateTime());
+            ->setCreatedAt(new \DateTime())
+            ->setSubscription(false);
 
         $this->userManager->initialise($instance);
 

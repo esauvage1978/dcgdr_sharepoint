@@ -15,4 +15,5 @@
     {% set icone='file-excel' %}
 {%  endif %}
 
-<i class="fa fa-{{ icone }} mr-2 "></i>
+
+<i class="fa fa-{{ icone }} mr-2 {{ option is defined ?option:'' }} {{color is defined?color:''}}"></i>
