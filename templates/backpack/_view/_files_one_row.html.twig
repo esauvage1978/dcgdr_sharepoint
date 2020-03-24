@@ -11,22 +11,25 @@
             </a>
         </td>
         <td class="col-1 text-center">
-            {% if backpackFile.content %}
-                <span data-html="true"
-                      data-toggle="tooltip" data-placement="top" title="{{ backpackFile.content }}"
-                      data-container="body" class="text-muted">
-        <i class="far fa-file-alt mr-1"></i> description présente
-                </span>
-            {% endif %}
-        </td>
-        <td class="col-1">
-            {{ include('backpack/_show/_new.html.twig',{dateNew:backpackFile.modifyAt}) }}
+            <span class="text-muted">
+                {{ backpackFile.content | raw }}
+            </span>
         </td>
         <td class="col-1 right">
             {{ include('backpack/_show/_size.html.twig',{size: backpackFile.size}) }}
         </td>
         <td class="col-1 text-muted text-xs ">
-            {{ backpackFile.modifyAt  | date('d/m/Y H:i:s') }}
+            {%  set color='black' %}
+            {% if backpackFile.modifyAt %}
+                {% set difference = date("today").diff(date(backpackFile.modifyAt)) %}
+                {% set leftDays = difference.days %}
+                {% if leftDays <8 %}
+                    {%  set color='#f012be' %}
+                {% endif %}
+            {% endif %}
+            <span style="color:{{ color }}">
+                {{ backpackFile.modifyAt  | date('d/m/Y H:i:s') }}
+            </span>
         </td>
     </tr>
 

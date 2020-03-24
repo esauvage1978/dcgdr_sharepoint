@@ -3,9 +3,9 @@
     {% set nbrNew=underrubric.backpacks | hasNewForUnderRubric %}
     {% if nbrNew >0 %}
         <div class="ribbon-wrapper ribbon-lg">
-            <div class="ribbon  bg-gradient-light">
-                <a href="{{ path('backpack_new_underrubric',{id:underrubric.id}) }}">
-                    <i class="fas fa-certificate"></i> {{ nbrNew }} Nouveauté {{ nbrNew>1 ?'s':'' }}
+            <div class="ribbon   bg-gradient-fuchsia">
+                <a href="{{ path('backpack_new_underrubric',{id:underrubric.id}) }}"  class="text-white text-bold">
+                    <i class="fas fa-certificate"></i> {{ nbrNew }} Nouveauté{{ nbrNew>1 ?'s':'' }}
                 </a>
             </div>
         </div>
@@ -20,7 +20,16 @@
                  alt="{{ underrubric.underthematic.name }}">
         {% endif %}
         <div class="card-body text-center">
-            <h5 class="text-bold  {{ underrubric.enable?'':'text-danger' }}">{{ underrubric.name }}</h5>
+            <h5 class="text-bold  {{ underrubric.enable?'':'text-danger' }} showOver" id="title_ur_vignette_{{ underrubric.id }}">
+                {{ underrubric.name }}
+                {% if is_granted('ROLE_GESTIONNAIRE') %}
+                    <div class="float-right text-xs hide" id="title_ur_vignette_{{ underrubric.id }}_span">
+                        <a href="{{ path('admin_underrubric_edit',{id:underrubric.id}) }}" class="text-indigo">
+                            <i class="fa fa-cog"></i> modifier
+                        </a>
+                    </div>
+                {% endif %}
+            </h5>
             <div class="text-muted">
                 <span class="{{ underrubric.underthematic.enable?'':'text-danger' }}">
                     {{ underrubric.underthematic.name }}

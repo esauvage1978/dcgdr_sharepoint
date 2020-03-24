@@ -45,7 +45,7 @@ class BackpackNotificator extends Messagor
 
     public function notifyNew()
     {
-        $this->addMessage('Lancement des otifications pour '. count($this->usersSubscription) .' utilisateurs :');
+        $this->addMessage('Lancement des notifications pour '. count($this->usersSubscription) .' utilisateurs :');
         $this->notifyBackpackNew($this->usersSubscription);
 
         return $this->getMessages();

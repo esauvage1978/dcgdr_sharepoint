@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ path('home') }}" class="brand-link">
+    <a href="{{ absolute_url(path('home')) }}" class="brand-link">
         <img src="{{ absolute_url( asset('dist/img/AdminLTELogo.png')) }}" alt="DCGDR SHARED"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
@@ -55,7 +55,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            {% if is_granted('ROLE_EDITEUR') %}
+                            {% if is_granted('ROLE_GESTIONNAIRE') %}
                                 <li class="nav-item {{ '/backpack/new' in app.request.uri ? 'active' :'' }}">
                                     <a href="{{ path('backpack_new') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

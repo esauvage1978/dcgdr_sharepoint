@@ -11,6 +11,8 @@ use App\Entity\Thematic;
 use App\Entity\UnderRubric;
 use App\Form\Admin\ThematicType;
 use App\Form\Backpack\BackpackType;
+use App\History\BackpackHistory;
+use App\History\HistoryShow;
 use App\Manager\BackpackManager;
 use App\Repository\ActionFileRepository;
 use App\Repository\BackpackDtoRepository;
@@ -237,11 +239,13 @@ class BackpackController extends AppControllerAbstract
     public function editAction(
         Request $request,
         Backpack $backpack,
-        BackpackManager $manager
+        BackpackManager $manager,
+        backpackHistory $backpackHistory
     ): Response
     {
-        $this->denyAccessUnlessGranted(BackpackVoter::UPDATE, $backpack);
 
+        $this->denyAccessUnlessGranted(BackpackVoter::UPDATE, $backpack);
+        $backpackOld = clone($backpack);
         $form = $this->createForm(BackpackType::class, $backpack);
 
         $form->handleRequest($request);
@@ -250,7 +254,7 @@ class BackpackController extends AppControllerAbstract
             if ($manager->save($backpack)) {
                 $this->addFlash(self::SUCCESS, self::MSG_MODIFY);
 
-
+                $backpackHistory->compare($backpackOld, $backpack);
                     return $this->redirectToRoute(self::ENTITY . '_edit', ['id' => $backpack->getId()]);
 
             }
@@ -260,6 +264,26 @@ class BackpackController extends AppControllerAbstract
         return $this->render(self::ENTITY . '/edit.html.twig', [
             self::ENTITY => $backpack,
             self::FORM => $form->createView(),
+        ]);
+    }
+    /**
+     * @Route("/backpack/{id}/history", name="backpack_history", methods={"GET","POST"})
+     * @return Response
+     * @IsGranted("ROLE_USER")
+     */
+    public function history(
+        Request $request,
+        Backpack $entity
+    ): Response
+    {
+        $historyShow=new HistoryShow(
+            $this->generateUrl('backpack_edit',['id'=>$entity->getId()]),
+            "Porte-document : " . $entity->getName(),
+            "Historiques des modifications du porte-document"
+        );
+        return $this->render('history/show.html.twig', [
+            'histories' => $entity->getHistories(),
+            'data'=>$historyShow->getParams()
         ]);
     }
 

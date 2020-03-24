@@ -29,7 +29,7 @@ class Step1220_UnderThematicFixtures extends Fixture implements FixtureGroupInte
 
     private $dataAdd;
 
-
+    private $transcription;
 
     public function __construct(
         FixturesImportData $fixturesImportData,

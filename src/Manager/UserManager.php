@@ -85,6 +85,7 @@ class UserManager
         if (null === $user->getCreatedAt()) {
             $user->setCreatedAt(new \DateTime());
             $user->setEnable(true);
+            $user->setSubscription(false);
         } else {
             $user->setModifiedAt(new \DateTime());
         }

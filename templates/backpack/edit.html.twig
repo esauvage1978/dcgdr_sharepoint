@@ -34,7 +34,13 @@
 
     {% endif %}
 
-    <span class="mb-3"></span>
+    <span class="mb-5"></span>
+
+    {{ include('share/__btn_history.html.twig',
+        {   url:'backpack_history',
+            id:backpack.id
+        }) }}
+    <span class="mb-5"></span>
 
     {{ include('share/__btn_return_show.html.twig',
         {   url:'backpack_show',

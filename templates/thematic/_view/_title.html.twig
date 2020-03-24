@@ -4,12 +4,24 @@
             <span class="text-purple {{ thematic.enable?'':'text-danger' }}">
                  {{ thematic.name }}
             </span>
+            <a class="float-right text-primary " href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
         </h5>
-        <h3 class="text-muted d-none d-lg-block">
+        <h3 class="text-muted d-none d-lg-block mb-3 showOver" id="title_{{ thematic.id }}">
             <span class="text-purple {{ thematic.enable?'':'text-danger' }}">
                 {{ thematic.name }}
             </span>
+
+            <a class="float-right text-primary ml-3 text-md" href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
+
+            {% if is_granted('ROLE_GESTIONNAIRE') %}
+                <span class="float-right text-xs hide " id="title_{{ thematic.id }}_span">
+                    <a href="{{ path('admin_thematic_edit',{id:thematic.id}) }}" class="text-indigo">
+                        <i class="fa fa-cog"></i> modifier
+                    </a>
+                </span>
+            {% endif %}
         </h3>
-        <a class="float-right text-primary " href="#top"><i class="fas fa-arrow-alt-circle-up"></i></a>
+
     </div>
 </div>
+
