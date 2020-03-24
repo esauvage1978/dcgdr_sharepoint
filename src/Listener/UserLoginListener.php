@@ -35,7 +35,7 @@ class UserLoginListener
 
 
         if (!$user->getEmailValidated()) {
-            return $this->sendmail->send($user, $this->sendmail::LOGIN, 'DCGDR PAR : Connexion effectuée');
+            return $this->sendmail->send($user, $this->sendmail::LOGIN, 'DCGDR Sharepoint : Connexion effectuée');
         }
 
 

@@ -28,13 +28,13 @@
 <ul class="font-size:80%">
     {% set ur_present=true %}
     {% endif %}
-            <li>
-                <b>Porte document : </b>
-                <a style="color:{{ bp.enable?'blue':'red' }}"
-                   href="{{ absolute_url( path('backpack_show',{id:bp.id})) }}">
-                    {{ bp.name }} {{ bp.enable?'':' (masqué)' }}
-                </a>
-                <ul>
+    <li>
+        <b>Porte document : </b>
+        <a style="color:{{ bp.enable?'blue':'red' }}"
+           href="{{ absolute_url( path('backpack_show',{id:bp.id})) }}">
+            {{ bp.name }} {{ bp.enable?'':' (masqué)' }}
+        </a>
+        <ul>
 
             <li>
                 <b>classement : </b>
@@ -60,25 +60,28 @@
             </li>
             {% set nbrL=bp.backpackLinks | length %}
             {% set nbrF=bp.backpackFiles | length %}
+            {% if bp.content %}
+                <li><b>Description : </b>
+                    <small class="text-muted pl-5 ">
+                        {{ bp.content | raw }}
+                    </small>
+                </li>
+            {% endif %}
             {% if nbrL>0 or nbrF>0 %}
                 <li><b>Fichiers joints : </b>
-
-                    <table style="border:1px solid blue">
+                    <table style="border:1px solid blue "  width="100%" cellpadding="0" cellspacing="0">
                         <thead>
                         <tr style="background-color: lightskyblue; border:1px solid white">
-                            <th >
+                            <th>
                                 Nom du fichier
                             </th>
-                            <th >
+                            <th>
                                 Description
                             </th>
-                            <th >
-                                Nouveauté
-                            </th>
-                            <th >
+                            <th>
                                 Taille
                             </th>
-                            <th >
+                            <th>
                                 Date
                             </th>
                         </tr>
@@ -88,15 +91,9 @@
                     </table>
                 </li>
             {% endif %}
-            {% if bp.content %}
-                <li><b>Description : </b>
-                    <small class="text-muted pl-5 ">
-                        {{ bp.content | raw }}
-                    </small>
-                </li>
-            {% endif %}
-                </ul>
-            </li>
+
+        </ul>
+    </li>
     {% set ur_p=ur_c %}
     {% endfor %}
 

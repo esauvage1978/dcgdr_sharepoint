@@ -32,6 +32,12 @@ class History implements EntityInterface
      */
     private $content;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Backpack", inversedBy="histories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $backpack;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,6 +78,18 @@ class History implements EntityInterface
     public function setContent(array $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getBackpack(): ?Backpack
+    {
+        return $this->backpack;
+    }
+
+    public function setBackpack(?Backpack $backpack): self
+    {
+        $this->backpack = $backpack;
 
         return $this;
     }

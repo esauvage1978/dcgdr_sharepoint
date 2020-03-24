@@ -38,6 +38,13 @@
             <i class="fas fa-trash"></i> Supprimer
         </span>
 
+        <span class="mb-5"></span>
+
+        {{ include('share/__btn_history.html.twig',
+            {   url:'backpack_history',
+                id:backpack.id
+            }) }}
+
     {% endif %}
 
     <span class="mb-3"></span>
@@ -92,4 +99,19 @@
 
 {% block javascripts %}
     <script src="{{ absolute_url( asset('js/add_sidebar.js')) }}"></script>
+
+    <script>
+        $(function () {
+            $('.hide').hide();
+            $(".showOver")
+                .mouseenter(function () {
+                    var span='#' +$(this).attr('id') + '_span';
+                    $(span).fadeIn( "slow", "linear" );
+                })
+                .mouseleave(function () {
+                    var span='#' +$(this).attr('id') + '_span';
+                    $(span).fadeOut( "slow", "linear" );
+                })
+        });
+    </script>
 {% endblock %}

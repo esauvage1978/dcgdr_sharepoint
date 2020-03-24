@@ -32,11 +32,11 @@ class UserSubscriber implements EventSubscriberInterface
 
     public function onUserRegistration(UserRegistrationEvent $event): int
     {
-        return $this->sendmail->send($event->getUser(), 'register', 'PARTENAIRE : validation de votre compte');
+        return $this->sendmail->send($event->getUser(), 'register', 'DCGDR Sharepoint : validation de votre compte');
     }
 
     public function onUserPasswordForget(UserPasswordForgetEvent $event): int
     {
-        return $this->sendmail->send($event->getUser(), 'passwordForget', 'PARTENAIRE : Mot de passe oublié');
+        return $this->sendmail->send($event->getUser(), 'passwordForget', 'DCGDR Sharepoint : Mot de passe oublié');
     }
 }
