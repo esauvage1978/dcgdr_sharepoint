@@ -3,7 +3,13 @@
 namespace App\Controller\Ajax;
 
 use App\Controller\AppControllerAbstract;
+use App\Dto\RubricDto;
+use App\Dto\UnderRubricDto;
+use App\Repository\AxeRepository;
 use App\Repository\BackpackRepository;
+use App\Repository\RubricDtoRepository;
+use App\Repository\RubricRepository;
+use App\Repository\UnderRubricDtoRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +17,62 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FillComboboxController extends AppControllerAbstract
 {
+    /**
+     * @Route("/ajax/getrubrics", name="ajax_fill_combobox_rubrics", methods={"POST"})
+     *
+     * @return Response
+     * @IsGranted("ROLE_USER")
+     */
+    public function AjaxGetRubrics(Request $request, RubricDtoRepository $rubricDtoRepository): Response
+    {
+        $rubricDto=new RubricDto();
+        $rubricDto
+            ->setEnable(RubricDto::TRUE)
+            ->setThematicEnable(RubricDto::TRUE)
+            ->setUnderThematicEnable(RubricDto::TRUE)
+            ->setUnderRubricEnable(RubricDto::TRUE)
+            ->setUser($this->getUser());
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json(
+                $rubricDtoRepository->findForCombobox($rubricDto)
+            );
+        }
+
+        return new Response("Ce n'est pas une requête Ajax");
+    }
+    /**
+     * @Route("/ajax/getunderrubrics", name="ajax_fill_combobox_underrubrics", methods={"POST"})
+     *
+     * @return Response
+     * @IsGranted("ROLE_USER")
+     */
+    public function AjaxGetUnderRubrics(
+        Request $request,
+        UnderRubricDtoRepository $underrubricDtoRepository,
+        RubricRepository $rubricRepository): Response
+    {
+        $idRubric=$request->request->get('id');
+        $rubric=$rubricRepository->find($idRubric);
+
+        $underrubricDto=new UnderRubricDto();
+        $underrubricDto
+            ->setRubric($rubric)
+            ->setEnable(UnderRubricDto::TRUE)
+            ->setThematicEnable(UnderRubricDto::TRUE)
+            ->setUnderThematicEnable(UnderRubricDto::TRUE)
+            ->setRubricEnable(UnderRubricDto::TRUE)
+            ->setUser($this->getUser());
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json(
+                $underrubricDtoRepository->findForCombobox($underrubricDto)
+            );
+        }
+
+        return new Response("Ce n'est pas une requête Ajax");
+    }
+
     /**
      * @Route("/ajax/getdir1", name="ajax_fill_combobox_dir1", methods={"POST"})
      *
