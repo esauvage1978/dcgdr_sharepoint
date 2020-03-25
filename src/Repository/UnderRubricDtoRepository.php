@@ -70,6 +70,30 @@ class UnderRubricDtoRepository extends ServiceEntityRepository implements DtoRep
         return new Paginator($this->builder);
     }
 
+    public function findForCombobox(DtoInterface $dto)
+    {
+        $this->dto = $dto;
+
+        $this->initialise_selectCombobox();
+
+        $this->initialise_where();
+
+        $this->initialise_orderBy_Combobox();
+
+        return $this->builder
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function initialise_selectCombobox()
+    {
+        $this->builder = $this->createQueryBuilder(self::ALIAS)
+            ->select('distinct '. self::ALIAS.'.id, '.self::ALIAS.'.name')
+            ->Join(self::ALIAS . '.underThematic', UnderThematicRepository::ALIAS)
+            ->LeftJoin(self::ALIAS . '.rubric', RubricRepository::ALIAS)
+            ->LeftJoin(RubricRepository::ALIAS . '.thematic', ThematicRepository::ALIAS);
+    }
+
     public function findAllForDto(DtoInterface $dto,string $filtre=self::FILTRE_DTO_INIT_HOME)
     {
         /**
@@ -300,6 +324,12 @@ class UnderRubricDtoRepository extends ServiceEntityRepository implements DtoRep
             ->orderBy(self::ALIAS . '.showOrder', 'ASC')
             ->addOrderBy(UnderThematicRepository::ALIAS . '.name', 'ASC')
             ->addOrderBy(self::ALIAS . '.name', 'ASC');
+    }
+
+    private function initialise_orderBy_Combobox()
+    {
+        $this->builder
+            ->orderBy(self::ALIAS . '.name', 'ASC');
     }
 
 

@@ -10,6 +10,7 @@ use App\Entity\Rubric;
 use App\Entity\Thematic;
 use App\Entity\UnderRubric;
 use App\Form\Admin\ThematicType;
+use App\Form\Backpack\BackpackNewType;
 use App\Form\Backpack\BackpackType;
 use App\History\BackpackHistory;
 use App\History\HistoryShow;
@@ -39,34 +40,33 @@ class BackpackController extends AppControllerAbstract
 
     /**
      * @Route("/backpack/new", name="backpack_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
+     * @return Response
+     * @IsGranted("ROLE_EDITEUR")
      */
-    public function backpackNew(
-        Request $request,
-        BackpackDtoRepository $backpackDtoRepository
-    ): Response
+    public function newAction(Request $request, BackpackManager $manager): Response
     {
+        $entity=new Backpack();
+        $form = $this->createForm(BackpackNewType::class, $entity);
 
-        $backpackDto = new BackpackDto();
+        $form->handleRequest($request);
 
-        $backpackDto
-            ->setNew(BackpackDto::TRUE)
-            ->setEnable(BackpackDto::TRUE)
-            ->setUnderThematicEnable(BackpackDto::TRUE)
-            ->setThematicEnable(BackpackDto::TRUE)
-            ->setUnderRubricEnable(BackpackDto::TRUE)
-            ->setRubricEnable(BackpackDto::TRUE);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($manager->save($entity)) {
+                $this->addFlash(self::SUCCESS, self::MSG_CREATE);
 
-        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
-            $backpackDto
-                ->setUser($this->getUser());
+                if (!empty($entity->getId())) {
+                    return $this->redirectToRoute(self::ENTITY . '_edit', ['id' => $entity->getId()]);
+                } else {
+                    return $this->redirectToRoute(self::ENTITY . '_index');
+                }
+            }
+            $this->addFlash(self::DANGER, self::MSG_ERROR . $manager->getErrors($entity));
         }
 
-        return $this->render(
-            'backpack/listNew.html.twig',
-            [
-                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto)
-            ]);
+        return $this->render(self::ENTITY . '/new.html.twig', [
+            self::ENTITY => $entity,
+            self::FORM => $form->createView(),
+        ]);
     }
 
 
