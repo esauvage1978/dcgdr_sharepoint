@@ -88,11 +88,17 @@ class Backpack implements EntityInterface
      */
     private $histories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Mailer", mappedBy="backpack", orphanRemoval=true)
+     */
+    private $mailers;
+
     public function __construct()
     {
         $this->backpackFiles = new ArrayCollection();
         $this->backpackLinks = new ArrayCollection();
         $this->histories = new ArrayCollection();
+        $this->mailers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -327,6 +333,37 @@ class Backpack implements EntityInterface
             // set the owning side to null (unless already changed)
             if ($history->getBackpack() === $this) {
                 $history->setBackpack(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mailer[]
+     */
+    public function getMailers(): Collection
+    {
+        return $this->mailers;
+    }
+
+    public function addMailer(Mailer $mailer): self
+    {
+        if (!$this->mailers->contains($mailer)) {
+            $this->mailers[] = $mailer;
+            $mailer->setBackpack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailer(Mailer $mailer): self
+    {
+        if ($this->mailers->contains($mailer)) {
+            $this->mailers->removeElement($mailer);
+            // set the owning side to null (unless already changed)
+            if ($mailer->getBackpack() === $this) {
+                $mailer->setBackpack(null);
             }
         }
 

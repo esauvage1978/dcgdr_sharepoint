@@ -19,7 +19,6 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @IsGranted("ROLE_USER")
      */
     public function index(
         RubricDto $rubricDto,

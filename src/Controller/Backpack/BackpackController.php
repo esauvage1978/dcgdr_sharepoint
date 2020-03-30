@@ -39,6 +39,38 @@ class BackpackController extends AppControllerAbstract
     const ENTITY = 'backpack';
 
     /**
+     * @Route("/backpack/news", name="backpack_news", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function backpackNews(
+        Request $request,
+        BackpackDtoRepository $backpackDtoRepository
+    ): Response
+    {
+        $backpackDto = new BackpackDto();
+
+        $backpackDto
+            ->setNew(BackpackDto::TRUE)
+            ->setEnable(BackpackDto::TRUE)
+            ->setUnderThematicEnable(BackpackDto::TRUE)
+            ->setThematicEnable(BackpackDto::TRUE)
+            ->setUnderRubricEnable(BackpackDto::TRUE)
+            ->setRubricEnable(BackpackDto::TRUE);
+
+        if (!$this->isgranted('ROLE_GESTIONNAIRE')) {
+            $backpackDto
+                ->setUser($this->getUser());
+        }
+
+        return $this->render(
+            'backpack/listNew.html.twig',
+            [
+                'backpacks' => $backpackDtoRepository->findAllForDto($backpackDto)
+            ]);
+    }
+
+
+    /**
      * @Route("/backpack/new", name="backpack_new", methods={"GET","POST"})
      * @return Response
      * @IsGranted("ROLE_EDITEUR")
@@ -129,7 +161,7 @@ class BackpackController extends AppControllerAbstract
 
 
     /**
-     * @Route("/backpack/new/rubric/{id}", name="backpack_new_rubric", methods={"GET","POST"})
+     * @Route("/backpack/news/rubric/{id}", name="backpack_new_rubric", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function backpackNewRubric(
@@ -164,7 +196,7 @@ class BackpackController extends AppControllerAbstract
     }
 
     /**
-     * @Route("/backpack/new/underrubric/{id}", name="backpack_new_underrubric", methods={"GET","POST"})
+     * @Route("/backpack/news/underrubric/{id}", name="backpack_new_underrubric", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function backpackNewUnderRubric(

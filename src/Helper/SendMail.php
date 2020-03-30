@@ -11,7 +11,7 @@ use Twig\Environment;
 class SendMail
 {
     const BACKPACK_NEW = 'backpackNew';
-
+    const MAILER_BACKPACK='mailerBackpack';
     const USERS_TO = 'user';
     const USERS_FROM = 'user_from';
 

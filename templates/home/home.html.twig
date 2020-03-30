@@ -20,76 +20,112 @@
         </div>
     {% endif %}
 
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-
-    <div class="text-center" >
-        {% set the_courant="" %}
-        {% set the_precedent="" %}
-        {% for rubric in rubrics %}
+<div class="text-center">
+    {% set the_courant="" %}
+    {% set the_precedent="" %}
+    {% for rubric in rubrics %}
         {% set the_courant=rubric.thematic.name %}
-            {% if the_precedent=="" or the_precedent !=the_courant %}
-                <a href="#anchor_thematic_{{ rubric.thematic.id }}" title="accès rapide" class="btn btn-light ml-1 mr-1">
-                    <small class="text-muted">{{ rubric.thematic.name }}</small>
-                </a>
-            {% endif %}
-            {% set the_precedent=rubric.thematic.name %}
-        {% endfor %}
+        {% if the_precedent=="" or the_precedent !=the_courant %}
+            <a href="#anchor_thematic_{{ rubric.thematic.id }}" title="accès rapide" class="btn btn-light ml-1 mr-1">
+                <small class="text-muted">{{ rubric.thematic.name }}</small>
+            </a>
+        {% endif %}
+        {% set the_precedent=rubric.thematic.name %}
+    {% endfor %}
+</div>
+
+
+{% set t_c="" %}
+                    {% set t_p="" %}
+                    {% set t_same=false %}
+                    {% set t_present=false %}
+                    {% set t_open=false %}
+
+                    {% for rubric in rubrics %}
+
+
+                            {% set t_c=rubric.thematic.name %}
+
+                            {% set t_same=  t_c == t_p ? true : false %}
+                            {% set t_present=  t_c is empty ? false : true %}
+
+                            {% if t_same == false and t_present==true %}
+
+                                {{ t_open ?'</div>':'' }}
+
+                                {{ include('thematic/_view/_title.html.twig',{thematic:rubric.thematic}) }}
+
+<div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
+    {% set t_open=true %}
+
+    {% endif %}
+
+
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+        {{ include('rubric/_view/_vignette.html.twig') }}
     </div>
+    {% set t_p=rubric.thematic.name %}
 
-
-
-        {% set t_c="" %}
-        {% set t_p="" %}
-        {% set t_same=false %}
-        {% set t_present=false %}
-        {% set t_open=false %}
-
-        {% for rubric in rubrics %}
-
-
-                {% set t_c=rubric.thematic.name %}
-
-                {% set t_same=  t_c == t_p ? true : false %}
-                {% set t_present=  t_c is empty ? false : true %}
-
-                {% if t_same == false and t_present==true %}
-
-                    {{ t_open ?'</div>':'' }}
-
-                    {{  include('thematic/_view/_title.html.twig',{thematic:rubric.thematic}) }}
-
-                    <div class="row col-12 d-flex align-items-stretch justify-content-start" id="anchor_contact">
-                    {% set t_open=true %}
-
-                {% endif %}
-
-
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
-                    {{ include('rubric/_view/_vignette.html.twig') }}
-                </div>
-                {% set t_p=rubric.thematic.name %}
-
-        {% endfor %}
+    {% endfor %}
 
     {{ t_open ?'</div>':'' }}
+    {% else %}
+        <div class="row bg-white shadow ">
+            <div class="col-sm-4 ">
+                <img src="{{ absolute_url( asset('img/closed.png')) }}"
+                     style="min-width:50%;
+                        min-height:50%;
+                        width:auto;
+                        height:auto;" alt="nothing"/>
+            </div>
+            <div class="col-sm-8 pr-4 pt-5">
+                <div class="row justify-content-center ">
+                    <h1 class="font-weight-bold  bg-white rounded"><b>DCGDR</b> Sharepoint</h1>
+                </div>
+                <div class="row justify-content-center ">
+
+                    <span class="text-muted  bg-white rounded">Sharepoint de la DCGDR</span>
+                </div>
+                <br/>
+
+                <div class="row justify-content-center">
+                    <div class="col-6 m-5 bg-white rounded">
+                        <h3><i class="fa fa-lock fa-fw text-danger"></i> Oops! Vous n'êtes pas connecté.</h3>
+
+                        <p>
+                            <br/><br/>
+                            Rien de grave, vous pouvez le faire à partir de la<a href="{{ path('user_login') }}"> page de
+                                connexion</a>.
+                        </p>
+                        <p>
+                            A tout de suite !
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+    {% endblock %}
 
 
-{% endblock %}
-
-
-{% block javascripts %}
-    <script>
-        $(function () {
-            $('.hide').hide();
-            $(".showOver")
-                .mouseenter(function () {
-                var span='#' +$(this).attr('id') + '_span';
-                $(span).fadeIn( "slow", "linear" );
-            })
-                .mouseleave(function () {
-                    var span='#' +$(this).attr('id') + '_span';
-                    $(span).fadeOut( "slow", "linear" );
-                })
-        });
-    </script>
-{% endblock %}
+    {% block javascripts %}
+        <script>
+            $(function () {
+                $('.hide').hide();
+                $(".showOver")
+                    .mouseenter(function () {
+                        var span = '#' + $(this).attr('id') + '_span';
+                        $(span).fadeIn("slow", "linear");
+                    })
+                    .mouseleave(function () {
+                        var span = '#' + $(this).attr('id') + '_span';
+                        $(span).fadeOut("slow", "linear");
+                    })
+            });
+        </script>
+    {% endblock %}
