@@ -6,6 +6,8 @@
 
 {% endblock %}
 {% block body %}
+
+
     {% if app.user and app.user.emailvalidated == false %}
         <div class="alert alert-danger alert-dismissible mt-2">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -21,7 +23,7 @@
     {% endif %}
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-
+    {{ include('message/_show_messages.html.twig',{'messages':messages}) }}
 <div class="text-center">
     {% set the_courant="" %}
     {% set the_precedent="" %}
@@ -96,7 +98,8 @@
 
                         <p>
                             <br/><br/>
-                            Rien de grave, vous pouvez le faire à partir de la<a href="{{ path('user_login') }}"> page de
+                            Rien de grave, vous pouvez le faire à partir de la<a href="{{ path('user_login') }}"> page
+                                de
                                 connexion</a>.
                         </p>
                         <p>
