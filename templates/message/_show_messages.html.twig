@@ -1,0 +1,45 @@
+{% if messages|length > 0 %}
+
+    <div class="card">
+        <!-- timeline time label -->
+        <div class="card-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages">
+                {% for message in messages %}
+                {% if message and message.content and message.enable %}
+                <!-- Message. Default to the left -->
+                <div class="direct-chat-msg">
+                    <div class="direct-chat-infos clearfix">
+                        <span class="direct-chat-name float-left">{{ message.user.name }}</span>
+                        <span class="direct-chat-timestamp float-right">{{ message.modifyat | date('d/m/Y H:i:s') }}</span>
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <img class="direct-chat-img" src="{{ message.user.avatar.image }}" alt="message user image">
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                        {{ message.content | raw }}
+                    </div>
+                    <!-- /.direct-chat-text -->
+                </div>
+                {% endif %}
+                {% endfor %}
+                <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
+
+            <!-- Contacts are loaded here -->
+
+            <!-- /.direct-chat-pane -->
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+{% endif %}

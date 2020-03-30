@@ -6,7 +6,7 @@
 parameters:
     directory_import : '%kernel.project_dir%/data/importFixtures/'
     mailer.mail: 'emmanuel.sauvage@live.fr'
-    mailer.name: '[ DCGDR SHARED ] Emmanuel SAUVAGE '
+    mailer.name: '[ DCGDR Sharepoint ] '
     directory_picture : '%kernel.project_dir%/public/rubric'
     directory_data_picture : '%kernel.project_dir%/data/bg'
     directory_file_backpack : '%kernel.project_dir%/public/uploads/backpacks'

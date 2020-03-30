@@ -1,28 +1,64 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% set name='DCGDR Sharepoint' %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>DCGDR Shared {% block title %} {% endblock %}</title>
+    <title>{{ name }} {% block title %} {% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta content="width=device-width">
     <style type="text/css">
         /* Fonts and Content */
-        body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; font-size:14px; }
-        body { background-color: #2A374E; margin: 0; padding: 0; -webkit-text-size-adjust:none; -ms-text-size-adjust:none; }
-        h2{ padding-top:12px; /* ne fonctionnera pas sous Outlook 2007+ */color:#0E7693; font-size:22px; }
+        body, td, p {
+            font-family: Roboto, Calibri, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        body {
+            background-color: #2A374E;
+            margin: 0;
+            padding: 0;
+            -webkit-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+        }
+
+        h2 {
+            font-family: Roboto, Calibri, Arial, sans-serif;
+            padding-top: 12px;
+            color: #2A374E;
+            font-size: 22px;
+        }
 
         @media only screen and (max-width: 480px) {
 
-            table[class=w275], td[class=w275], img[class=w275] { width:135px !important; }
-            table[class=w30], td[class=w30], img[class=w30] { width:10px !important; }
-            table[class=w580], td[class=w580], img[class=w580] { width:280px !important; }
-            table[class=w640], td[class=w640], img[class=w640] { width:300px !important; }
-            img{ height:auto;}
+            table[class=w275], td[class=w275], img[class=w275] {
+                width: 135px !important;
+            }
+
+            table[class=w30], td[class=w30], img[class=w30] {
+                width: 10px !important;
+            }
+
+            table[class=w580], td[class=w580], img[class=w580] {
+                width: 280px !important;
+            }
+
+            table[class=w640], td[class=w640], img[class=w640] {
+                width: 300px !important;
+            }
+
+            img {
+                height: auto;
+            }
+
             /*illisible, on passe donc sur 3 lignes */
             table[class=w180], td[class=w180], img[class=w180] {
-                width:280px !important;
-                display:block;
+                width: 280px !important;
+                display: block;
             }
-            td[class=w20]{ display:none; }
+
+            td[class=w20] {
+                display: none;
+            }
         }
 
     </style>
@@ -30,98 +66,245 @@
 </head>
 <body style="margin:0px; padding:0px; -webkit-text-size-adjust:none;">
 
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:rgb(42, 55, 78)" >
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:rgb(42, 55, 78)">
     <tbody>
     <tr>
         <td align="center" bgcolor="#2A374E">
-            <table  cellpadding="0" cellspacing="0" border="0">
+            <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
                 <tr>
-                    <td class="w640"  width="640" height="10"></td>
+                    <td class="w640" width="640" height="10"></td>
                 </tr>
 
                 <tr>
-                    <td align="center" class="w640"  width="640" height="20">
+                    <td align="center" class="w640" width="640" height="20">
 
-                        <a style="color:#ffffff; font-size:12px;" href="#"><span style="color:#ffffff; font-size:12px;"></span></a>
+                        <a style="color:#ffffff; font-size:12px;" href="#"><span
+                                    style="color:#ffffff; font-size:12px;"></span></a>
 
                     </td>
                 </tr>
                 <tr>
-                    <td class="w640"  width="640" height="10"></td>
+                    <td class="w640" width="640" height="10"></td>
                 </tr>
 
 
                 <!-- entete -->
                 <tr class="pagetoplogo">
-                    <td class="w640"  width="640">
-                        <table  class="w640"  width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#F2F0F0">
+                    <td class="w640" width="640">
+                        <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#F2F0F0">
                             <tbody>
                             <tr>
-                                <td class="w30"  width="30"></td>
-                                <td align="center"  class="w580"  width="580" valign="middle" >
+                                <td class="w30" width="30"></td>
+                                <td align="center" class="w580" width="580" valign="middle">
                                     <p>
                                         &nbsp;
                                     </p>
-                                    <h1 style="color:#0E7693; font-size:25px; padding-top:12px;padding-bottom:20px;">
-                                        DCGDR Sharepoint
+                                    <h1 style="color:#2A374E; font-size:25px; padding-top:12px;padding-bottom:20px;">
+                                        {{ name }}
                                     </h1>
                                     <p>
                                         &nbsp;
                                     </p>
                                 </td>
-                                <td class="w30"  width="30"></td>
+                                <td class="w30" width="30"></td>
                             </tr>
                             </tbody>
                         </table>
                     </td>
                 </tr>
-
-                <!-- separateur horizontal -->
                 <tr>
-                    <td  class="w640"  width="640" height="1" bgcolor="#d7d6d6"></td>
+                    <td class="esd-structure es-p15t es-p15b es-p20r es-p20l"
+                        style="background-position: center center; background-color: #efefef;" bgcolor="#efefef"
+                        align="left">
+                        <table width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <td class="esd-container-frame" width="560" valign="top" align="center">
+                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="esd-block-menu">
+                                                <table class="es-menu" width="100%" cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                    <tr class="links">
+                                                        <td class="es-p10t es-p10b es-p5r es-p5l"
+                                                            style="padding-bottom: 10px; padding-top: 10px; "
+                                                            width="33%" valign="top" bgcolor="transparent"
+                                                            align="center">
+                                                            <a target="_blank" href="{{ absolute_url(path('home')) }}"
+                                                               style=" font-size: 16px; color:#57a7fe; text-transform: uppercase; text-decoration: none;font-weight: bolder">
+                                                                Page d'accueil
+                                                            </a>
+                                                        </td>
+                                                        <td class="es-p10t es-p10b es-p5r es-p5l"
+                                                            style="padding-bottom: 10px; padding-top: 10px; "
+                                                            width="33%" valign="top" bgcolor="transparent"
+                                                            align="center">
+                                                            <a target="_blank"
+                                                               href="{{ absolute_url(path('profil_home')) }}"
+                                                               style=" font-size: 16px; color:#57a7fe; text-transform: uppercase; text-decoration: none;font-weight: bolder">
+                                                                Mon profil
+                                                            </a>
+                                                        </td>
+                                                        <td class="es-p10t es-p10b es-p5r es-p5l es-mobile-hidden"
+                                                            style="padding-bottom: 10px; padding-top: 10px; "
+                                                            width="33%" valign="top" bgcolor="transparent"
+                                                            align="center">
+                                                            <a target="_blank"
+                                                               href="{{ absolute_url(path('backpack_new')) }}"
+                                                               style=" font-size: 16px; color:#57a7fe; text-transform: uppercase; text-decoration: none;font-weight: bolder">
+                                                                Les nouveautés
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
                 </tr>
-
-                <!-- contenu -->
+                <tr>
+                    <td class="w640" width="640" height="1" bgcolor="#d7d6d6"></td>
+                </tr>
                 <tr class="content">
-                    <td class="w640" class="w640"  width="640" bgcolor="#ffffff">
-                        <table class="w640"  width="640" cellpadding="0" cellspacing="0" border="0">
+                    <td class="w640" width="640" bgcolor="#ffffff">
+                        <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
                             <tbody>
                             <tr>
-                                <td  class="w30"  width="30"></td>
-                                <td  class="w580"  width="580">
-                                    <!-- une zone de contenu -->
-                                    {% block body %} {% endblock %}
+                                <td class="w30" width="30"></td>
+                                <td class="w580" width="580">
+
+                                    <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="w580" width="580">
+                                                <p>
+                                                    &nbsp;
+                                                </p>
+                                                <h2 style="color:#2A374E; font-size:22px; padding-top:12px;">
+                                                    {% block title_content %} {% endblock %}
+                                                </h2>
+                                                <p>
+                                                    &nbsp;
+                                                </p>
+                                                <div align="left" class="article-content">
+                                                    {% if user.name is defined %}
+                                                        <p>Bonjour <b>{{ user.name }},</b></p>
+                                                    {% else %}
+                                                        <p>Bonjour,</p>
+                                                    {% endif %}
+
+                                                    {% block body %} {% endblock %}
+                                                    <p>
+                                                        &nbsp;
+                                                    </p>
+                                                    <p>
+                                                        Merci d'utiliser <b>{{ name }}</b> et à bientôt
+                                                    </p>
+                                                    <p>
+                                                        &nbsp;
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                    <br/><br/>
+
+
                                 </td>
-                                <td class="w30" class="w30"  width="30"></td>
+                                <td class="w30" width="30"></td>
                             </tr>
                             </tbody>
                         </table>
                     </td>
                 </tr>
-
-                <!--  separateur horizontal de 15px de haut -->
                 <tr>
-                    <td class="w640"  width="640" height="15" bgcolor="#ffffff"></td>
+                    <td class="w640" width="640" height="15" bgcolor="#ffffff"></td>
                 </tr>
-
-                <!-- pied de page -->
                 <tr class="pagebottom">
-                    <td class="w640"  width="640">
-                        <table class="w640"  width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#c7c7c7">
+                    <td class="w640" width="640">
+                        <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#c7c7c7">
                             <tbody>
                             <tr>
                                 <td colspan="5" height="10"></td>
                             </tr>
                             <tr>
-                                <td class="w30"  width="30"></td>
-                                <td class="w580"  width="580" valign="top">
-                                    <p align="right" class="pagebottom-content-left">
-                                        <a style="color:#255D5C;" href="{{ absolute_url(path('home')) }}"><span style="color:#255D5C;">Consulter le site</span></a>
-                                    </p>
+                                <td class="w30" width="30"></td>
+                                <td class="w580" width="580" valign="top">
+                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="esd-block-spacer es-p20" style="font-size:0" align="center">
+                                                <table width="100%" height="100%" cellspacing="0" cellpadding="0"
+                                                       border="0">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td style="border-bottom: 1px solid #cccccc; background:none; height:1px; width:100%; margin:0px 0px 0px 0px;"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="esd-block-text es-p10b" esdev-links-color="#666666" align="left">
+                                                <p style="color: #666666;">Cet e-mail est envoyé depuis
+                                                    l'application {{ name }}. </p>
+                                                {% if user.subscription is defined %}
+                                                    {% if user.subscription %}
+                                                        <p style="color: #666666;">Si pour une raison quelconque, vous
+                                                            ne souhaitez plus recevoir les nouveautés, vous pouvez
+                                                            <a style="color: #ffffff;"
+                                                               href="{{ absolute_url(path('profil_home')) }}">vous
+                                                                désabonner ici</a>.<br/><br/>
+                                                        </p>
+                                                    {% else %}
+                                                        <p style="color: #666666;">Actuellement vous
+                                                            n'êtes pas encore abonné aux nouveautés, vous pouvez
+                                                            <a style="color: #ffffff;"
+                                                               href="{{ absolute_url(path('profil_home')) }}">vous
+                                                                abonner ici</a>.<br/><br/>
+                                                        </p>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="esd-block-text es-p10b" esdev-links-color="#666666" align="left">
+                                                <p style="color: #666666;">
+                                                    <a target="_blank" style="color: #ffffff;"
+                                                       href="{{ absolute_url(path('home')) }}">Page d'accueil</a>
+                                                    |
+                                                    <a target="_blank" style="color: #ffffff;"
+                                                       href="{{ absolute_url(path('documentation')) }}">Documentation</a>
+                                                    |
+                                                    <a target="_blank" style="color: #ffffff;"
+                                                       href="mailto:emmanuel.sauvage@assurance-maladie.fr">Emmanuel
+                                                        SAUVAGE (développeur)</a>
+                                                    <br>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td esdev-links-color="#666666" class="esd-block-text" align="left">
+                                                <p style="color: #666666;">Copyright © 2020 CPAM des Flandres /
+                                                    DCGDR<br></p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </td>
 
-                                <td class="w30"  width="30"></td>
+                                <td class="w30" width="30"></td>
                             </tr>
                             <tr>
                                 <td colspan="5" height="10"></td>
@@ -131,7 +314,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="w640"  width="640" height="60"></td>
+                    <td class="w640" width="640" height="60"></td>
                 </tr>
                 </tbody>
             </table>

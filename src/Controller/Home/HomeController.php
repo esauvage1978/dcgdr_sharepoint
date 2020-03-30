@@ -6,6 +6,7 @@ use App\Dto\BackpackDto;
 use App\Dto\RubricDto;
 use App\Dto\UnderRubricDto;
 use App\Repository\BackpackDtoRepository;
+use App\Repository\MessageRepository;
 use App\Repository\RubricDtoRepository;
 use App\Repository\RubricRepository;
 use App\Repository\UnderRubricDtoRepository;
@@ -19,12 +20,12 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @IsGranted("ROLE_USER")
      */
     public function index(
         RubricDto $rubricDto,
         RubricDtoRepository $rubricDtoRepository,
-        RubricRepository $rp
+        RubricRepository $rp,
+        MessageRepository $messageRepository
     )
     {
         $rubricDto
@@ -40,6 +41,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/home.html.twig', [
             'rubrics' => $rubricDtoRepository->findAllForDto($rubricDto, RubricDtoRepository::FILTRE_DTO_INIT_HOME),
+            'messages'=> $messageRepository->findBy(['name'=>'home'])
         ]);
     }
 

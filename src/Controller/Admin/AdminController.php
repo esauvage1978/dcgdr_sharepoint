@@ -22,10 +22,11 @@ class AdminController extends AbstractController
      * @IsGranted("ROLE_USER")
      */
     public function adminHomeAction(
+        MessageRepository $messageRepository
     ): Response
     {
         return $this->render('admin/home.html.twig',
-            []);
+            ['messages'=> $messageRepository->findBy(['name'=>'admin'])]);
     }
 
 
